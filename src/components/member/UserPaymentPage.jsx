@@ -1,0 +1,254 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+
+import LoampHeader from "../../navbar/LoampHeader.jsx";
+import LoampFooter from "../../navbar/LoampFooter.jsx";
+
+import MemberSideNavbar from "../../navbar/member/MemberSideNavbar.jsx";
+
+import TitleLine from "../../widgets/TitleLine.jsx";
+import FileUpload from "../../widgets/FileUpload.jsx";
+
+import logo from "../../assets/images/logo.png";
+import fa1 from "../../assets/images/home/fa-1.jpg";
+import fa2 from "../../assets/images/home/fa-2.jpg";
+import fa3 from "../../assets/images/home/fa-3.jpg";
+import charter from "../../assets/images/home/charter.webp";
+import president from "../../assets/images/home/president.webp";
+
+import semicircle from "../../assets/images/register-login/semicircle.png";
+import semicircleflip from "../../assets/images/register-login/semicircle-flip.png";
+import africa from "../../assets/images/register-login/africa.png";
+
+import countries from "world-countries";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
+
+export default function UserPaymentPage({ isMobile }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+  const gotoPage = (pageName) => {
+    navigate("/" + pageName);
+  };
+  const navigateTo = (route) => {
+    navigate(route);
+  };
+
+  const [letter, setLetter] = useState(null);
+  const [passportDataPage, setPassportDataPage] = useState(null);
+  const [intlPassport, setIntlPassport] = useState(null);
+  const [idCard, setIdCard] = useState(null);
+  const [otherDocs, setOtherDocs] = useState(null);
+
+  const [isUploadLoading, setIsUploadLoading] = useState(false);
+
+  const [serverResponse, setServerResponse] = useState("");
+
+  const currentPageName = "Payment";
+
+  const [dashboardSummary, setDashboardSummary] = useState([]);
+
+  const handleSkip = async (e) => {
+    e.preventDefault();
+    navigate("/user-dashboard");
+    return;
+  };
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    navigate("/user-dashboard");
+    return;
+
+    // setIsSignupLoading(true);
+    // setServerResponse('');
+
+    // const response = await fetch('http://127.0.0.1:8080/signup', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ email, password }),
+    // });
+
+    // if (response.ok) {
+    //   const data = await response.json();
+
+    //   // Handle successful sign-in, e.g., store token in local storage
+    //   //console.log(data);
+
+    //   //localStorage.setItem('uid', data.uid);
+    //   //console.log("Signed up as: " + data.message);
+
+    //   // Redirect to home page
+    //   navigate('/home');
+    // } else {
+    //   const errorData = await response.json();
+
+    //   // Handle sign-in error, e.g., display error message
+    //   console.log(errorData.error);
+    //   setServerResponse(errorData.error);
+    // }
+
+    // setIsSignupLoading(false);
+  };
+
+  return (
+    <div>
+      <LoampHeader isMobile={isMobile} gotoPage={gotoPage} showMarqees={true} />
+
+      <div className="pt-10"></div>
+
+      <div className="flex">
+        {isMobile ? (
+          <div></div>
+        ) : (
+          <MemberSideNavbar currentPageName={currentPageName} />
+        )}
+
+        <div
+          className="w-full rounded-lg "
+          // style={{ borderRadius: '8px' }}
+        >
+          <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-12">
+            <div className="flex flex-row w-full justify-between mx-4 items-center">
+              <div
+                className="cursor-pointer hover:text-theme hover:bg-black bg-theme rounded-md px-2 py-2"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                <FontAwesomeIcon icon={faChevronLeft} className="w-4 h-4" />
+              </div>
+
+              <div className="relative flex items-center mr-4 rounded-lg">
+                <FontAwesomeIcon
+                  icon={faSearch}
+                  className="absolute left-8 h-4 w-4 object-scale-down text-gray-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="pl-14 border border-gray-300 rounded-lg py-1 px-2 mx-4 focus:outline-none focus:border-1 focus:border-theme"
+                  // onChange={handleSearchChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex w-full bg-white p-4">
+            <div className="w-full">
+              <div className="flex w-full flex-col z-20">
+                <div
+                  className="flex flex-col flex-grow  border-1  bg-softTheme rounded-lg   pb-4 mt-0 mb-12 px-4 "
+                  style={{ flexBasis: "50%" }}
+                >
+                  <div className="w-full mt-4">
+                    <div className="flex flex-col w-full  pb-4 ">
+                      <div
+                        className="flex justify-between my-2 pb-2"
+                        style={{}}
+                      >
+                        <div className="flex w-full items-center justify-start  ">
+                          <div className="font-semibold ">
+                            Payments and Subscriptions
+                          </div>
+                        </div>
+                      </div>
+                      <div className="w-full ">
+                        <div className="overflow-x-auto mt-2">
+                          <table className="min-w-full bg-white border border-gray-200">
+                            <thead className="text-xs">
+                              <tr className="w-full bg-gray-100">
+                                <th className="py-2 px-4  text-left text-black">
+                                  S/N
+                                </th>
+                                <th className="py-2 px-4  text-left text-black">
+                                  Year
+                                </th>
+                                <th className="py-2 px-4  text-left text-black">
+                                  Status
+                                </th>
+                                <th className="py-2 px-4  text-left text-black">
+                                  Renewal Date
+                                </th>
+                                <th className="py-2 px-4  text-left text-black">
+                                  Date Paid
+                                </th>
+                                <th className="py-2 px-4  text-left text-black">
+                                  Membership Fee
+                                </th>
+                              </tr>
+                            </thead>
+
+                            {
+                              <tbody className="text-xs">
+                                {dashboardSummary?.recentTransactions?.map(
+                                  (transaction, index) => (
+                                    <tr
+                                      key={transaction.id}
+                                      className={
+                                        index % 2 === 0
+                                          ? "bg-white"
+                                          : "bg-lightPurple"
+                                      }
+                                      onClick={(e) =>
+                                        handleRowClick(transaction, e)
+                                      }
+                                      style={{ cursor: "pointer" }}
+                                    >
+                                      <td
+                                        className="py-2 px-4 border-b border-gray  text-gray"
+                                        style={{ fontSize: "14px" }}
+                                      >
+                                        {/* {transaction.transactionType} */}
+                                      </td>
+                                      <td
+                                        className="py-2 px-4 border-b border-gray  text-gray"
+                                        style={{ fontSize: "14px" }}
+                                      >
+                                        {/* {transaction.sender.firstName}{" "}{transaction.sender.lastName} */}
+                                      </td>
+                                      <td
+                                        className="py-2 px-4 border-b border-gray  text-gray"
+                                        style={{ fontSize: "14px" }}
+                                      >
+                                        {/* {transaction.transactionDate} */}
+                                      </td>
+                                      <td
+                                        className="py-2 px-4 border-b border-gray  text-gray"
+                                        style={{ fontSize: "14px" }}
+                                      >
+                                        {/* {transaction.amount} */}
+                                      </td>
+                                      <td
+                                        className="py-2 px-4 border-b border-gray  text-gray"
+                                        style={{ fontSize: "14px" }}
+                                      >
+                                        {/* {transaction.status} */}
+                                      </td>
+                                    </tr>
+                                  )
+                                )}
+                              </tbody>
+                            }
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <LoampFooter gotoPage={gotoPage} />
+    </div>
+  );
+}
