@@ -41,7 +41,7 @@ const FileUpload = ({ label, file, setFile }) => {
             Drag & drop file here, or <span className="text-theme font-semibold">choose file</span>
             <br />
             <span className="text-xs text-gray-400">
-              Supported formats: PDF, JPG, PNG — Max 5MB
+              Supported formats: PDF, JPG, PNG — Max 2MB
             </span>
           </p>
         )}

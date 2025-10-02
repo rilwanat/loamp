@@ -14,6 +14,8 @@ import ContactUsPage from './components/ContactUsPage.jsx';
 import CreateMembershipPage from './components/CreateMembershipPage.jsx';
 import LoginPage from './components/LoginPage.jsx';
 
+
+import UserVerifyEmailPage from './components/member/UserVerifyEmailPage.jsx';
 import UploadDocumentsPage from './components/member/UploadDocumentsPage.jsx';
 import UserDashboardPage from './components/member/UserDashboardPage.jsx';
 import UserMembershipPage from './components/member/UserMembershipPage.jsx';
@@ -21,6 +23,7 @@ import UserVerificationStatusPage from './components/member/UserVerificationStat
 import UserChangePasswordPage from './components/member/UserChangePasswordPage.jsx';
 import UserPaymentPage from './components/member/UserPaymentPage.jsx';
 
+import LoginPageAdmin from './components/LoginPageAdmin.jsx';
 import AdminDashboardPage from './components/admin/AdminDashboardPage.jsx';
 import AdminUploadsPage from './components/admin/AdminUploadsPage.jsx';
 import AdminNewsPage from './components/admin/AdminNewsPage.jsx';
@@ -29,8 +32,19 @@ import AdminRemindersPage from './components/admin/AdminRemindersPage.jsx';
 import AdminEventsPage from './components/admin/AdminEventsPage.jsx';
 import AdminSupportPage from './components/admin/AdminSupportPage.jsx';
 
+import LoginPageSuperAdmin from './components/LoginPageSuperAdmin.jsx';
 
 
+//
+import axiosInstance from './auth/axiosConfig'; // Ensure the correct relative path
+import { setCookie } from './auth/authUtils'; // Ensure the correct relative path
+import { jwtDecode } from 'jwt-decode';
+import { getCookie, deleteCookie } from './auth/authUtils'; // Import getCookie function
+//
+
+import ProtectedMemberRoute from './auth/protectedMemberRoute';
+import ProtectedAdminRoute from './auth/ProtectedAdminRoute';
+import ProtectedSuperAdminRoute from './auth/ProtectedSuperAdminRoute';
 
 
 
@@ -47,6 +61,60 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+
+
+  //MEMBER DETAILS
+      const [memberDetails, setMemberDetails] = useState(null);
+          const refreshMemberDetails = async () => {
+              // setIsLoading(true);
+              // setError(null);              
+              try {
+                  // Option 1: If you only need to refresh from cookies
+                  const storedMemberDetails = getCookie('loamp-member-details');
+                  const parsedMemberDetails = storedMemberDetails ? JSON.parse(storedMemberDetails) : null;
+                  setMemberDetails(parsedMemberDetails);
+                  // alert(JSON.stringify(parsedMemberDetails), null, 2);
+              } catch (err) {
+                  // setError('Failed to refresh user details');
+                  alert('Refresh Member error:', err);
+              } finally {
+                  // setIsLoading(false);
+              }
+          };
+          // Initial load
+          useEffect(() => {
+              refreshMemberDetails();
+          }, []);
+      //MEMBER DETAILS
+
+
+      //ADMIN DETAILS
+      const [adminDetails, setAdminDetails] = useState(null);
+          const refreshAdminDetails = async () => {
+              // setIsLoading(true);
+              // setError(null);              
+              try {
+                  // Option 1: If you only need to refresh from cookies
+                  const storedAdminDetails = getCookie('loamp-admin-details');
+                  const parsedAdminDetails = storedAdminDetails ? JSON.parse(storedAdminDetails) : null;
+                  setAdminDetails(parsedAdminDetails);
+                  // alert(JSON.stringify(parsedAdminDetails), null, 2);
+              } catch (err) {
+                  // setError('Failed to refresh user details');
+                  alert('Refresh Admin error:', err);
+              } finally {
+                  // setIsLoading(false);
+              }
+          };
+          // Initial load
+          useEffect(() => {
+              refreshAdminDetails();
+          }, []);
+      //ADMIN DETAILS
+
+
+      
 
   return (
     <Router>
@@ -65,21 +133,23 @@ function App() {
             <Route path="/login" element={<LoginPage isMobile={isMobile} />} />
 
 
-            <Route path="/user-upload-documents" element={<UploadDocumentsPage isMobile={isMobile} />} />
-            <Route path="/user-dashboard" element={<UserDashboardPage isMobile={isMobile} />} />
-            <Route path="/user-membership" element={<UserMembershipPage isMobile={isMobile} />} />
-            <Route path="/user-verification-status" element={<UserVerificationStatusPage isMobile={isMobile} />} />
-            <Route path="/user-change-password" element={<UserChangePasswordPage isMobile={isMobile} />} />
-            <Route path="/user-payment" element={<UserPaymentPage isMobile={isMobile} />} />
-
-
-            <Route path="/admin-dashboard" element={<AdminDashboardPage isMobile={isMobile} />} />
-            <Route path="/admin-uploads" element={<AdminUploadsPage isMobile={isMobile} />} />
-            <Route path="/admin-news" element={<AdminNewsPage isMobile={isMobile} />} />
-            <Route path="/admin-membership" element={<AdminMembershipPage isMobile={isMobile} />} />
-            <Route path="/admin-reminders" element={<AdminRemindersPage isMobile={isMobile} />} />
-            <Route path="/admin-events" element={<AdminEventsPage isMobile={isMobile} />} />
-            <Route path="/admin-support" element={<AdminSupportPage isMobile={isMobile} />} />
+            <Route path="/user-verify-email" element={<ProtectedMemberRoute><UserVerifyEmailPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />
+            <Route path="/user-upload-documents" element={<ProtectedMemberRoute><UploadDocumentsPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />
+            <Route path="/user-dashboard" element={<ProtectedMemberRoute><UserDashboardPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />
+            <Route path="/user-membership" element={<ProtectedMemberRoute><UserMembershipPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />
+            <Route path="/user-verification-status" element={<ProtectedMemberRoute><UserVerificationStatusPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />
+            <Route path="/user-change-password" element={<ProtectedMemberRoute><UserChangePasswordPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />
+            <Route path="/user-payment" element={<ProtectedMemberRoute><UserPaymentPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />
+            
+            
+            <Route path="/admin-login" element={<LoginPageAdmin isMobile={isMobile} />} />
+            <Route path="/admin-dashboard" element={<ProtectedAdminRoute><AdminDashboardPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
+            <Route path="/admin-uploads" element={<ProtectedAdminRoute><AdminUploadsPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
+            <Route path="/admin-news" element={<ProtectedAdminRoute><AdminNewsPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
+            <Route path="/admin-membership" element={<ProtectedAdminRoute><AdminMembershipPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
+            <Route path="/admin-reminders" element={<ProtectedAdminRoute><AdminRemindersPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
+            <Route path="/admin-events" element={<ProtectedAdminRoute><AdminEventsPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
+            <Route path="/admin-support" element={<ProtectedAdminRoute><AdminSupportPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
             
              
             

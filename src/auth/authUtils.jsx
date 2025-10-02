@@ -25,24 +25,28 @@ export const setCookie = (name, value, days) => {
 export const deleteCookie = (name) => {
   // alert(name);
   switch(name) {
-    case ("user"):
-      document.cookie = "loamp-user-token" + '=; Max-Age=-99999999;';
-      document.cookie = "loamp-user-details" + '=; Max-Age=-99999999;';
+    case ("member"):
+      document.cookie = "loamp-member-token" + '=; Max-Age=-99999999;';
+      document.cookie = "loamp-member-details" + '=; Max-Age=-99999999;';
       break;
     case ("admin"):
       document.cookie = "loamp-admin-token" + '=; Max-Age=-99999999;';
       document.cookie = "loamp-admin-details" + '=; Max-Age=-99999999;';
+    break;
+    case ("super-admin"):
+      document.cookie = "loamp-super-admin-token" + '=; Max-Age=-99999999;';
+      document.cookie = "loamp-super-admin-details" + '=; Max-Age=-99999999;';
     break;
   }
 
 };
 
 // Updated function to check if the user is authenticated
-export const isAuthenticated = () => {
-  const token = getCookie('loamp-user-token');
-  const userDetails = getCookie('loamp-user-details');
+export const isMemberAuthenticated = () => {
+  const token = getCookie('loamp-member-token');
+  const memberDetails = getCookie('loamp-member-details');
 
-  if (token && userDetails) {
+  if (token && memberDetails) {
     try {
       const decodedToken = jwtDecode(token);
       if (decodedToken.exp * 1000 > Date.now()) {
@@ -58,9 +62,9 @@ export const isAuthenticated = () => {
 // Updated function to check if the admin is authenticated
 export const isAdminAuthenticated = () => {
   const token = getCookie('loamp-admin-token');
-  const userDetails = getCookie('loamp-admin-details');
+  const memberDetails = getCookie('loamp-admin-details');
 
-  if (token && userDetails) {
+  if (token && memberDetails) {
     try {
       const decodedToken = jwtDecode(token);
       if (decodedToken.exp * 1000 > Date.now()) {
@@ -68,6 +72,24 @@ export const isAdminAuthenticated = () => {
       }
     } catch (error) {
       console.error("Failed to decode admin token:", error);
+    }
+  }
+  return false;
+};
+
+// Updated function to check if the super-admin is authenticated
+export const isSuperAdminAuthenticated = () => {
+  const token = getCookie('loamp-super-admin-token');
+  const memberDetails = getCookie('loamp-super-admin-details');
+
+  if (token && memberDetails) {
+    try {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken.exp * 1000 > Date.now()) {
+        return true;
+      }
+    } catch (error) {
+      console.error("Failed to decode super admin token:", error);
     }
   }
   return false;

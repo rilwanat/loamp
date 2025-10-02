@@ -39,12 +39,12 @@ export const navData = [
     text: "Payment",
     link: "user-payment",
   },
-  {
-    id: 6,
-    icon: <FontAwesomeIcon icon={faRightFromBracket} className="w-4 h-4" />,
-    text: "Logout",
-    link: "user-logout",
-  },
+  // {
+  //   id: 6,
+  //   icon: <FontAwesomeIcon icon={faRightFromBracket} className="w-4 h-4" />,
+  //   text: "Logout",
+  //   link: "user-logout",
+  // },
 ];
 
 

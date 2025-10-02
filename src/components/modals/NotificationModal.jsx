@@ -69,9 +69,48 @@ const NotificationModal = ({
 
               // window.location.reload(true);
               // window.location.href = "/";
+
+              if (notificationMessage == "Please check your mail for a verification code.") {
+                gotoPage("login");
+              }
+
+              //
+              if (notificationMessage == "Login successful.") {
+                gotoPage("user-dashboard");
+              }
+              if (notificationMessage == "Login successful. Upload your documents.") {
+                gotoPage("user-upload-documents");
+              }
+              if (notificationMessage == "Please verify your email to continue.") {
+                gotoPage("user-verify-email");
+              }
+              //
+
+              if (notificationMessage == "Email verification successful.") {
+                gotoPage("user-upload-documents");
+              }
+
+              if (notificationMessage == "All documents uploaded successfully.") {
+                gotoPage("user-dashboard");
+              }
+
+
+
+
+              if (notificationMessage == "Admin Login successful.") {
+                gotoPage("admin-dashboard");
+              }
+
+              if (notificationMessage == "Super-Admin Login successful.") {
+                gotoPage("super-admin-dashboard");
+              }
+              
+              
+
+
             }}
-            style={{ width: "128px", borderWidth: "1px" }}
-            className="text-center border-theme bg-theme rounded-lg px-4 py-2 text-white text-sm cursor-pointer mx-1"
+            style={{ width: "128px" }}
+            className="text-center font-semibold  bg-theme hover:text-theme hover:bg-black rounded-lg px-4 py-2 text-black text-sm cursor-pointer mx-1"
           >
             Okay
           </div>

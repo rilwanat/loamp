@@ -162,7 +162,7 @@ export default function UserChangePasswordPage({ isMobile }) {
                           className={`bg-white border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Old Password"
                           // readOnly={!editable}
-                          // value={userDetails.email}
+                          // value={memberDetails.email}
                           // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
@@ -186,7 +186,7 @@ export default function UserChangePasswordPage({ isMobile }) {
                           className={`bg-white border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="New Password"
                           // readOnly={!editable}
-                          // value={userDetails.email}
+                          // value={memberDetails.email}
                           // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
@@ -210,7 +210,7 @@ export default function UserChangePasswordPage({ isMobile }) {
                           className={`bg-white border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Retype New Password"
                           // readOnly={!editable}
-                          // value={userDetails.email}
+                          // value={memberDetails.email}
                           // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>

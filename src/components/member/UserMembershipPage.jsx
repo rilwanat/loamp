@@ -29,8 +29,44 @@ import { faChevronLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
 // import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
 
-export default function UserMembershipPage({ isMobile }) {
+import NotificationModal from "../modals/NotificationModal";
+
+//
+import axiosInstance from "../../auth/axiosConfig"; // Ensure the correct relative path
+import { setCookie, isMemberAuthenticated } from "../../auth/authUtils"; // Ensure the correct relative path
+import { jwtDecode } from "jwt-decode";
+import { getCookie, deleteCookie } from "../../auth/authUtils"; // Import getCookie function
+//
+
+export default function UserMembershipPage({
+  isMobile,
+  memberDetails,
+  refreshMemberDetails,
+}) {
   const navigate = useNavigate();
+
+  //notification modal
+  const [notificationType, setNotificationType] = useState(false);
+  const [notificationTitle, setNotificationTitle] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+  const openNotificationModal = (type, title, message) => {
+    setNotificationType(type);
+    setNotificationTitle(title);
+    setNotificationMessage(message);
+
+    setIsNotificationModalOpen(true);
+  };
+  const closeNotificationModal = () => {
+    setIsNotificationModalOpen(false);
+  };
+  //notification modal
+
+  useEffect(() => {
+    if (memberDetails?.email_address) {
+      refreshMemberDetails();
+    }
+  }, [memberDetails?.email_address]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -126,30 +162,30 @@ export default function UserMembershipPage({ isMobile }) {
           // style={{ borderRadius: '8px' }}
         >
           <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-12">
-              <div className="flex flex-row w-full justify-between mx-4 items-center">
-                <div
-                  className="cursor-pointer hover:text-theme hover:bg-black bg-theme rounded-md px-2 py-2"
-                  onClick={() => {
-                    navigate(-1);
-                  }}
-                >
-                  <FontAwesomeIcon icon={faChevronLeft} className="w-4 h-4" />
-                </div>
+            <div className="flex flex-row w-full justify-between mx-4 items-center">
+              <div
+                className="cursor-pointer hover:text-theme hover:bg-black bg-theme rounded-md px-2 py-2"
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                <FontAwesomeIcon icon={faChevronLeft} className="w-4 h-4" />
+              </div>
 
-                <div className="invisible relative flex items-center mr-4 rounded-lg">
-                  <FontAwesomeIcon
-                    icon={faSearch}
-                    className="absolute left-8 h-4 w-4 object-scale-down text-gray-400"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="pl-14 border border-gray-300 rounded-lg py-1 px-2 mx-4 focus:outline-none focus:border-1 focus:border-theme"
-                    // onChange={handleSearchChange}
-                  />
-                </div>
+              <div className="invisible relative flex items-center mr-4 rounded-lg">
+                <FontAwesomeIcon
+                  icon={faSearch}
+                  className="absolute left-8 h-4 w-4 object-scale-down text-gray-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="pl-14 border border-gray-300 rounded-lg py-1 px-2 mx-4 focus:outline-none focus:border-1 focus:border-theme"
+                  // onChange={handleSearchChange}
+                />
               </div>
             </div>
+          </div>
 
           <div className="flex w-full bg-white p-4">
             <div className="w-full">
@@ -178,23 +214,40 @@ export default function UserMembershipPage({ isMobile }) {
                               alt=""
                             />
                           </div>
-                          <div className="mt-18 flex items-center gap-x-2">
-                            <div className="text-sm font-semibold text-theme">
+                          <div className="mt-18 flex items-center gap-x-2 w-full justify-end">
+                            <div className="text-xs font-semibold text-black">
                               Membership Status:
                             </div>
                             <div
                               className={`${
-                                true
+                                memberDetails &&
+                                memberDetails.membership_status == "Active"
                                   ? "bg-green-200 text-green-900"
                                   : "bg-red-200 text-red-900"
                               } text-xs font-bold px-3 py-1 rounded-md`}
                             >
-                              Active
+                              {memberDetails && memberDetails.membership_status}
                             </div>
                           </div>
                         </div>
-
-                        <div className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3 mx-1  rounded-lg p-4 flex sm:justify-end z-[100] sm:mt-20 ">
+                        <div className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3 mx-1  rounded-lg p-4 flex sm:justify-end z-[100] sm:mt-20 -mt-6">
+                          <div className="flex items-center gap-x-2  w-full justify-end">
+                            <div className="text-xs font-semibold text-black">
+                              Subscription Status:
+                            </div>
+                            <div
+                              className={`${
+                                memberDetails &&
+                                memberDetails.subscription_status == "Active"
+                                  ? "bg-green-200 text-green-900"
+                                  : "bg-red-200 text-red-900"
+                              } text-xs font-bold px-3 py-1 rounded-md`}
+                            >
+                              {memberDetails && memberDetails.subscription_status}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3 mx-1  rounded-lg p-4 flex sm:justify-end z-[100] sm:mt-20">
                           <div
                             onClick={(e) => setEditable((prev) => !prev)}
                             style={{ width: "30%" }}
@@ -226,7 +279,7 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Firstname"
                           readOnly={!editable}
-                          // value={userDetails.email}
+                          value={memberDetails && memberDetails.first_name}
                           // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
@@ -247,7 +300,7 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Lastname"
                           readOnly={!editable}
-                          // value={userDetails.bvn}
+                          value={memberDetails && memberDetails.last_name}
                           // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
@@ -270,7 +323,7 @@ export default function UserMembershipPage({ isMobile }) {
                           className={`bg-gray-200 border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Email Address"
                           readOnly={true}
-                          // value={userDetails.dateOfBirth}
+                          value={memberDetails && memberDetails.email_address}
                           // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
@@ -291,16 +344,16 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Phone Number"
                           readOnly={!editable}
-                          // value={userDetails.gender}
+                          value={memberDetails && memberDetails.phone_number}
                           // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex flex-col mt-2">
+                  {/* <div className="flex flex-col mt-2">
                     <div className="flex flex-wrap">
-                      {/* Role Dropdown */}
+                      
                       <div className="w-full md:w-1/2 px-2 mb-4">
                         <label
                           htmlFor="role"
@@ -315,7 +368,7 @@ export default function UserMembershipPage({ isMobile }) {
                             editable ? "bg-gray-50" : "bg-gray-200"
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-theme block w-full p-2.5`}
                           disabled={!editable}
-                          // value={userDetails.role}
+                          value={memberDetails && memberDetails.role}
                           // onChange={(e) =>
                           //   setProductData({ ...productData, role: e.target.value })
                           // }
@@ -326,13 +379,13 @@ export default function UserMembershipPage({ isMobile }) {
                         </select>
                       </div>
 
-                      {/* Status Dropdown */}
+                      
                       <div className="w-full md:w-1/2 px-2 mb-4">
                         <label
                           htmlFor="status"
                           className="block text-sm font-medium text-black mb-2"
                         >
-                          Status:
+                          Membership Status:
                         </label>
                         <select
                           id="status"
@@ -341,23 +394,47 @@ export default function UserMembershipPage({ isMobile }) {
                             editable ? "bg-gray-50" : "bg-gray-200"
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-theme block w-full p-2.5`}
                           disabled={!editable}
-                          // value={userDetails.status}
+                          value={memberDetails && memberDetails.membership_status}
                           // onChange={(e) =>
                           //   setProductData({ ...productData, status: e.target.value })
                           // }
                         >
                           <option value="">Select Status</option>
-                          <option value="Past">Past</option>
-                          <option value="Current">Current</option>
+                          <option value="Past">Active</option>
+                          <option value="Current">Inactive</option>
                         </select>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="flex flex-col mt-2">
                     <div className="flex flex-wrap">
+                      {/* Country of Residence */}
+                      <div className="w-full md:w-1/3 px-2 mb-4">
+                        <label
+                          htmlFor="nationality"
+                          className="block text-sm font-medium text-black mb-2"
+                        >
+                          Country of Residence:
+                        </label>
+                        <input
+                          type="text"
+                          id="nationality"
+                          name="nationality"
+                          className={`${
+                            editable ? "bg-gray-50" : "bg-gray-200"
+                          } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
+                          placeholder="Enter Country of Residence"
+                          readOnly={!editable}
+                          value={
+                            memberDetails && memberDetails.country_of_residence
+                          }
+                          // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
+                        />
+                      </div>
+
                       {/* Nationality */}
-                      <div className="w-full md:w-1/2 px-2 mb-4">
+                      <div className="w-full md:w-1/3 px-2 mb-4">
                         <label
                           htmlFor="nationality"
                           className="block text-sm font-medium text-black mb-2"
@@ -373,11 +450,13 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Enter nationality"
                           readOnly={!editable}
+                          value={memberDetails && memberDetails.nationality}
+                          // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
 
                       {/* Region */}
-                      <div className="w-full md:w-1/2 px-2 mb-4">
+                      <div className="w-full md:w-1/3 px-2 mb-4">
                         <label
                           htmlFor="region"
                           className="block text-sm font-medium text-black mb-2"
@@ -391,7 +470,7 @@ export default function UserMembershipPage({ isMobile }) {
                             editable ? "bg-gray-50" : "bg-gray-200"
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-theme block w-full p-2.5`}
                           disabled={!editable}
-                          // value={userDetails.region}
+                          value={memberDetails && memberDetails.region}
                           // onChange={(e) =>
                           //   setProductData({ ...productData, region: e.target.value })
                           // }
@@ -432,6 +511,8 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Enter diplomatic area"
                           readOnly={!editable}
+                          value={memberDetails && memberDetails.diplomatic_area}
+                          // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
 
@@ -452,6 +533,8 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="dd/mm/yyyy"
                           readOnly={!editable}
+                          value={memberDetails && memberDetails.date_of_birth}
+                          // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
                     </div>
@@ -476,6 +559,8 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Enter Instagram profile URL"
                           readOnly={!editable}
+                          value={memberDetails && memberDetails.instagram}
+                          // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
 
@@ -496,6 +581,8 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Enter LinkedIn profile URL"
                           readOnly={!editable}
+                          value={memberDetails && memberDetails.linked_in}
+                          // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
                     </div>
@@ -520,6 +607,8 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Enter Facebook profile URL"
                           readOnly={!editable}
+                          value={memberDetails && memberDetails.facebook}
+                          // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
 
@@ -540,6 +629,8 @@ export default function UserMembershipPage({ isMobile }) {
                           } border-1 border-gray-300 text-black text-sm rounded-lg focus:outline-none focus:border-1 focus:border-theme block w-full p-2.5`}
                           placeholder="Enter Twitter profile URL"
                           readOnly={!editable}
+                          value={memberDetails && memberDetails.twitter}
+                          // onChange={(e) => setProductData({ ...productData, productItemName: e.target.value })}
                         />
                       </div>
                     </div>
@@ -593,6 +684,15 @@ export default function UserMembershipPage({ isMobile }) {
           </div>
         </div>
       </div>
+
+      <NotificationModal
+        isOpen={isNotificationModalOpen}
+        onRequestClose={closeNotificationModal}
+        notificationType={notificationType}
+        notificationTitle={notificationTitle}
+        notificationMessage={notificationMessage}
+        gotoPage={gotoPage}
+      />
 
       <LoampFooter gotoPage={gotoPage} />
     </div>

@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-import LoampFooter from "./LoampFooter";
+import LoampFooter from "../LoampFooter";
 
-import styles from "./AdminMobileNavbar.module.css";
+import styles from "./SuperAdminMobileNavbar.module.css";
 import { NavLink } from "react-router-dom";
-import { navData } from "./AdminNavData";
+import { navData } from "./SuperAdminNavData";
 
-import logo from "../assets/images/logo.png";
-import logo2 from "../assets/images/logo-2.png";
+import logo from "../../assets/images/logo.png";
+import logo2 from "../../assets/images/logo-2.png";
 
 // import PersonIcon from '@mui/icons-material/Person';
 // import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -83,7 +83,7 @@ const accountItemVariants = {
 };
 //
 
-export default function AdminMobileNavbar({
+export default function SuperAdminMobileNavbar({
   isLive,
   parsedAdminData,
   gotoPage,

@@ -6,6 +6,7 @@ import LoampHeader from "../navbar/LoampHeader.jsx";
 import LoampFooter from "../navbar/LoampFooter.jsx";
 
 import TitleLine from "../widgets/TitleLine.jsx";
+import LoadingScreen from "../widgets/LoadingScreen.jsx";
 
 import logo from "../assets/images/logo.png";
 import fa1 from "../assets/images/home/fa-1.jpg";
@@ -18,8 +19,34 @@ import semicircle from "../assets/images/register-login/semicircle.png";
 import semicircleflip from "../assets/images/register-login/semicircle-flip.png";
 import africa from "../assets/images/register-login/africa.png";
 
-export default function CreateMembershipPage({ isMobile }) {
+import NotificationModal from "./modals/NotificationModal";
+
+//
+import axiosInstance from "../auth/axiosConfig"; // Ensure the correct relative path
+import { setCookie, isMemberAuthenticated } from "../auth/authUtils"; // Ensure the correct relative path
+import { jwtDecode } from "jwt-decode";
+import { getCookie, deleteCookie } from "../auth/authUtils"; // Import getCookie function
+//
+
+export default function LoginPage({ isMobile }) {
   const navigate = useNavigate();
+
+  //notification modal
+  const [notificationType, setNotificationType] = useState(false);
+  const [notificationTitle, setNotificationTitle] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState("");
+  const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
+  const openNotificationModal = (type, title, message) => {
+    setNotificationType(type);
+    setNotificationTitle(title);
+    setNotificationMessage(message);
+
+    setIsNotificationModalOpen(true);
+  };
+  const closeNotificationModal = () => {
+    setIsNotificationModalOpen(false);
+  };
+  //notification modal
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -31,55 +58,188 @@ export default function CreateMembershipPage({ isMobile }) {
     navigate(route);
   };
 
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [country, setCountryOfResidence] = useState("");
-  const [email, setEmail] = useState("email@africanambassadors.org");
+  const [email, setEmail] = useState("rilwan.at@gmail.com");
   const [password, setPassword] = useState("12345678");
-  const [confirmPassword, setConfirmPassword] = useState("12345678");
 
-  const [isSignupLoading, setIsSignupLoading] = useState(false);
   const [isSigninLoading, setIsSigninLoading] = useState(false);
 
   const [serverResponse, setServerResponse] = useState("");
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
 
-  const handleSignIn = async (e) => {
+  const isValidPassword = (password) => {
+    return password.length >= 8;
+  };
+
+  const [errorMessage, setErrorMessage] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const handleSignin = async (e) => {
     e.preventDefault();
-    navigate("/upload-documents");
-    return;
+    setErrorMessage({ message: "" });
 
-    // setIsSignupLoading(true);
-    // setServerResponse('');
-
-    // const response = await fetch('http://127.0.0.1:8080/signup', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ email, password }),
-    // });
-
-    // if (response.ok) {
-    //   const data = await response.json();
-
-    //   // Handle successful sign-in, e.g., store token in local storage
-    //   //console.log(data);
-
-    //   //localStorage.setItem('uid', data.uid);
-    //   //console.log("Signed up as: " + data.message);
-
-    //   // Redirect to home page
-    //   navigate('/home');
-    // } else {
-    //   const errorData = await response.json();
-
-    //   // Handle sign-in error, e.g., display error message
-    //   console.log(errorData.error);
-    //   setServerResponse(errorData.error);
+    // if (!isTermsChecked) {
+    //   setErrorMessage({ message: 'Please accept A.S.K Terms & Conditions.' });
+    //   return;
     // }
 
-    // setIsSignupLoading(false);
+    if (email === "Enter your email" || email === "" || password === "") {
+      setErrorMessage({
+        message: "Login Failed: Please enter valid credentials",
+      });
+      openNotificationModal(
+        false,
+        "Login",
+        "Login Failed: Please enter valid credentials."
+      );
+      // setRegistrationStatus("Failed");
+      setIsSigninLoading(false);
+
+      //alert("");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setErrorMessage({ message: "Please, enter a valid email." });
+      openNotificationModal(false, "Login", "Please, enter a valid email.");
+      return;
+    }
+
+    if (!isValidPassword(password)) {
+      setErrorMessage({ message: "Password must be at least 8 characters." });
+      openNotificationModal(
+        false,
+        "Login",
+        "Password must be at least 8 characters."
+      );
+      return;
+    }
+
+    // alert("User: " + email + " " + firstname + " " + lastname);
+    setIsSigninLoading(true);
+
+    try {
+      const requestData = {
+        email: email.trim(),
+        password: password.trim(),
+      };
+
+      // alert(JSON.stringify(requestData, null, 2));
+      // alert((import.meta.env.VITE_IS_LIVE === "true"
+      //     ? import.meta.env.VITE_API_SERVER_URL
+      //     : import.meta.env.VITE_API_DEMO_SERVER_URL) +
+      //     import.meta.env.VITE_USER_LOGIN);
+
+      const response = await axiosInstance.post(
+        (import.meta.env.VITE_IS_LIVE === "true"
+          ? import.meta.env.VITE_API_SERVER_URL
+          : import.meta.env.VITE_API_DEMO_SERVER_URL) +
+          import.meta.env.VITE_USER_LOGIN,
+        requestData,
+        {
+          headers: {
+            // 'Content-Type': 'multipart/form-data',
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setIsSigninLoading(false);
+      // alert(JSON.stringify(response.data, null, 2));
+      // return;
+
+      if (response.data.status) {
+        // If registration is successful
+        setErrorMessage({ message: "" });
+
+        setEmail("");
+        setPassword("");
+
+        const token = response.data.token;
+        const decodedToken = jwtDecode(token);
+        // alert(JSON.stringify(decodedToken), null, 2);
+
+        const expirationDays =
+          (decodedToken.exp - decodedToken.iat) / (24 * 60 * 60);
+        // alert(expirationDays * (24 * 60 * 60)); //seconds
+
+        setCookie("loamp-member-token", token, expirationDays);
+        setCookie("loamp-member-details", JSON.stringify(response.data.userData));
+
+        // refreshMemberDetails();
+
+        //toggleAccount();
+        // alert("Login Successful: " + response.data.message);
+
+        if (response.data.userData.email_verified !== "Yes") {
+          openNotificationModal(
+            true,
+            "Login Successful",
+            "Please verify your email to continue."
+          );
+        } else {
+          // alert(response.data.message);
+          if (response.data.userData.document_upload_status !== "Ok") {
+            // upload documnents
+            openNotificationModal(
+              true,
+              "Login Successful",
+              response.data.message + " Upload your documents."
+            );
+          } else {
+            // login
+            openNotificationModal(
+              true,
+              "Login Successful",
+              response.data.message
+            );
+          }
+        }
+
+        // toggleAccountForSignIn();
+      } else {
+        // If there are errors in the response
+        const errors = response.data.errors.map((error) => error.msg);
+        const errorMessage = errors.join(", ");
+        setErrorMessage({ message: errorMessage });
+        // alert("Registration Failed");
+
+        openNotificationModal(false, "Login Error", "Login Failed");
+      }
+    } catch (error) {
+      setIsSigninLoading(false);
+      // alert(error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        const errorMessage = error.response.data.message;
+        setErrorMessage({ message: errorMessage });
+        openNotificationModal(false, "Login Error", errorMessage);
+      } else if (
+        error.response &&
+        error.response.data &&
+        error.response.data.errors
+      ) {
+        const { errors } = error.response.data;
+        const errorMessages = errors.map((error) => error.msg);
+        const errorMessage = errorMessages.join(", "); // Join all error messages
+        setErrorMessage({ message: errorMessage });
+        openNotificationModal(false, "Login Error", errorMessage);
+      } else {
+        setErrorMessage({
+          message: "Login failed. Please check your credentials and try again.",
+        });
+        openNotificationModal(
+          false,
+          "Login Error",
+          "Login failed. Please check your credentials and try again."
+        );
+      }
+    }
   };
 
   return (
@@ -128,7 +288,7 @@ export default function CreateMembershipPage({ isMobile }) {
                       {/* <div className='hidden sm:block'><img className="w-56  object-cover" src={logginImgTwo} alt="" /></div> */}
                       <form
                         className="bg-white max-w-[520px] w-full  mx-auto  p-8 px-8 rounded-lg  my-8 flex flex-col justify-center shadow-lg"
-                        onSubmit={handleSignIn}
+                        onSubmit={handleSignin}
                       >
                         <div>
                           <h2 className="text-xl text-black font-bold">
@@ -170,8 +330,7 @@ export default function CreateMembershipPage({ isMobile }) {
                             className="w-full my-5 py-2 bg-theme  text-black font-semibold  cursor-pointer"
                             type="submit"
                             style={{ borderRadius: "8px" }}
-                            disabled={isSigninLoading || isSignupLoading}
-                            
+                            disabled={isSigninLoading}
                           >
                             {isSigninLoading ? <LoadingScreen /> : "Sign In"}
                           </button>
@@ -233,6 +392,16 @@ export default function CreateMembershipPage({ isMobile }) {
           </div>
         </div>
       </div>
+
+      <NotificationModal
+        isOpen={isNotificationModalOpen}
+        onRequestClose={closeNotificationModal}
+        notificationType={notificationType}
+        notificationTitle={notificationTitle}
+        notificationMessage={notificationMessage}
+        gotoPage={gotoPage}
+      />
+
       <LoampFooter gotoPage={gotoPage} />
     </div>
   );

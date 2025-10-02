@@ -53,10 +53,5 @@ export const navData = [
     text: "Support",
     link: "admin-support",
   },
-  // {
-  //   id: 8,
-  //   icon: <FontAwesomeIcon icon={faRightFromBracket} className="w-4 h-4" />,
-  //   text: "Logout",
-  //   link: "admin-logout",
-  // },
+  
 ];

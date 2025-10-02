@@ -18,6 +18,12 @@ class Response
     private $tokens_table = "tokens_table";
     private $subscriptions_table = "subscribe_table";
 
+    private $news_table = "news_table";
+    private $events_table = "events_table";
+
+    private $admins_table = "admins_table";
+    private $super_admins_table = "super_admins_table";
+
 
 
     // public $username;
@@ -70,32 +76,7 @@ class Response
         return $jwt;
     }
 
-    function validateToken($token)
-    {
-        try {
-            // Decode the token
-            $decoded = JWT::decode($token, new Key($this->secretKey, 'HS256'));
-
-            // Check if the token is expired
-            $currentTime = time();
-            if ($decoded->exp < $currentTime) {
-                // Token has expired
-                // echo json_encode(array("status" => false, "message" => "Token expired"));
-                return false;
-            } else {
-                // Token is valid
-                // echo json_encode(array("status" => true, "message" => "Token is valid"));
-                return true;
-            }
-        } catch (Exception $e) {
-            // Token is invalid or malformed
-            // echo json_encode(array("status" => false, "message" => "Invalid token: " . $e->getMessage()));
-            return false;
-        }
-    }
-
-
-    public function checkIfUserExists($email)
+    public function checkIfMemberExists($email)
     {
         // Check if the user already exists
         $query_check = "SELECT id FROM " . $this->members_table . " WHERE email_address = :email";
@@ -112,12 +93,15 @@ class Response
             return false;
         }
     }
-    public function createUser($email, $password)
+    public function createMember($first_name, $last_name, $country_of_residence, $email, $password)
     {
         // $customer_id = strval(time());
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         $query = "INSERT INTO " . $this->members_table . " SET             
+            first_name=:first_name,
+            last_name=:last_name,
+            country_of_residence=:country_of_residence,
             email_address=:email,
             password=:password
             ";
@@ -126,6 +110,9 @@ class Response
         $stmt = $this->conn->prepare($query);
 
 
+        $stmt->bindParam(":first_name", $first_name);
+        $stmt->bindParam(":last_name", $last_name);
+        $stmt->bindParam(":country_of_residence", $country_of_residence);
         $stmt->bindParam(":email", $email);
         $stmt->bindParam(":password", $hashed_password);
 
@@ -141,33 +128,8 @@ class Response
 
         return false; // User creation failed
     }
-    public function createUserWithoutPassword($email)
-    {
-        // $customer_id = strval(time());
 
-        $query = "INSERT INTO " . $this->members_table . " SET             
-            email_address=:email
-            ";
-
-        // prepare query
-        $stmt = $this->conn->prepare($query);
-
-
-        $stmt->bindParam(":email", $email);
-
-
-        // execute query
-        if ($stmt->execute()) {
-            // User inserted successfully, generate authentication token
-            $authToken = $this->generateAuthToken();
-
-            // Return the generated authentication token
-            return $authToken;
-        }
-
-        return false; // User creation failed
-    }
-    public function InsertEmailTokenForUser($email, $randomToken)
+    public function InsertEmailTokenForMember($email, $randomToken)
     {
         // $customer_id = strval(time());
 
@@ -235,10 +197,68 @@ class Response
         return false;
     }
 
-    public function checkIfUserCredentialsIsValid($email, $rawPassword)
+    public function checkIfMemberCredentialsIsValid($email, $rawPassword)
     {
         // Check if the user exists
         $query_check = "SELECT id, password FROM " . $this->members_table . " WHERE email_address = :email";
+        $stmt_check = $this->conn->prepare($query_check);
+        $stmt_check->bindParam(":email", $email);
+        $stmt_check->execute();
+
+        // If the row count is greater than 0, it means the user exists
+        if ($stmt_check->rowCount() > 0) {
+            // Fetch the user's record
+            $user = $stmt_check->fetch(PDO::FETCH_ASSOC);
+            $hashedPassword = $user['password'];
+
+            // Verify the password
+            if (password_verify($rawPassword, $hashedPassword)) {
+                // Password is correct, generate authentication token
+                $authToken = $this->generateAuthToken();
+                return $authToken;
+            } else {
+                // Password is incorrect
+                return false;
+            }
+        } else {
+            // User does not exist
+            return false;
+        }
+    }
+    
+    public function checkIfAdminCredentialsIsValid($email, $rawPassword)
+    {
+        // Check if the user exists
+        $query_check = "SELECT id, password FROM " . $this->admins_table . " WHERE email_address = :email";
+        $stmt_check = $this->conn->prepare($query_check);
+        $stmt_check->bindParam(":email", $email);
+        $stmt_check->execute();
+
+        // If the row count is greater than 0, it means the user exists
+        if ($stmt_check->rowCount() > 0) {
+            // Fetch the user's record
+            $user = $stmt_check->fetch(PDO::FETCH_ASSOC);
+            $hashedPassword = $user['password'];
+
+            // Verify the password
+            if (password_verify($rawPassword, $hashedPassword)) {
+                // Password is correct, generate authentication token
+                $authToken = $this->generateAuthToken();
+                return $authToken;
+            } else {
+                // Password is incorrect
+                return false;
+            }
+        } else {
+            // User does not exist
+            return false;
+        }
+    }
+
+    public function checkIfSuperAdminCredentialsIsValid($email, $rawPassword)
+    {
+        // Check if the user exists
+        $query_check = "SELECT id, password FROM " . $this->super_admins_table . " WHERE email_address = :email";
         $stmt_check = $this->conn->prepare($query_check);
         $stmt_check->bindParam(":email", $email);
         $stmt_check->execute();
@@ -298,49 +318,270 @@ class Response
         try {
             // Prepare the SQL query using a prepared statement
             $query = "SELECT
-                    p.id,
-                    p.fullname,
-                    p.email_address,
-                    p.voter_consistency,
-                    -- p.password,
-                    p.phone_number,
-                    p.kyc_status,
-                    p.account_number,
-                    p.account_name,
-                    p.bank_name,
-                    p.gender,
-                    p.state_of_residence,
-                    p.profile_picture,
-                    p.email_verified,
-                    p.registration_date,
-                    p.user_type,
-                    p.eligibility,
-                    p.is_cheat,
-                    p.opened_welcome_msg,
-                    p.vote_weight 
-                FROM " . $this->members_table . " p  WHERE p.email_address = :email";
+                    m.id,
+                    
+                    -- Basic Info
+                    m.first_name,
+                    m.last_name,
+                    m.email_address,
+                    m.email_verified,
+                    -- m.password, -- excluded for security
+                    m.phone_number,
+                    m.date_of_birth,
+                    m.gender,
+                    
+                    -- Membership & Role
+                    m.role,
+                    m.membership_status,
+                    m.document_upload_status,
+                    m.profile_status,
+                    m.subscription_status,
+                    m.subscription_date,
+                    m.enrolment_type,
+                    
+                    -- Location
+                    m.country_of_residence,
+                    m.nationality,
+                    m.region,
+                    m.diplomatic_area,
+                    m.state_of_residence,
+                    
+                    -- Socials
+                    m.instagram,
+                    m.linkedin,
+                    m.facebook,
+                    m.twitter,
+                    
+                    -- Profile
+                    m.profile_picture,
+                    m.bio,
+                    
+                    -- Documents
+                    m.letter_of_credence,
+                    m.passport_data_page,
+                    m.intl_passport,
+                    m.id_card,
+                    m.other_docs,
+                    
+                    -- Timestamps
+                    m.registration_date,
+                    m.last_updated_at
+                    
+                FROM " . $this->members_table . " m
+                WHERE m.email_address = :email";
 
             // Prepare the statement
             $stmt = $this->conn->prepare($query);
 
-            // Bind the email parameter to the prepared statement
+            // Bind the email parameter
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
 
-            // Execute the statement
+            // Execute the query
             $stmt->execute();
 
-            // Fetch the result
+            // Fetch single row
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
-            return $user; // User not found
-
+            return $user ?: null;
         } catch (Exception $e) {
-            // Log the error message and return null for security
             // error_log("Error reading user: " . $e->getMessage());
             return null;
         }
     }
+
+    public function ReadAdmin($email)
+    {
+        try {
+            // Prepare the SQL query using a prepared statement
+            $query = "SELECT
+                    m.id,
+                    
+                    -- Basic Info
+                    m.first_name,
+                    m.last_name,
+                    m.email_address,
+                    m.email_verified,
+                    -- m.password, -- excluded for security
+                    m.phone_number,
+                    m.date_of_birth,
+                    m.gender,
+                    
+                    -- Membership & Role
+                    m.role,
+                    -- m.membership_status,
+                    -- m.document_upload_status,
+                    m.profile_status,
+                    -- m.subscription_status,
+                    -- m.subscription_date,
+                    
+                    -- -- Location
+                    -- m.country_of_residence,
+                    -- m.nationality,
+                    -- m.region,
+                    -- m.diplomatic_area,
+                    -- m.state_of_residence,
+                    
+                    -- -- Socials
+                    -- m.instagram,
+                    -- m.linkedin,
+                    -- m.facebook,
+                    -- m.twitter,
+                    
+                    -- Profile
+                    m.profile_picture,
+                    m.bio,
+                    
+                    -- -- Documents
+                    -- m.letter_of_credence,
+                    -- m.passport_data_page,
+                    -- m.intl_passport,
+                    -- m.id_card,
+                    -- m.other_docs,
+                    
+                    -- Timestamps
+                    m.registration_date,
+                    m.last_updated_at
+                    
+                FROM " . $this->admins_table . " m
+                WHERE m.email_address = :email";
+
+            // Prepare the statement
+            $stmt = $this->conn->prepare($query);
+
+            // Bind the email parameter
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+            // Execute the query
+            $stmt->execute();
+
+            // Fetch single row
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $user ?: null;
+        } catch (Exception $e) {
+            // error_log("Error reading user: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function ReadSuperAdmin($email)
+    {
+        try {
+            // Prepare the SQL query using a prepared statement
+            $query = "SELECT
+                    m.id,
+                    
+                    -- Basic Info
+                    m.first_name,
+                    m.last_name,
+                    m.email_address,
+                    m.email_verified,
+                    -- m.password, -- excluded for security
+                    m.phone_number,
+                    m.date_of_birth,
+                    m.gender,
+                    
+                    -- Membership & Role
+                    m.role,
+                    -- m.membership_status,
+                    -- m.document_upload_status,
+                    m.profile_status,
+                    -- m.subscription_status,
+                    -- m.subscription_date,
+                    
+                    -- -- Location
+                    -- m.country_of_residence,
+                    -- m.nationality,
+                    -- m.region,
+                    -- m.diplomatic_area,
+                    -- m.state_of_residence,
+                    
+                    -- -- Socials
+                    -- m.instagram,
+                    -- m.linkedin,
+                    -- m.facebook,
+                    -- m.twitter,
+                    
+                    -- Profile
+                    m.profile_picture,
+                    m.bio,
+                    
+                    -- -- Documents
+                    -- m.letter_of_credence,
+                    -- m.passport_data_page,
+                    -- m.intl_passport,
+                    -- m.id_card,
+                    -- m.other_docs,
+                    
+                    -- Timestamps
+                    m.registration_date,
+                    m.last_updated_at
+                    
+                FROM " . $this->super_admins_table . " m
+                WHERE m.email_address = :email";
+
+            // Prepare the statement
+            $stmt = $this->conn->prepare($query);
+
+            // Bind the email parameter
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+            // Execute the query
+            $stmt->execute();
+
+            // Fetch single row
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $user ?: null;
+        } catch (Exception $e) {
+            // error_log("Error reading user: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function UpdateMemberDocs($email, $letter_of_credence, $passport_data_page, $intl_passport, $id_card, $other_docs)
+    {
+        $document_upload_status = "Ok";
+        $query = ""; {
+            $query = "UPDATE " . $this->members_table . " SET 
+            
+            letter_of_credence=:letter_of_credence,
+            passport_data_page=:passport_data_page,
+            intl_passport=:intl_passport,
+            id_card=:id_card,
+            other_docs=:other_docs,
+document_upload_status=:document_upload_status 
+
+
+
+            WHERE email_address = :email
+            ";
+        }
+
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":email", $email);
+
+        $stmt->bindParam(":letter_of_credence", $letter_of_credence);
+        $stmt->bindParam(":passport_data_page", $passport_data_page);
+        $stmt->bindParam(":intl_passport", $intl_passport);
+        $stmt->bindParam(":id_card", $id_card);
+        $stmt->bindParam(":other_docs", $other_docs);
+
+        $stmt->bindParam(":document_upload_status", $document_upload_status);
+
+
+        // execute query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 
 
     // Function to generate a random password

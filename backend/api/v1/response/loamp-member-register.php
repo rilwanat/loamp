@@ -30,13 +30,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $data = json_decode(file_get_contents("php://input"));
 
     if (
+        !empty($data->first_name) &&
+        !empty($data->last_name) &&
+        !empty($data->country_of_residence) &&
         !empty($data->email) &&
         !empty($data->password)
         // && !empty($data->confirmPassword)
 
     ) {
 
-        if ($response->checkIfUserExists($data->email)) {
+        if ($response->checkIfMemberExists($data->email)) {
             // User creation failed
             http_response_code(400);
             echo json_encode(array("status" => false, "message" => "Registration failed. Email already exists."));
@@ -44,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             // Attempt to create user
-            $authToken = $response->createUser($data->email, $data->password);
+            $authToken = $response->createMember($data->first_name, $data->last_name, $data->country_of_residence, $data->email, $data->password);
             if ($authToken) {
 
 
@@ -54,48 +57,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 for ($i = 0; $i < 8; $i++) {
                     $randomToken .= $codeAlphabet[random_int(0, strlen($codeAlphabet) - 1)];
                 }
-                $response->InsertEmailTokenForUser($data->email, $randomToken);
+                $response->InsertEmailTokenForMember($data->email, $randomToken);
                 //
 
 
                 //
-                $subject = "Welcome Email (From League of African Ambassadors)";
+                $subject = "Welcome Email";
                 $message = "
-<h4>Welcome to League of African Ambassadors!</h4>
-We're thrilled to have you on board!. Your code for email verification is: 
+<h4>Welcome to African Ambassadors!</h4>
+We're thrilled to have you as part of our community! Your code for email verification is: 
 <br>
 <div 
 style='padding: 10px; background: #f4f4f4; border: 1px dashed #ccc; 
 display: inline-block; font-family: monospace; font-size: 16px; font-weight: bold'>" . $randomToken . "</div>
 <br><br>
 
-As a valued subscriber, you're now part of a community driven initiatives dedicated to 
-promoting human dignity.<br><br> To stay updated on our latest news, initiatives, and 
-opportunities, kindly subscribe to our social media handles:<br>
-<ul>
-    <li><a href='https://t.me/africanambassadors' target='_blank'>Telegram</a></li>
-    <li><a href='https://www.facebook.com/africanambassadors' target='_blank'>Facebook</a></li>
-    <li><a href='https://x.com/@africanambassadors' target='_blank'>Twitter</a></li>
-    <li><a href='https://www.instagram.com/africanambassadors' target='_blank'>Instagram</a></li>
-    <li><a href='https://www.tiktok.com/@africanambassadors' target='_blank'>TikTok</a></li>
-    <li><a href='https://www.youtube.com/@africanambassadors' target='_blank'>YouTube</a></li>
-</ul>
-
-<br>To make the most of your membership, don't hesitate to:
-<ul>
-    <li>one</li>
-    <li>two</li>
-</ul>
+As a valued member, your contributions will go a long way in creating positive change in Africa! 
+To activate your membership, we kindly ask you to verify your email and upload the necessary documents.
 <br><br>
-
-Thank you for joining us! Your contributions will go a long way in creating positive change!
+Simply log in to your account and navigate to the Profile section to continue.
 <br><br>
 Best regards,
 <br>
-<strong>League of African Ambassadors Team</strong>
+<strong>African Ambassadors Team</strong>
 <br><br>
 ";
-                // sendMailToUser($data->email, $data->email, $subject, $message);
+                // sendMailToUser($data->first_name, $data->email, $subject, $message);
+                sendMailSMTP($data->first_name, $data->email, $subject, $message);
                 //
 
 
@@ -105,7 +93,7 @@ Best regards,
                 http_response_code(200);
                 echo json_encode(array(
                     "status" => true,
-                    "message" => "Registration successful.",
+                    "message" => "Please check your mail for a verification code.",
                     "token" => $authToken,
 
                 ));

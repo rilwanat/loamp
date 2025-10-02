@@ -4,6 +4,18 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import logo2 from "../assets/images/logo-2.png";
 
+//
+import axiosInstance from "../auth/axiosConfig"; // Ensure the correct relative path
+import {
+  setCookie,
+  isMemberAuthenticated,
+  isAdminAuthenticated,
+  isSuperAdminAuthenticated,
+} from "../auth/authUtils"; // Ensure the correct relative path
+import { jwtDecode } from "jwt-decode";
+import { getCookie, deleteCookie } from "../auth/authUtils"; // Import getCookie function
+//
+
 export default function LoampHeaderHead({}) {
   const navigate = useNavigate();
 
@@ -106,15 +118,47 @@ export default function LoampHeaderHead({}) {
         <div className="flex items-center">
           <>
             <div className="flex items-center" style={{ height: "40px" }}>
-              <div
-                onClick={() => {
-                navigate("/create-membership");
-              }}
-                style={{ width: "176px", borderWidth: "1px" }}
-                className="text-center shadow-lg border-black bg-softTheme rounded-lg px-4 py-2 text-black text-sm cursor-pointer mx-1 "
-              >
-                Create Membership
-              </div>
+              {isMemberAuthenticated() ? (
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    deleteCookie("member");
+                    window.location.href = "/";
+                  }}
+                >
+                  Logout
+                </div>
+              ) : isAdminAuthenticated() ? (
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    deleteCookie("admin");
+                    window.location.href = "/";
+                  }}
+                >
+                  Logout
+                </div>
+              ) : isSuperAdminAuthenticated() ? (
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    deleteCookie("super-admin");
+                    window.location.href = "/";
+                  }}
+                >
+                  Logout
+                </div>
+              ) : (
+                <div
+                  onClick={() => {
+                    navigate("/create-membership");
+                  }}
+                  style={{ width: "176px", borderWidth: "1px" }}
+                  className="text-center shadow-lg border-black bg-softTheme rounded-lg px-4 py-2 text-black text-sm cursor-pointer mx-1 "
+                >
+                  Create Membership
+                </div>
+              )}
             </div>
           </>
         </div>
