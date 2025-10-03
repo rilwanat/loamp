@@ -152,11 +152,11 @@ export default function PublicationsPage({ isMobile }) {
             </div>
           </div>
 
-          <div className="flex w-full bg-white p-4">
+          <div className="flex w-full">
             <div className="w-full">
               <div className="flex w-full md:flex-row flex-col z-20">
                 <div
-                  className="flex flex-col flex-grow   bg-softTheme rounded-lg   pb-4 mt-0 mb-12 px-4 "
+                  className="flex flex-col flex-grow  rounded-lg   pb-4 mt-0 mb-12"
                   style={{ flexBasis: "50%" }}
                 >
                   <div className="flex mt-4">
@@ -198,9 +198,9 @@ export default function PublicationsPage({ isMobile }) {
                           </div>
 
                           <div className="flex flex-col md:flex-row  w-full">
-                            <div className="rounded-lg bg-softTheme p-4 mt-4  w-full">
+                            <div className="rounded-lg my-4  w-full">
                               <div className="mt-0">
-                                <div className="bg-softTheme">
+                                <div className="">
                                   <div className="flex w-full">
                                     <div className="" style={{ width: "100%" }}>
                                       {isDataloading ? (
@@ -219,6 +219,7 @@ export default function PublicationsPage({ isMobile }) {
                                                 duration: 0.5,
                                               }}
                                               className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-6"
+                                              key={index}
                                             >
                                               <div className="bg-white relative">
                                                 <div className="absolute top-0 right-0 w-28 h-16 bg-white"></div>
@@ -230,11 +231,11 @@ export default function PublicationsPage({ isMobile }) {
                                                       news.cover_image
                                                     }
                                                     alt="Cover Image"
-                                                    className=""
+                                                    className="h-60 w-full object-cover"
                                                     style={{
-                                                      width: "100%",
-                                                      height: "auto",
-                                                      objectFit: "contain",
+                                                      // width: "100%",
+                                                      // height: "auto",
+                                                      // objectFit: "contain",
                                                       // userSelect: "none",
                                                       // pointerEvents: "none",
                                                     }}
@@ -243,7 +244,7 @@ export default function PublicationsPage({ isMobile }) {
                                                 <div className="absolute bottom-0 left-0 w-28 h-24 bg-white"></div>
                                               </div>
 
-                                              <div className="bg-white p-8 rounded-lg">
+                                              <div className="bg-white p-0 rounded-lg">
                                                 <div className="flex flex-col items-start mb-4">
                                                   {/* <div className="p-2 mb-4 rounded-md bg-theme flex items-center justify-center">
                                                                   <MonetizationOnIcon className="text-white text-3xl" />

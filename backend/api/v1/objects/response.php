@@ -759,6 +759,70 @@ public function ReadAllMembers()
     }
 }
 
+public function ReadAllMembersAlphabetic()
+{
+    try {
+        $query = "SELECT
+                    m.id,
+
+                    -- Basic Info
+                    m.first_name,
+                    m.last_name,
+                    m.email_address,
+                    m.email_verified,
+                    -- m.password,
+                    m.phone_number,
+                    m.date_of_birth,
+                    m.gender,
+
+                    -- Membership & Role
+                    m.role,
+                    m.membership_status,
+                    m.document_upload_status,
+                    m.profile_status,
+                    m.subscription_status,
+                    m.subscription_date,
+                    m.enrolment_type,
+
+                    -- Location
+                    m.country_of_residence,
+                    m.nationality,
+                    m.region,
+                    m.diplomatic_area,
+                    m.state_of_residence,
+
+                    -- Socials
+                    m.instagram,
+                    m.linkedin,
+                    m.facebook,
+                    m.twitter,
+
+                    -- Profile
+                    m.profile_picture,
+                    m.bio,
+
+                    -- Documents
+                    m.letter_of_credence,
+                    m.passport_data_page,
+                    m.intl_passport,
+                    m.id_card,
+                    m.other_docs,
+                    
+                    -- Timestamps
+                    m.registration_date,
+                    m.last_updated_at
+                FROM " . $this->members_table . " m
+                ORDER BY m.last_name ASC";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    } catch (Exception $e) {
+        return null;
+    }
+}
+
+
 // Read all news
 public function ReadAllNews()
 {

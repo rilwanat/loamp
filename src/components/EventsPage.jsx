@@ -20,6 +20,8 @@ import president from "../assets/images/home/president.webp";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faClock, faMapMarkerAlt, faGlobe } from "@fortawesome/free-solid-svg-icons";
+
 
 import NotificationModal from "./modals/NotificationModal";
 
@@ -152,11 +154,11 @@ export default function EventsPage({ isMobile }) {
             </div>
           </div>
 
-          <div className="flex w-full bg-white p-4">
+          <div className="flex w-full">
             <div className="w-full">
               <div className="flex w-full md:flex-row flex-col z-20">
                 <div
-                  className="flex flex-col flex-grow   bg-softTheme rounded-lg   pb-4 mt-0 mb-12 px-4 "
+                  className="flex flex-col flex-grow   rounded-lg   pb-4 mt-0 mb-12  "
                   style={{ flexBasis: "50%" }}
                 >
                   <div className="flex mt-4">
@@ -198,7 +200,7 @@ export default function EventsPage({ isMobile }) {
                           </div>
 
                           <div className="flex flex-col md:flex-row  w-full">
-                            <div className="rounded-lg bg-softTheme p-4 mt-4  w-full">
+                            <div className="rounded-lg my-4  w-full">
                               <div className="mt-0">
                                 <div className="bg-softTheme">
                                   <div className="flex w-full">
@@ -213,33 +215,52 @@ export default function EventsPage({ isMobile }) {
                                               className="flex flex-col justify-between items-start rounded-lg my-0 p-2 w-full border-1 border-black bg-white cursor-pointer  transition-colors duration-300 ease-in-out hover:border-theme"
                                               // onClick={(e) => navigateToAppointments()}
                                             >
-                                              <img
-                                                src={
-                                                  import.meta.env.VITE_API_URL +
-                                                  event.cover_image
-                                                }
-                                                alt="Cover Image"
-                                                className=" w-full h-50 object-cover rounded-lg p-1  cursor-pointer"
-                                                // onClick={() =>
-                                                //   setPreviewSrc(
-                                                //     import.meta.env.VITE_API_URL +
-                                                //       event.cover_image
-                                                //   )
-                                                // }
-                                              />
-                                              <div className="p-2 flex flex-col w-full">
-                                                <div className="flex ">
-                                                  <p className=" mr-2 text-gray-600 mb-1 px-3 py-1 bg-theme rounded-md w-fit text-sm">
-                                                    {event.status}
-                                                  </p>
-                                                </div>
+                                              <div className="relative w-full">
+  <img
+    src={import.meta.env.VITE_API_URL + event.cover_image}
+    alt="Cover Image"
+    className="w-full h-50 object-cover rounded-lg p-1 cursor-pointer"
+    // onClick={() =>
+    //   setPreviewSrc(
+    //     import.meta.env.VITE_API_URL + event.cover_image
+    //   )
+    // }
+  />
+
+  {/* Status badge at bottom-left */}
+  <div className="absolute bottom-3 left-3">
+    <p className="mr-2 text-black mb-1 px-3 py-1 bg-theme rounded-md w-fit text-sm">
+      {event.status == "Active" ? 'Upcoming' : 'Past' }
+    </p>
+  </div>
+</div>
+
+                                              <div className="p-2 flex flex-col w-full ">
+                                                {/* New: Time, Calendar, Location */}
+  <div className="flex flex-col gap-1 my-2">
+    <div className="flex">
+    <p className="text-sm text-gray-600 flex items-center mr-4">
+      <FontAwesomeIcon icon={faClock} className="text-theme mr-2" />
+      {event.event_datetimeX || "--:-- --"}
+    </p>
+    <p className="text-sm text-gray-600 flex items-center">
+      <FontAwesomeIcon icon={faCalendarAlt} className="text-theme mr-2" />
+      {event.event_datetime }
+    </p>
+    </div>
+    <p className="text-sm text-gray-600 flex items-center overflow-hidden truncate max-w-[200px]">
+      <FontAwesomeIcon icon={faMapMarkerAlt} className="text-theme mr-2" />
+      {event.location || "No location set"}
+    </p>
+  </div>
+                                                
                                                 <div className="flex flex-col ">
-                                                  <h3 className=" font-bold text-black mb-1">
+                                                  <h3 className="text-lg font-bold text-black mb-1">
                                                     {event.name}
                                                   </h3>
-                                                  <p className="text-sm text-darkTheme mb-1 line-clamp-2">
+                                                  {/* <p className="text-sm text-darkTheme mb-1 line-clamp-2">
                                                     {event.event_datetime}
-                                                  </p>
+                                                  </p> */}
                                                 </div>
                                                 <div className="flex flex-col ">
                                                   <p className=" text-black mb-1">
