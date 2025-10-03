@@ -23,7 +23,7 @@ function Loading({  }) {
         />
       </div> */}
       <div className="flex justify-center my-2">
-        <ClipLoader size={40} color={"#2F1155"} loading={true} /> 
+        <ClipLoader size={40} color={"#fab641"} loading={true} /> 
       </div>
       {/* <div className="flex justify-center text-xs text-scGreen">loading...</div> */}
     </div>

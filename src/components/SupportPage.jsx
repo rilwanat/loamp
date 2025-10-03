@@ -133,11 +133,11 @@ export default function SupportPage({ isMobile }) {
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <MonetizationOnIcon className="text-white text-3xl" /> */}
                     </div>
-                    <h2 className="text-2xl font-semibold text-black">
-                      Mission
+                    <h2 className="text-xl font-semibold text-black">
+                      Membership Contributions
                     </h2>
                   </div>
-                  <p className="text-lg text-black">Our</p>
+                  <p className="text-lg text-black">Regular fees from committed members sustain the league's operations and development.</p>
                 </div>
 
                 <div className="bg-softTheme p-8 rounded-lg">
@@ -145,11 +145,11 @@ export default function SupportPage({ isMobile }) {
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <MonetizationOnIcon className="text-white text-3xl" /> */}
                     </div>
-                    <h2 className="text-2xl font-semibold text-black">
-                      Mission
+                    <h2 className="text-xl font-semibold text-black">
+                      Gifts and Donations
                     </h2>
                   </div>
-                  <p className="text-lg text-black">Our</p>
+                  <p className="text-lg text-black">Generous contributions from individuals and entities bolster the league's capacity for impactful projects.</p>
                 </div>
 
                 <div className="bg-softTheme p-8 rounded-lg">
@@ -157,11 +157,11 @@ export default function SupportPage({ isMobile }) {
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <MonetizationOnIcon className="text-white text-3xl" /> */}
                     </div>
-                    <h2 className="text-2xl font-semibold text-black">
-                      Mission
+                    <h2 className="text-xl font-semibold text-black">
+                      Endowments
                     </h2>
                   </div>
-                  <p className="text-lg text-black">Our</p>
+                  <p className="text-lg text-black">The resulting investment income from endowment is earmarked for supporting and bringing to fruition, the League's mission and vision.</p>
                 </div>
 
                 <div className="bg-softTheme p-8 rounded-lg">
@@ -169,11 +169,11 @@ export default function SupportPage({ isMobile }) {
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <MonetizationOnIcon className="text-white text-3xl" /> */}
                     </div>
-                    <h2 className="text-2xl font-semibold text-black">
-                      Mission
+                    <h2 className="text-xl font-semibold text-black">
+                      Special Programs
                     </h2>
                   </div>
-                  <p className="text-lg text-black">Our</p>
+                  <p className="text-lg text-black">Royalties and proceeds from special programs of the League, facilitate the actualization of impactful projects and initiatives.</p>
                 </div>
 
                 <div className="bg-softTheme p-8 rounded-lg">
@@ -181,11 +181,11 @@ export default function SupportPage({ isMobile }) {
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <MonetizationOnIcon className="text-white text-3xl" /> */}
                     </div>
-                    <h2 className="text-2xl font-semibold text-black">
-                      Mission
+                    <h2 className="text-xl font-semibold text-black">
+                      Special Levies and Subscriptions
                     </h2>
                   </div>
-                  <p className="text-lg text-black">Our</p>
+                  <p className="text-lg text-black">These are additional fees or charges proposed and approved to fund specific projects, upgrades, or improvements within the organisation.</p>
                 </div>
 
                 <div className="bg-softTheme p-8 rounded-lg">
@@ -193,11 +193,11 @@ export default function SupportPage({ isMobile }) {
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <MonetizationOnIcon className="text-white text-3xl" /> */}
                     </div>
-                    <h2 className="text-2xl font-semibold text-black">
-                      Mission
+                    <h2 className="text-xl font-semibold text-black">
+                      Grant
                     </h2>
                   </div>
-                  <p className="text-lg text-black">Our</p>
+                  <p className="text-lg text-black">Advocacy for sponsorship and grants within Africa allows the league to broaden its impact towards diplomatic excellence.</p>
                 </div>
               </motion.div>
             </div>

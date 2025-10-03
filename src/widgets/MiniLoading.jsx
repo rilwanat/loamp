@@ -11,7 +11,7 @@ function Loading({  }) {
     return (
       <>
         <div className="flex  z-50">
-          <ClipLoader size={24} color={"#2F1155"} loading={true} /> 
+          <ClipLoader size={24} color={"#fab641"} loading={true} /> 
         </div>
       </>    
     );
