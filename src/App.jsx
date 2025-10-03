@@ -135,7 +135,6 @@ function App() {
             <Route path="/create-membership" element={<CreateMembershipPage isMobile={isMobile} />} />
             <Route path="/login" element={<LoginPage isMobile={isMobile} />} />
 
-
             <Route path="/user-verify-email" element={<ProtectedMemberRoute><UserVerifyEmailPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />
             <Route path="/user-upload-documents" element={<ProtectedMemberRoute><UploadDocumentsPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />
             <Route path="/user-dashboard" element={<ProtectedMemberRoute><UserDashboardPage isMobile={isMobile} memberDetails={memberDetails} refreshMemberDetails={refreshMemberDetails}/></ProtectedMemberRoute>} />

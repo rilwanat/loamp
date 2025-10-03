@@ -194,10 +194,10 @@ export default function AdminMobileNavbar({
                 animate={isMenuOpen ? "visible" : "hidden"}
                 className="text-md text-black cursor-pointer block py-4 px-8 hover:bg-theme"
                 onClick={() => {
-                  navigate("/");
+                  navigate("/admin-dashboard");
                 }}
               >
-                Home
+                Admin Dashboard
               </motion.span>
 
               <hr className=" border-gray-300" />
@@ -208,10 +208,10 @@ export default function AdminMobileNavbar({
                 animate={isMenuOpen ? "visible" : "hidden"}
                 className="text-md text-black cursor-pointer block py-4 px-8 hover:bg-theme"
                 onClick={() => {
-                  gotoPage("about-us");
+                  gotoPage("admin-uploads");
                 }}
               >
-                About Us
+                Uploads
               </motion.span>
 
               <hr className=" border-gray-300" />
@@ -222,10 +222,10 @@ export default function AdminMobileNavbar({
                 animate={isMenuOpen ? "visible" : "hidden"}
                 className="text-md text-black cursor-pointer block py-4 px-8 hover:bg-theme"
                 onClick={() => {
-                  gotoPage("members");
+                  gotoPage("admin-news");
                 }}
               >
-                Members
+                News
               </motion.span>
 
               <hr className=" border-gray-300" />
@@ -236,7 +236,35 @@ export default function AdminMobileNavbar({
                 animate={isMenuOpen ? "visible" : "hidden"}
                 className="text-md text-black cursor-pointer block py-4 px-8 hover:bg-theme"
                 onClick={() => {
-                  gotoPage("events");
+                  gotoPage("admin-membership");
+                }}
+              >
+                Membership
+              </motion.span>
+
+              <hr className=" border-gray-300" />
+
+              <motion.span
+                variants={menuItemVariants}
+                initial="hidden"
+                animate={isMenuOpen ? "visible" : "hidden"}
+                className="text-md text-black cursor-pointer block py-4 px-8 hover:bg-theme"
+                onClick={() => {
+                  gotoPage("admin-reminders");
+                }}
+              >
+                Reminders
+              </motion.span>
+
+              <hr className=" border-gray-300" />
+
+              <motion.span
+                variants={menuItemVariants}
+                initial="hidden"
+                animate={isMenuOpen ? "visible" : "hidden"}
+                className="text-md text-black cursor-pointer block py-4 px-8 hover:bg-theme"
+                onClick={() => {
+                  gotoPage("admin-events");
                 }}
               >
                 Events
@@ -250,38 +278,10 @@ export default function AdminMobileNavbar({
                 animate={isMenuOpen ? "visible" : "hidden"}
                 className="text-md text-black cursor-pointer block py-4 px-8 hover:bg-theme"
                 onClick={() => {
-                  gotoPage("publications");
-                }}
-              >
-                Publications
-              </motion.span>
-
-              <hr className=" border-gray-300" />
-
-              <motion.span
-                variants={menuItemVariants}
-                initial="hidden"
-                animate={isMenuOpen ? "visible" : "hidden"}
-                className="text-md text-black cursor-pointer block py-4 px-8 hover:bg-theme"
-                onClick={() => {
-                  gotoPage("support");
+                  gotoPage("admin-support");
                 }}
               >
                 Support
-              </motion.span>
-
-              <hr className=" border-gray-300" />
-
-              <motion.span
-                variants={menuItemVariants}
-                initial="hidden"
-                animate={isMenuOpen ? "visible" : "hidden"}
-                className="text-md text-black cursor-pointer block py-4 px-8 hover:bg-theme"
-                onClick={() => {
-                  gotoPage("contact-us");
-                }}
-              >
-                Contact Us
               </motion.span>
             </div>
           </div>
