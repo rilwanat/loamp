@@ -101,13 +101,23 @@ const NotificationModal = ({
                 gotoPage("admin-dashboard");
               }
 
+              
+
+              if (notificationMessage == "Publication created successfully.") {
+                gotoPage("admin-news");
+              }
+              if (notificationMessage == "Event created successfully.") {
+                gotoPage("admin-events");
+              }
+              
+              
+              
+              
+              
               if (notificationMessage == "Super-Admin Login successful.") {
                 gotoPage("super-admin-dashboard");
               }
               
-              
-
-
             }}
             style={{ width: "128px" }}
             className="text-center font-semibold  bg-theme hover:text-theme hover:bg-black rounded-lg px-4 py-2 text-black text-sm cursor-pointer mx-1"

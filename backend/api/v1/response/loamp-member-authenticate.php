@@ -32,11 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($authToken) {
 
 
-            $userData = $response->ReadMember($data->email);
+            $memberData = $response->ReadMember($data->email);
 
             // User authentication successful, return authentication token
             http_response_code(200);
-            echo json_encode(array("status" => true, "message" => "Login successful.", "token" => $authToken, "userData" => $userData));
+            echo json_encode(array("status" => true, "message" => "Login successful.", "token" => $authToken, "memberData" => $memberData));
         } else {
             // User authentication failed
             http_response_code(400);

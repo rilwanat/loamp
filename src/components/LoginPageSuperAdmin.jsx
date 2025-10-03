@@ -173,7 +173,7 @@ export default function LoginPageSuperAdmin({ isMobile }) {
         //toggleAccount();
         // alert("Super-Admin Login Successful: " + response.data.message);
 
-        // if (response.data.userData.email_verified !== "Yes") {
+        // if (response.data.superAdminData.email_verified !== "Yes") {
         //   openNotificationModal(
         //     true,
         //     "Super-Admin Login Successful",
@@ -181,7 +181,7 @@ export default function LoginPageSuperAdmin({ isMobile }) {
         //   );
         // } else {
         //   // alert(response.data.message);
-        //   if (response.data.userData.document_upload_status !== "Ok") {
+        //   if (response.data.superAdminData.document_upload_status !== "Ok") {
         //     // upload documnents
         //     openNotificationModal(
         //       true,

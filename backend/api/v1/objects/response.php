@@ -627,4 +627,70 @@ document_upload_status=:document_upload_status
 
         return empty($errors) ? true : $errors;
     }
+
+    public function CreatePublication($cover_image, $publication_name, $publication_content, $created_by, $last_updated_by)
+{
+    try {
+        $query = "INSERT INTO " . $this->news_table . " 
+            SET 
+                cover_image = :cover_image,
+                publication_name = :publication_name,
+                publication_content = :publication_content,
+                date = CURDATE(),
+                status = 'Active',
+                created_by = :created_by,
+                last_updated_by = :last_updated_by";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":cover_image", $cover_image);
+        $stmt->bindParam(":publication_name", $publication_name);
+        $stmt->bindParam(":publication_content", $publication_content);
+        $stmt->bindParam(":created_by", $created_by);
+        $stmt->bindParam(":last_updated_by", $last_updated_by);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+public function CreateEvent($cover_image, $name, $description, $event_datetime, $location, $ticket_type, $created_by, $last_updated_by)
+{
+    try {
+        $query = "INSERT INTO " . $this->events_table . " 
+            SET 
+                cover_image = :cover_image,
+                name = :name,
+                description = :description,
+                event_datetime = :event_datetime,
+                location = :location,
+                ticket_type = :ticket_type,
+                status = 'Active',
+                created_by = :created_by,
+                last_updated_by = :last_updated_by";
+
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(":cover_image", $cover_image);
+        $stmt->bindParam(":name", $name);
+        $stmt->bindParam(":description", $description);
+        $stmt->bindParam(":event_datetime", $event_datetime); // expects full DATETIME string
+        $stmt->bindParam(":location", $location);
+        $stmt->bindParam(":ticket_type", $ticket_type);
+        $stmt->bindParam(":created_by", $created_by, PDO::PARAM_INT);
+        $stmt->bindParam(":last_updated_by", $last_updated_by, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
 }

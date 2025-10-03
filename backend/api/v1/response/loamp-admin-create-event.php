@@ -12,7 +12,7 @@ $database = new Database();
 $db = $database->getConnection();
 $response = new Response($db);
 
-$baseUploadDir = "../../../../upload-documents/members/";
+$baseUploadDir = "../../../../upload-documents/events/";
 
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -24,35 +24,41 @@ require_once 'loamp-auth-validate-token.php';
 validateToken();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? null;
+    $event_name        = $_POST['event_name'] ?? null;
+    $event_description = $_POST['event_description'] ?? null;
+    $event_time        = $_POST['event_time'] ?? null;
+    $event_date        = $_POST['event_date'] ?? null;
+    $event_location        = $_POST['event_location'] ?? null;
+    $ticket_type       = $_POST['ticket_type'] ?? null;
+    $created_by       = $_POST['created_by'] ?? null;
+    $last_updated_by       = $_POST['last_updated_by'] ?? null;
+
+    if (!$event_name || !$event_description || !$event_time || !$event_date || !$ticket_type) {
+        http_response_code(400);
+        echo json_encode([
+            "status" => false,
+            "message" => "All fields (Event Name, Description, Time, Date, Location and Ticket Type) are required."
+        ]);
+        exit();
+    }
 
     // Expected document keys
     $requiredDocs = [
-        "letter_of_credence" => "Letter of Credence",
-        "passport_data_page" => "Passport Data Page",
-        "intl_passport"      => "International Passport",
-        "id_card"            => "ID Card",
-        "other_docs"         => "Other Documents"
+        "cover_image" => "Cover Image",
     ];
 
-    $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+    $allowedTypes = ['image/jpeg', 'image/png'];
     $maxSize = 2 * 1024 * 1024; // 2MB
 
     $uploadedFiles = [];
 
-    if (!$email) {
-        http_response_code(400);
-        echo json_encode(["status" => false, "message" => "Email is required."]);
-        exit();
-    }
+    // Sanitize event name → folder name
+    $cleanName = preg_replace("/[^a-zA-Z0-9]/", "_", strtolower($event_name));
+    $eventDir = $baseUploadDir . $cleanName . "/";
 
-    // Sanitize email → folder name
-    $cleanEmail = preg_replace("/[^a-zA-Z0-9]/", "_", $email);
-    $userDir = $baseUploadDir . $cleanEmail . "/";
-
-    // Ensure user folder exists
-    if (!is_dir($userDir)) {
-        mkdir($userDir, 0777, true);
+    // Ensure event folder exists
+    if (!is_dir($eventDir)) {
+        mkdir($eventDir, 0777, true);
     }
 
     foreach ($requiredDocs as $field => $label) {
@@ -70,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(400);
             echo json_encode([
                 "status" => false,
-                "message" => "$label must be PDF, JPG, or PNG."
+                "message" => "$label must be JPG or PNG."
             ]);
             exit();
         }
@@ -90,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Fixed filename: fieldname.ext
         $filename = $field . "." . $ext;
-        $finalPath = $userDir . $filename;
+        $finalPath = $eventDir . $filename;
 
         // Delete old file if exists
         if (file_exists($finalPath)) {
@@ -99,11 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Move new file
         if (move_uploaded_file($_FILES[$field]['tmp_name'], $finalPath)) {
-            // Change this line (store filesystem path)
-            //$uploadedFiles[$field] = $finalPath;
-
-            // To this (store web-accessible URL path instead)
-            $uploadedFiles[$field] = "/loamp/upload-documents/members/$cleanEmail/$filename";
+            // Save URL (relative path for web access)
+            $uploadedFiles[$field] = "/loamp/upload-documents/events/$cleanName/$filename";
         } else {
             http_response_code(500);
             echo json_encode([
@@ -116,34 +119,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Save to database
     if (count($uploadedFiles) === count($requiredDocs)) {
-        $createResult = $response->UpdateMemberDocs(
-            $email,
-            $uploadedFiles["letter_of_credence"],
-            $uploadedFiles["passport_data_page"],
-            $uploadedFiles["intl_passport"],
-            $uploadedFiles["id_card"],
-            $uploadedFiles["other_docs"]
+
+        // Combine date and time into a single DATETIME string
+        // Example: "2025-10-05" + "14:30" → "2025-10-05 14:30:00"
+        $event_datetime = null;
+        if ($event_date && $event_time) {
+            $event_datetime = date("Y-m-d H:i:s", strtotime("$event_date $event_time"));
+        } else {
+            http_response_code(400);
+            echo json_encode([
+                "status" => false,
+                "message" => "Invalid event date or time."
+            ]);
+            exit();
+        }
+
+
+        $createResult = $response->CreateEvent(
+            $uploadedFiles["cover_image"],
+            $event_name,
+            $event_description,
+            $event_datetime,
+            $event_location,
+            $ticket_type,
+            $created_by,
+            $last_updated_by
         );
 
         if ($createResult === true) {
-            $memberData = $response->ReadMember($email);
-
             http_response_code(200);
             echo json_encode([
                 "status" => true,
-                "message" => "All documents uploaded successfully.",
-                "memberData" => $memberData
+                "message" => "Event created successfully."
             ]);
         } else {
             http_response_code(500);
             echo json_encode([
                 "status" => false,
-                "message" => "Unable to save documents in database."
+                "message" => "Unable to create event in database."
             ]);
         }
     } else {
         http_response_code(400);
-        echo json_encode(["status" => false, "message" => "Email or documents missing."]);
+        echo json_encode([
+            "status" => false,
+            "message" => "Event data or documents missing."
+        ]);
     }
 } else {
     http_response_code(405);

@@ -31,6 +31,9 @@ import AdminMembershipPage from './components/admin/AdminMembershipPage.jsx';
 import AdminRemindersPage from './components/admin/AdminRemindersPage.jsx';
 import AdminEventsPage from './components/admin/AdminEventsPage.jsx';
 import AdminSupportPage from './components/admin/AdminSupportPage.jsx';
+import AdminCreateNewsPage from './components/admin/AdminCreateNewsPage.jsx';
+import AdminCreateEventsPage from './components/admin/AdminCreateEventsPage.jsx';
+
 
 import LoginPageSuperAdmin from './components/LoginPageSuperAdmin.jsx';
 
@@ -150,6 +153,9 @@ function App() {
             <Route path="/admin-reminders" element={<ProtectedAdminRoute><AdminRemindersPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
             <Route path="/admin-events" element={<ProtectedAdminRoute><AdminEventsPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
             <Route path="/admin-support" element={<ProtectedAdminRoute><AdminSupportPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
+            
+            <Route path="/admin-create-news" element={<ProtectedAdminRoute><AdminCreateNewsPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />            
+            <Route path="/admin-create-events" element={<ProtectedAdminRoute><AdminCreateEventsPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
             
              
             

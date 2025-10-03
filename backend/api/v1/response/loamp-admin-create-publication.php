@@ -12,7 +12,7 @@ $database = new Database();
 $db = $database->getConnection();
 $response = new Response($db);
 
-$baseUploadDir = "../../../../upload-documents/members/";
+$baseUploadDir = "../../../../upload-documents/publications/";
 
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -24,35 +24,37 @@ require_once 'loamp-auth-validate-token.php';
 validateToken();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? null;
+    $publication_name = $_POST['publication_name'] ?? null;
+    $publication_content = $_POST['publication_content'] ?? null;
+    $created_by       = $_POST['created_by'] ?? null;
+    $last_updated_by       = $_POST['last_updated_by'] ?? null;
+
+    if (!$publication_name || !$publication_content) {
+        http_response_code(400);
+        echo json_encode([
+            "status" => false,
+            "message" => "Publication name and content are required."
+        ]);
+        exit();
+    }
 
     // Expected document keys
     $requiredDocs = [
-        "letter_of_credence" => "Letter of Credence",
-        "passport_data_page" => "Passport Data Page",
-        "intl_passport"      => "International Passport",
-        "id_card"            => "ID Card",
-        "other_docs"         => "Other Documents"
+        "cover_image" => "Cover Image",
     ];
 
-    $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+    $allowedTypes = ['image/jpeg', 'image/png'];
     $maxSize = 2 * 1024 * 1024; // 2MB
 
     $uploadedFiles = [];
 
-    if (!$email) {
-        http_response_code(400);
-        echo json_encode(["status" => false, "message" => "Email is required."]);
-        exit();
-    }
+    // Sanitize publication name → folder name
+    $cleanName = preg_replace("/[^a-zA-Z0-9]/", "_", strtolower($publication_name));
+    $pubDir = $baseUploadDir . $cleanName . "/";
 
-    // Sanitize email → folder name
-    $cleanEmail = preg_replace("/[^a-zA-Z0-9]/", "_", $email);
-    $userDir = $baseUploadDir . $cleanEmail . "/";
-
-    // Ensure user folder exists
-    if (!is_dir($userDir)) {
-        mkdir($userDir, 0777, true);
+    // Ensure publication folder exists
+    if (!is_dir($pubDir)) {
+        mkdir($pubDir, 0777, true);
     }
 
     foreach ($requiredDocs as $field => $label) {
@@ -70,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(400);
             echo json_encode([
                 "status" => false,
-                "message" => "$label must be PDF, JPG, or PNG."
+                "message" => "$label must be JPG or PNG."
             ]);
             exit();
         }
@@ -90,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Fixed filename: fieldname.ext
         $filename = $field . "." . $ext;
-        $finalPath = $userDir . $filename;
+        $finalPath = $pubDir . $filename;
 
         // Delete old file if exists
         if (file_exists($finalPath)) {
@@ -99,11 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Move new file
         if (move_uploaded_file($_FILES[$field]['tmp_name'], $finalPath)) {
-            // Change this line (store filesystem path)
-            //$uploadedFiles[$field] = $finalPath;
-
-            // To this (store web-accessible URL path instead)
-            $uploadedFiles[$field] = "/loamp/upload-documents/members/$cleanEmail/$filename";
+            // Save URL (relative path for web access)
+            $uploadedFiles[$field] = "/loamp/upload-documents/publications/$cleanName/$filename";
         } else {
             http_response_code(500);
             echo json_encode([
@@ -116,34 +115,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Save to database
     if (count($uploadedFiles) === count($requiredDocs)) {
-        $createResult = $response->UpdateMemberDocs(
-            $email,
-            $uploadedFiles["letter_of_credence"],
-            $uploadedFiles["passport_data_page"],
-            $uploadedFiles["intl_passport"],
-            $uploadedFiles["id_card"],
-            $uploadedFiles["other_docs"]
+        $createResult = $response->CreatePublication(
+            $uploadedFiles["cover_image"],
+            $publication_name,
+            $publication_content,
+            $created_by,
+            $last_updated_by
         );
 
         if ($createResult === true) {
-            $memberData = $response->ReadMember($email);
-
             http_response_code(200);
             echo json_encode([
                 "status" => true,
-                "message" => "All documents uploaded successfully.",
-                "memberData" => $memberData
+                "message" => "Publication created successfully."
             ]);
         } else {
             http_response_code(500);
             echo json_encode([
                 "status" => false,
-                "message" => "Unable to save documents in database."
+                "message" => "Unable to create publication in database."
             ]);
         }
     } else {
         http_response_code(400);
-        echo json_encode(["status" => false, "message" => "Email or documents missing."]);
+        echo json_encode([
+            "status" => false,
+            "message" => "Publication data or documents missing."
+        ]);
     }
 } else {
     http_response_code(405);

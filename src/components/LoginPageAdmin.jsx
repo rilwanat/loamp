@@ -173,7 +173,7 @@ export default function LoginPageAdmin({ isMobile }) {
         //toggleAccount();
         // alert("Admin Login Successful: " + response.data.message);
 
-        // if (response.data.userData.email_verified !== "Yes") {
+        // if (response.data.memberData.email_verified !== "Yes") {
         //   openNotificationModal(
         //     true,
         //     "Admin Login Successful",
@@ -181,7 +181,7 @@ export default function LoginPageAdmin({ isMobile }) {
         //   );
         // } else {
         //   // alert(response.data.message);
-        //   if (response.data.userData.document_upload_status !== "Ok") {
+        //   if (response.data.memberData.document_upload_status !== "Ok") {
         //     // upload documnents
         //     openNotificationModal(
         //       true,

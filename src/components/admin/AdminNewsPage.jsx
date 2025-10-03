@@ -165,7 +165,7 @@ export default function UserVerificationStatusPage({ isMobile }) {
                       >
                         <div
                           onClick={() => {
-                            // navigate("/create-membership");
+                            navigate("/admin-create-news");
                           }}
                           // style={{ width: "176px" }}
                           className="text-center shadow-lg  bg-theme rounded-lg py-2 px-4 mx-4  text-black text-sm cursor-pointer hover:text-theme hover:bg-black transition-colors duration-300 ease-in-out"

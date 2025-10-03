@@ -46,12 +46,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($codeValid) {
 
-            $userData = $response->ReadMember($data->email);
+            $memberData = $response->ReadMember($data->email);
 
 
             // Email verification successful, return true
             http_response_code(200);
-            echo json_encode(array("status" => true, "message" => "Email verification successful.", "userData" => $userData));
+            echo json_encode(array("status" => true, "message" => "Email verification successful.", "memberData" => $memberData));
         } else {
             // User authentication failed
             http_response_code(400);

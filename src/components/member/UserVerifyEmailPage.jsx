@@ -56,11 +56,16 @@ export default function UserVerifyEmailPage({
   };
   //notification modal
 
+// useEffect(() => {
+//   if (memberDetails?.email_address) {
+//     refreshMemberDetails();
+//   }
+// }, [memberDetails?.email_address]);
+
 useEffect(() => {
-  if (memberDetails?.email_address) {
-    refreshMemberDetails();
-  }
-}, [memberDetails?.email_address]);
+  refreshMemberDetails();
+}, []);
+
 
 
   useEffect(() => {
@@ -131,7 +136,7 @@ useEffect(() => {
 
         setVerificationCode("");
 
-        setCookie("loamp-member-details", JSON.stringify(response.data.userData));
+        setCookie("loamp-member-details", JSON.stringify(response.data.memberData));
         //  refreshMemberDetails();
         //  navigateTo('/');
 
@@ -280,8 +285,8 @@ useEffect(() => {
                               className="bg-white border-1 border-gray-500 mt-2 p-2 focus:outline-none focus:ring-2 focus:ring-theme text-2xl font-bold text-center"
                               style={{ borderRadius: "8px", width: "180px" }}
                               type="text"
-                              maxLength={6}
-                              placeholder="XXXXXX"
+                              maxLength={8}
+                              placeholder="XXXXXXXX"
                               value={verificationCode}
                               onChange={(e) => setVerificationCode(e.target.value)}
                             />

@@ -122,8 +122,19 @@ export default function GuestMobileNavbar({
           />
         </div>
 
+       <div className="absolute top-6 right-4 flex gap-2">
+        <div
+                  onClick={() => {
+                    navigate("/create-membership");
+                  }}
+                  style={{ width: "176px", borderWidth: "1px" }}
+                  className="text-center shadow-lg border-black bg-softTheme rounded-lg px-4 py-2 text-black text-sm cursor-pointer mx-1 hover:border-theme"
+                >
+                  Create Membership
+                </div>
+
         {/* Hamburger (absolute on right) */}
-        <div className="absolute top-6 right-4 flex justify-end p-2 rounded-md bg-softTheme hover:bg-softTheme">
+        <div className="flex justify-end p-2 rounded-md bg-softTheme hover:bg-softTheme">
           <div
             style={{ width: "20px", height: "24px" }}
             className="relative z-20 cursor-pointer"
@@ -155,6 +166,10 @@ export default function GuestMobileNavbar({
             />
           </div>
         </div>
+        </div> 
+
+
+
       </div>
 
       {/* Mobile menu */}

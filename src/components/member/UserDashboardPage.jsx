@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import LoampHeader from "../../navbar/LoampHeader.jsx";
 import LoampFooter from "../../navbar/LoampFooter.jsx";
 
-import MemberSideNavbar from "../../navbar/member/MemberSideNavbar";
+import MemberSideNavbar from "../../navbar/member/MemberSideNavbar.jsx";
 
 import TitleLine from "../../widgets/TitleLine.jsx";
 import FileUpload from "../../widgets/FileUpload.jsx";
@@ -27,13 +27,13 @@ import countries from "world-countries";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
 
-import NotificationModal from "../modals/NotificationModal";
+import NotificationModal from "../modals/NotificationModal.jsx";
 
 //
-import axiosInstance from "../../auth/axiosConfig"; // Ensure the correct relative path
-import { setCookie, isMemberAuthenticated } from "../../auth/authUtils"; // Ensure the correct relative path
+import axiosInstance from "../../auth/axiosConfig.js"; // Ensure the correct relative path
+import { setCookie, isMemberAuthenticated } from "../../auth/authUtils.jsx"; // Ensure the correct relative path
 import { jwtDecode } from "jwt-decode";
-import { getCookie, deleteCookie } from "../../auth/authUtils"; // Import getCookie function
+import { getCookie, deleteCookie } from "../../auth/authUtils.jsx"; // Import getCookie function
 //
 
 
@@ -62,11 +62,16 @@ export default function UserDashboardPage({
   };
   //notification modal
 
+  // useEffect(() => {
+  //   if (memberDetails?.email_address) {
+  //     refreshMemberDetails();
+  //   }
+  // }, [memberDetails?.email_address]);
+
   useEffect(() => {
-    if (memberDetails?.email_address) {
-      refreshMemberDetails();
-    }
-  }, [memberDetails?.email_address]);
+    refreshMemberDetails();
+  }, []);
+  
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

@@ -166,14 +166,14 @@ export default function LoginPage({ isMobile }) {
         // alert(expirationDays * (24 * 60 * 60)); //seconds
 
         setCookie("loamp-member-token", token, expirationDays);
-        setCookie("loamp-member-details", JSON.stringify(response.data.userData));
+        setCookie("loamp-member-details", JSON.stringify(response.data.memberData));
 
         // refreshMemberDetails();
 
         //toggleAccount();
         // alert("Login Successful: " + response.data.message);
 
-        if (response.data.userData.email_verified !== "Yes") {
+        if (response.data.memberData.email_verified !== "Yes") {
           openNotificationModal(
             true,
             "Login Successful",
@@ -181,7 +181,7 @@ export default function LoginPage({ isMobile }) {
           );
         } else {
           // alert(response.data.message);
-          if (response.data.userData.document_upload_status !== "Ok") {
+          if (response.data.memberData.document_upload_status !== "Ok") {
             // upload documnents
             openNotificationModal(
               true,

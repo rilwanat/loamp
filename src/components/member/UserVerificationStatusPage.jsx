@@ -60,11 +60,16 @@ export default function UserVerificationStatusPage({
   };
   //notification modal
 
+  // useEffect(() => {
+  //   if (memberDetails?.email_address) {
+  //     refreshMemberDetails();
+  //   }
+  // }, [memberDetails?.email_address]);
+
   useEffect(() => {
-    if (memberDetails?.email_address) {
-      refreshMemberDetails();
-    }
-  }, [memberDetails?.email_address]);
+    refreshMemberDetails();
+  }, []);
+  
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

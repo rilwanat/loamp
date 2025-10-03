@@ -55,11 +55,16 @@ export default function UploadDocumentsPage({
   };
   //notification modal
 
+  // useEffect(() => {
+  //   if (memberDetails?.email_address) {
+  //     refreshMemberDetails();
+  //   }
+  // }, [memberDetails?.email_address]);
+
   useEffect(() => {
-    if (memberDetails?.email_address) {
-      refreshMemberDetails();
-    }
-  }, [memberDetails?.email_address]);
+    refreshMemberDetails();
+  }, []);
+
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -168,7 +173,8 @@ export default function UploadDocumentsPage({
       );
 
       setIsUploadLoading(false);
-      //  alert("kyc: " + JSON.stringify(response.data, null, 2));
+      // alert(memberDetails.email_address);
+      //  alert(JSON.stringify(response.data, null, 2));
       // return;
 
       if (response.data.status) {
@@ -180,6 +186,20 @@ export default function UploadDocumentsPage({
         setIntlPassport(null);
         setIdCard(null);
         setOtherDocs(null);
+
+
+        //
+// const token = response.data.token;
+//         const decodedToken = jwtDecode(token);
+//         // alert(JSON.stringify(decodedToken), null, 2);
+
+//         const expirationDays =
+//           (decodedToken.exp - decodedToken.iat) / (24 * 60 * 60);
+//         // alert(expirationDays * (24 * 60 * 60)); //seconds
+
+//         setCookie("loamp-member-token", token, expirationDays);
+        setCookie("loamp-member-details", JSON.stringify(response.data.memberData));
+        //
 
         openNotificationModal(true, "Upload Documents", response.data.message);
       } else {
@@ -258,7 +278,7 @@ export default function UploadDocumentsPage({
                   className="absolute top-0 left-90 w-[800px] md:w-[800px] h-auto  -z-10 opacity-30"
                 />
 
-                <div className="w-full rounded-lg">
+                <div className="w-full rounded-lg ">
                   <div className="grid grid-cols-1 sm:grid-cols-2 h-full sm:h-screen  w-full mt-4">
                     <div className="hidden md:flex flex-col justify-center items-center h-screen">
                       <div className="relative w-full max-w-md mx-auto rounded-2xl overflow-hidden">
@@ -286,36 +306,132 @@ export default function UploadDocumentsPage({
                           </h2>
                           {/* <p className='text-l text-pcGrayText my-2'>Start your 30-day free trial</p> */}
 
-                          <div className="mt-4"></div>
-                          <FileUpload
-                            label="Letter of Credence"
-                            file={letterOfCredence}
-                            setFile={setLetterOfCredence}
-                          />
+<div className="mt-4 bg-softTheme p-4 border border-theme rounded-lg">
+  <FileUpload
+    label="Letter of Credence"
+    file={letterOfCredence}
+    setFile={setLetterOfCredence}
+  />
+  {letterOfCredence && (
+    letterOfCredence.type === "application/pdf" ? (
+      <embed
+        src={URL.createObjectURL(letterOfCredence)}
+        type="application/pdf"
+        width="100%"
+        height="500px"
+        className="border border-theme rounded-md shadow-sm"
+      />
+    ) : (
+      <img
+        src={URL.createObjectURL(letterOfCredence)}
+        alt="Letter of Credence Preview"
+        className="sm:w-64 sm:h-64 w-full h-[100%] object-contain  p-1 rounded-md shadow-sm"
+      />
+    )
+  )}
+</div>
 
-                          <FileUpload
-                            label="Data page of Diplomatic Passport"
-                            file={passportDataPage}
-                            setFile={setPassportDataPage}
-                          />
+<div className="mt-4 bg-softTheme p-4 border border-theme rounded-lg">
+  <FileUpload
+    label="Data page of Diplomatic Passport"
+    file={passportDataPage}
+    setFile={setPassportDataPage}
+  />
+  {passportDataPage && (
+    passportDataPage.type === "application/pdf" ? (
+      <embed
+        src={URL.createObjectURL(passportDataPage)}
+        type="application/pdf"
+        width="100%"
+        height="500px"
+        className="border border-theme rounded-md shadow-sm"
+      />
+    ) : (
+      <img
+        src={URL.createObjectURL(passportDataPage)}
+        alt="Diplomatic Passport Preview"
+        className="sm:w-64 sm:h-64 w-full h-[100%] object-contain  p-1 rounded-md shadow-sm"
+      />
+    )
+  )}
+</div>
 
-                          <FileUpload
-                            label="International Passport"
-                            file={intlPassport}
-                            setFile={setIntlPassport}
-                          />
+<div className="mt-4 bg-softTheme p-4 border border-theme rounded-lg">
+  <FileUpload
+    label="International Passport"
+    file={intlPassport}
+    setFile={setIntlPassport}
+  />
+  {intlPassport && (
+    intlPassport.type === "application/pdf" ? (
+      <embed
+        src={URL.createObjectURL(intlPassport)}
+        type="application/pdf"
+        width="100%"
+        height="500px"
+        className="border border-theme rounded-md shadow-sm"
+      />
+    ) : (
+      <img
+        src={URL.createObjectURL(intlPassport)}
+        alt="International Passport Preview"
+        className="sm:w-64 sm:h-64 w-full h-[100%] object-contain  p-1 rounded-md shadow-sm"
+      />
+    )
+  )}
+</div>
 
-                          <FileUpload
-                            label="ID Card"
-                            file={idCard}
-                            setFile={setIdCard}
-                          />
+<div className="mt-4 bg-softTheme p-4 border border-theme rounded-lg">
+  <FileUpload
+    label="ID Card"
+    file={idCard}
+    setFile={setIdCard}
+  />
+  {idCard && (
+    idCard.type === "application/pdf" ? (
+      <embed
+        src={URL.createObjectURL(idCard)}
+        type="application/pdf"
+        width="100%"
+        height="500px"
+        className="border border-theme rounded-md shadow-sm"
+      />
+    ) : (
+      <img
+        src={URL.createObjectURL(idCard)}
+        alt="ID Card Preview"
+        className="sm:w-64 sm:h-64 w-full h-[100%] object-contain  p-1 rounded-md shadow-sm"
+      />
+    )
+  )}
+</div>
 
-                          <FileUpload
-                            label="Other Relevant Documents"
-                            file={otherDocs}
-                            setFile={setOtherDocs}
-                          />
+<div className="mt-4 bg-softTheme p-4 border border-theme rounded-lg">
+  <FileUpload
+    label="Other Relevant Documents"
+    file={otherDocs}
+    setFile={setOtherDocs}
+  />
+  {otherDocs && (
+    otherDocs.type === "application/pdf" ? (
+      <embed
+        src={URL.createObjectURL(otherDocs)}
+        type="application/pdf"
+        width="100%"
+        height="500px"
+        className="border border-theme rounded-md shadow-sm"
+      />
+    ) : (
+      <img
+        src={URL.createObjectURL(otherDocs)}
+        alt="Other Docs Preview"
+        className="sm:w-64 sm:h-64 w-full h-[100%] object-contain  p-1 rounded-md shadow-sm"
+      />
+    )
+  )}
+</div>
+
+
 
                           <div className="flex justify-between text-black py-2 mt-2">
                             <p className="flex items-center text-xs">
