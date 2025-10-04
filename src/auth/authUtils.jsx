@@ -23,23 +23,22 @@ export const setCookie = (name, value, days) => {
 };
 
 export const deleteCookie = (name) => {
-  // alert(name);
-  switch(name) {
-    case ("member"):
-      document.cookie = "loamp-member-token" + '=; Max-Age=-99999999;';
-      document.cookie = "loamp-member-details" + '=; Max-Age=-99999999;';
+  switch (name) {
+    case "member":
+      document.cookie = "loamp-member-token=; Max-Age=0; path=/; Secure; SameSite=None";
+      document.cookie = "loamp-member-details=; Max-Age=0; path=/; Secure; SameSite=None";
       break;
-    case ("admin"):
-      document.cookie = "loamp-admin-token" + '=; Max-Age=-99999999;';
-      document.cookie = "loamp-admin-details" + '=; Max-Age=-99999999;';
-    break;
-    case ("super-admin"):
-      document.cookie = "loamp-super-admin-token" + '=; Max-Age=-99999999;';
-      document.cookie = "loamp-super-admin-details" + '=; Max-Age=-99999999;';
-    break;
+    case "admin":
+      document.cookie = "loamp-admin-token=; Max-Age=0; path=/; Secure; SameSite=None";
+      document.cookie = "loamp-admin-details=; Max-Age=0; path=/; Secure; SameSite=None";
+      break;
+    case "super-admin":
+      document.cookie = "loamp-super-admin-token=; Max-Age=0; path=/; Secure; SameSite=None";
+      document.cookie = "loamp-super-admin-details=; Max-Age=0; path=/; Secure; SameSite=None";
+      break;
   }
-
 };
+
 
 // Updated function to check if the user is authenticated
 export const isMemberAuthenticated = () => {

@@ -21,6 +21,9 @@ import logo from "../assets/images/logo.png";
 // import axiosInstance from '../../../axiosConfig';
 
 function LoampFooter({ gotoPage }) {
+  const navigate = useNavigate();
+
+
   const [email, setEmail] = useState("");
 
   useEffect(() => {}, []);
@@ -32,7 +35,7 @@ function LoampFooter({ gotoPage }) {
 
   return (
     <div className="flex flex-col bg-black text-white">
-      <div className="flex flex-col h-auto px-8 sm:px-16 md:px-32 py-4 pb-8">
+      <div className="flex flex-col h-auto px-8 sm:px-16 md:px-8 py-4 pb-8">
         <div className="flex flex-col items-start md:flex-row md:items-center md:justify-between ">
           <div className="flex flex-col md:items-start md:w-1/3 my-4 md:h-40">
             <div className="flex items-center mb-2">
@@ -75,86 +78,7 @@ function LoampFooter({ gotoPage }) {
                 </ul>
               </div>
             </div>
-          </div>
-
-          <div className="flex flex-col md:items-start md:w-1/3  my-4 md:h-40">
-                        <p onClick={() => {}} className='text-white mb-2' style={{ color: '', fontSize: '20px' }}>Company Info</p>
-                        <p onClick={() => { navigate('/');}} className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>Home</p>
-                        <p onClick={() => { navigate('/about-us');}} className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>About Us</p>
-                        <p onClick={() => { navigate('/membership');}} className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>Membership</p>
-                        <p onClick={() => { navigate('/events');}} className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>Events</p>
-                        <p onClick={() => { navigate('/publications');}} className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>Publications</p>
-                        <p onClick={() => { navigate('/support');}} className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>Support</p>
-                        <p onClick={() => { navigate('/contact-us');}} className='text-white mb-1' style={{ color: '', fontSize: '12px' }}>Contact Us</p>
-                    </div>
-
-          <div className="flex flex-col md:w-1/3 my-4 md:h-40">
-            {/* <div className="flex flex-col items-start mb-4">
-                            <p
-                                className="text-white mb-2"
-                                style={{ color: '', fontSize: '20px' }}
-                            >
-                                Subscribe to our Newsletter
-                            </p>
-                            <p
-                                className="text-white"
-                                style={{ color: '', fontSize: '12px' }}
-                            >
-                                Connect with people, share similar experiences and history to
-                                better your health experiences and well-being.
-                            </p>
-                        </div> */}
-            {/* <div className="flex flex-col sm:flex-row relative">
-                            <input
-                                type="text"
-                                placeholder="Your Email"
-                                className="pl-4 border border-gray-300 rounded-lg py-1 px-2 text-center"
-                                onChange={(e) => setEmail(e.target.value)}
-                                value={email}
-                            />
-                            <div
-                                // onClick={() => { handleSubscribeToNewsletter() }}
-                                style={{ borderWidth: '1px' }}
-                                className="text-center mt-4 sm:mt-0 sm:ml-2 border-white rounded-lg px-4 py-2 text-white text-sm cursor-pointer"
-                            >
-                                Subscribe
-                            </div>
-                        </div> */}
-            {/* <div className="flex py-4">
-                            <img
-                                onClick={() => {
-                                    alert('googleplay');
-                                }}
-                                className="mr-4 cursor-pointer border-black border-4"
-                                src={googleplay}
-                                alt=""
-                                style={{
-                                    width: '128px',
-                                    height: '32px',
-                                    objectFit: 'cover',
-                                    borderRadius: '8px',
-                                }}
-                            />
-                            <img
-                                onClick={() => {
-                                    alert('appStore');
-                                }}
-                                className="mr-4 cursor-pointer border-black border-4"
-                                src={appstore}
-                                alt=""
-                                style={{
-                                    width: '128px',
-                                    height: '32px',
-                                    objectFit: 'cover',
-                                    borderRadius: '8px',
-                                }}
-                            />
-                        </div> */}
-          </div>
-        </div>
-
-        <div className="flex justify-between items-start">
-          <div className="flex flex-col">
+            <div className="flex flex-col">
             <span
               className="text-white text-sm cursor-pointer block mb-2"
               onClick={() => {
@@ -177,12 +101,92 @@ function LoampFooter({ gotoPage }) {
                 /* Handle navigation */
               }}
             >
-              Address: <br />
+              Address: 
               Stand No. 35187, Pelican House, <br />
               Alick Nkhata Road, Opposite Mass Media, <br />
               P.O Box 50354 Ridgeway, Lusaka, Zambia.
             </span>
           </div>
+          </div>
+
+          <div className="flex flex-col md:items-start md:w-1/3  my-4 md:h-40">
+            <p
+              onClick={() => {}}
+              className="text-white mb-2 "
+              style={{ color: "", fontSize: "20px" }}
+            >
+              Company Info
+            </p>
+            <p
+              onClick={() => {
+                navigate("/");
+              }}
+              className="text-white text-sm mb-2 cursor-pointer hover:text-theme"
+              style={{ color: "", }}
+            >
+              Home
+            </p>
+            <p
+              onClick={() => {
+                navigate("/about-us");
+              }}
+              className="text-white text-sm mb-2 cursor-pointer hover:text-theme"
+              style={{ color: "",  }}
+            >
+              About Us
+            </p>
+            <p
+              onClick={() => {
+                navigate("/members");
+              }}
+              className="text-white text-sm mb-2 cursor-pointer hover:text-theme"
+              style={{ color: "",  }}
+            >
+              Membership
+            </p>
+            <p
+              onClick={() => {
+                navigate("/events");
+              }}
+              className="text-white text-sm mb-2 cursor-pointer hover:text-theme"
+              style={{ color: "",  }}
+            >
+              Events
+            </p>
+            <p
+              onClick={() => {
+                navigate("/publications");
+              }}
+              className="text-white text-sm mb-2 cursor-pointer hover:text-theme"
+              style={{ color: "",  }}
+            >
+              Publications
+            </p>
+            <p
+              onClick={() => {
+                navigate("/support");
+              }}
+              className="text-white text-sm mb-2 cursor-pointer hover:text-theme"
+              style={{ color: "",  }}
+            >
+              Support
+            </p>
+            <p
+              onClick={() => {
+                navigate("/contact-us");
+              }}
+              className="text-white text-sm mb-2 cursor-pointer hover:text-theme"
+              style={{ color: "",  }}
+            >
+              Contact Us
+            </p>
+          </div>
+
+          
+        </div>
+
+        <div className="flex justify-between items-start sm:mt-16 ">
+          <div></div>
           <span
             className="text-white text-sm cursor-pointer block my-2"
             // onClick={() => { gotoPage("privacy-policy"); }}

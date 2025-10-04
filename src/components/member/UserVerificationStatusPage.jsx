@@ -118,7 +118,7 @@ export default function UserVerificationStatusPage({
           className="w-full rounded-lg "
           // style={{ borderRadius: '8px' }}
         >
-          <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-12">
+          <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-20">
             <div className="flex flex-row w-full justify-between mx-4 items-center">
               <div
                 className="cursor-pointer hover:text-theme hover:bg-black bg-theme rounded-md px-2 py-2"
@@ -148,13 +148,13 @@ export default function UserVerificationStatusPage({
             <div className="w-full">
               <div className="flex w-full md:flex-row flex-col z-20">
                 <div
-                  className="flex flex-col flex-grow  border-1  bg-softTheme rounded-lg   pb-4 mt-0 mb-12 px-4 "
+                  className="flex flex-col flex-grow  border-1  bg-softTheme rounded-lg   pb-4 mt-0 mb-12 px-0 "
                   style={{ flexBasis: "50%" }}
                 >
                   <div className=" flex flex-col justify-center sm:px-8 py-4">
                     {/* <div className='hidden sm:block'><img className="w-56  object-cover" src={logginImgTwo} alt="" /></div> */}
                     <form
-                      className="bg-white  w-full  mx-auto  p-8 px-8 rounded-lg  my-8 flex flex-col justify-center shadow-lg"
+                      className="bg-white  w-full  mx-auto  p-8 rounded-lg  my-8 flex flex-col justify-center shadow-lg"
                       // onSubmit={handleUpload}
                     >
                       <div>

@@ -166,6 +166,23 @@ export default function HomePage({ isMobile }) {
     handleDataEvents();
   }, []);
 
+  const [language, setLanguage] = useState("english");
+  // Map language -> file path in assets
+  const files = {
+    portuguese: "/assets/files/The Charter - portuguese.pdf",
+    english: "/assets/files/The Charter - english.pdf",
+    french: "/assets/files/The Charter - french.pdf",
+    arabic: "/assets/files/The Charter - arabic.pdf",
+    swahili: "/assets/files/The Charter - swahili.pdf",
+  };
+  const handleDownload = () => {
+    const filePath = files[language];
+    const link = document.createElement("a");
+    link.href = filePath;
+    link.download = filePath.split("/").pop(); // get file name
+    link.click();
+  };
+
   return (
     <div>
       <LoampHeader isMobile={isMobile} gotoPage={gotoPage} showMarqees={true} />
@@ -204,7 +221,9 @@ export default function HomePage({ isMobile }) {
                     </p>
 
                     <div
-                      // onClick={() => { navigate('/'); }}
+                      onClick={() => {
+                        navigate("/about-us");
+                      }}
                       style={{ width: "176px", borderWidth: "1px" }}
                       className="text-center  border-theme bg-theme rounded-lg px-4 py-2 text-black text-sm cursor-pointer mx-1 
                       cursor-pointer
@@ -343,7 +362,7 @@ export default function HomePage({ isMobile }) {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.5 }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-6"
+                className="grid grid-cols-1 md:grid-cols-2  mb-8 mt-6"
               >
                 <div className="bg-white relative">
                   <div className="absolute top-0 right-0 w-28 h-16 bg-white"></div>
@@ -388,7 +407,7 @@ export default function HomePage({ isMobile }) {
                       through Pan-African Diplomacy.
                     </p>
 
-                    <div
+                    {/* <div
                       // onClick={() => { navigate('/'); }}
                       style={{ width: "176px", borderWidth: "1px" }}
                       className="text-center  border-theme bg-theme rounded-lg px-4 py-2 text-black text-sm cursor-pointer font-semibold 
@@ -396,6 +415,43 @@ export default function HomePage({ isMobile }) {
                       hover:text-theme hover:bg-black"
                     >
                       Download
+                    </div> */}
+
+                    <div className="flex flex-col items-start gap-4 mt-2">
+                      {/* Language Radios */}
+                      <div className="flex gap-4 mb-2">
+                        {[
+                          "portuguese",
+                          "english",
+                          "french",
+                          "arabic",
+                          "swahili",
+                        ].map((lang) => (
+                          <label
+                            key={lang}
+                            className="flex items-center gap-1 text-sm font-medium cursor-pointer"
+                          >
+                            <input
+                              type="radio"
+                              name="language"
+                              value={lang}
+                              checked={language === lang}
+                              onChange={() => setLanguage(lang)}
+                              className="text-theme focus:ring-theme accent-theme"
+                            />
+                            {lang.charAt(0).toUpperCase() + lang.slice(1)}
+                          </label>
+                        ))}
+                      </div>
+
+                      {/* Download Button */}
+                      <div
+                        onClick={handleDownload}
+                        style={{ width: "176px", borderWidth: "1px" }}
+                        className="text-center border-theme bg-theme rounded-lg px-4 py-2 text-black text-sm font-semibold cursor-pointer hover:text-theme hover:bg-black"
+                      >
+                        Download
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -900,9 +956,21 @@ export default function HomePage({ isMobile }) {
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <MonetizationOnIcon className="text-white text-3xl" /> */}
                     </div>
-                    <h2 className="text-lg font-semibold text-black">
+                    <h2 className="text-lg font-semibold text-black mb-4">
                       League of African Ambassadors Trust Fund
                     </h2>
+                    <p className="text-lg text-black">
+                      To ameliorate the post-service living standards of former
+                      ambassadors, the League of African Ambassadors envisions
+                      the establishment of TRUST FUNDS aimed at empowering
+                      subscribed members of the league to ensure that they
+                      access quality health care services, school fees for their
+                      wards, and solutions for housing challenges or any other
+                      areas of preffered need while also utilizing the expertise
+                      and resources of these former ambassadors for the
+                      betterment of society long after their diplomatic service
+                      has ended.
+                    </p>
                   </div>
                 </div>
 
@@ -911,9 +979,20 @@ export default function HomePage({ isMobile }) {
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <VolunteerActivismIcon className="text-white text-3xl" /> */}
                     </div>
-                    <h2 className="text-lg font-semibold text-black">
-                      Institute Of African Foreign Policy and Strategic Studies
+                    <h2 className="text-lg font-semibold text-black mb-4">
+                      Institute of African Foreign Policy & Strategic Studies
                     </h2>
+                    <p className="text-lg text-black">
+                      Pursuant to the vision of the league of African
+                      Ambassadors, as enshrined in the CHARTER, to establish an
+                      Africentric knowledge bank, the league aims to establish
+                      the INSTITUTE OF AFRICAN FOREIGN POLICY AND STRATEGIC
+                      STUDIES to offer Executive Courses, Seminars, Retreats,
+                      Conferences, Trainings and Retraining for African Foreign
+                      Policy Framers and Practicioners with peculiar African
+                      approach to diplomatic engagements and international
+                      relations.
+                    </p>
                   </div>
                 </div>
               </motion.div>

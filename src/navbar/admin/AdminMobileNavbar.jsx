@@ -17,7 +17,7 @@ import logo2 from "../../assets/images/logo-2.png";
 // import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 // import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 
-// // import { getCookie, deleteCookie } from '../../../authUtils'; // Import getCookie function
+import { getCookie, deleteCookie } from "../../auth/authUtils"; // Import getCookie function
 // import CloseIcon from '@mui/icons-material/Close';
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
@@ -124,16 +124,23 @@ export default function AdminMobileNavbar({
         </div>
 
         {/* Hamburger (absolute on right) */}
-<div className="flex justify-end p-2 rounded-md 
-        bg-softTheme cursor-pointer
-        hover:text-theme hover:bg-black z-20
-        ">
-          <FontAwesomeIcon
-      icon={faBars}
-      size="lg"
-      className=""
-      onClick={toggleMenu}
-    />
+        <div className="absolute top-6 right-4 flex gap-2">
+          {/* < LoampButton /> */}
+
+          {/* Hamburger (absolute on right) */}
+          <div
+            className="flex justify-end p-2 rounded-md 
+                        bg-softTheme cursor-pointer
+                        hover:text-theme hover:bg-black z-20
+                        "
+          >
+            <FontAwesomeIcon
+              icon={faBars}
+              size="lg"
+              className=""
+              onClick={toggleMenu}
+            />
+          </div>
         </div>
       </div>
 
@@ -263,6 +270,24 @@ export default function AdminMobileNavbar({
               >
                 Support
               </motion.span>
+
+              <hr className=" border-gray-300" />
+
+              <motion.span
+                variants={menuItemVariants}
+                initial="hidden"
+                animate={isMenuOpen ? "visible" : "hidden"}
+                className="text-md text-red-500 cursor-pointer block py-4 px-8 hover:bg-theme"
+                onClick={() => {
+                  deleteCookie("admin");
+                  // toggleMenu();
+                  window.location.href = "/";
+                }}
+              >
+                Logout
+              </motion.span>
+
+              <hr className=" border-gray-300" />
             </div>
           </div>
           {/* Fixed div at the bottom */}

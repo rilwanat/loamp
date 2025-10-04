@@ -21,6 +21,9 @@ class Response
     private $news_table = "news_table";
     private $events_table = "events_table";
 
+    private $executives_table = "executives_table";
+    private $trustees_table = "trustees_table";
+
     private $admins_table = "admins_table";
     private $super_admins_table = "super_admins_table";
 
@@ -225,7 +228,7 @@ class Response
             return false;
         }
     }
-    
+
     public function checkIfAdminCredentialsIsValid($email, $rawPassword)
     {
         // Check if the user exists
@@ -629,9 +632,9 @@ document_upload_status=:document_upload_status
     }
 
     public function CreatePublication($cover_image, $publication_name, $publication_content, $created_by, $last_updated_by)
-{
-    try {
-        $query = "INSERT INTO " . $this->news_table . " 
+    {
+        try {
+            $query = "INSERT INTO " . $this->news_table . " 
             SET 
                 cover_image = :cover_image,
                 publication_name = :publication_name,
@@ -641,27 +644,27 @@ document_upload_status=:document_upload_status
                 created_by = :created_by,
                 last_updated_by = :last_updated_by";
 
-        $stmt = $this->conn->prepare($query);
+            $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(":cover_image", $cover_image);
-        $stmt->bindParam(":publication_name", $publication_name);
-        $stmt->bindParam(":publication_content", $publication_content);
-        $stmt->bindParam(":created_by", $created_by);
-        $stmt->bindParam(":last_updated_by", $last_updated_by);
+            $stmt->bindParam(":cover_image", $cover_image);
+            $stmt->bindParam(":publication_name", $publication_name);
+            $stmt->bindParam(":publication_content", $publication_content);
+            $stmt->bindParam(":created_by", $created_by);
+            $stmt->bindParam(":last_updated_by", $last_updated_by);
 
-        if ($stmt->execute()) {
-            return true;
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } catch (Exception $e) {
+            return false;
         }
-        return false;
-    } catch (Exception $e) {
-        return false;
     }
-}
 
-public function CreateEvent($cover_image, $name, $description, $event_datetime, $location, $ticket_type, $created_by, $last_updated_by)
-{
-    try {
-        $query = "INSERT INTO " . $this->events_table . " 
+    public function CreateEvent($cover_image, $name, $description, $event_datetime, $location, $ticket_type, $created_by, $last_updated_by)
+    {
+        try {
+            $query = "INSERT INTO " . $this->events_table . " 
             SET 
                 cover_image = :cover_image,
                 name = :name,
@@ -673,33 +676,33 @@ public function CreateEvent($cover_image, $name, $description, $event_datetime, 
                 created_by = :created_by,
                 last_updated_by = :last_updated_by";
 
-        $stmt = $this->conn->prepare($query);
+            $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(":cover_image", $cover_image);
-        $stmt->bindParam(":name", $name);
-        $stmt->bindParam(":description", $description);
-        $stmt->bindParam(":event_datetime", $event_datetime); // expects full DATETIME string
-        $stmt->bindParam(":location", $location);
-        $stmt->bindParam(":ticket_type", $ticket_type);
-        $stmt->bindParam(":created_by", $created_by, PDO::PARAM_INT);
-        $stmt->bindParam(":last_updated_by", $last_updated_by, PDO::PARAM_INT);
+            $stmt->bindParam(":cover_image", $cover_image);
+            $stmt->bindParam(":name", $name);
+            $stmt->bindParam(":description", $description);
+            $stmt->bindParam(":event_datetime", $event_datetime); // expects full DATETIME string
+            $stmt->bindParam(":location", $location);
+            $stmt->bindParam(":ticket_type", $ticket_type);
+            $stmt->bindParam(":created_by", $created_by, PDO::PARAM_INT);
+            $stmt->bindParam(":last_updated_by", $last_updated_by, PDO::PARAM_INT);
 
-        if ($stmt->execute()) {
-            return true;
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } catch (Exception $e) {
+            return false;
         }
-        return false;
-    } catch (Exception $e) {
-        return false;
     }
-}
 
 
 
-// Read all members
-public function ReadAllMembers()
-{
-    try {
-        $query = "SELECT
+    // Read all members
+    public function ReadAllMembers()
+    {
+        try {
+            $query = "SELECT
                     m.id,
 
                     -- Basic Info
@@ -751,18 +754,18 @@ public function ReadAllMembers()
                 FROM " . $this->members_table . " m
                 ORDER BY m.registration_date DESC";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    } catch (Exception $e) {
-        return null;
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt;
+        } catch (Exception $e) {
+            return null;
+        }
     }
-}
 
-public function ReadAllMembersAlphabetic()
-{
-    try {
-        $query = "SELECT
+    public function ReadAllMembersAlphabetic()
+    {
+        try {
+            $query = "SELECT
                     m.id,
 
                     -- Basic Info
@@ -814,20 +817,20 @@ public function ReadAllMembersAlphabetic()
                 FROM " . $this->members_table . " m
                 ORDER BY m.last_name ASC";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    } catch (Exception $e) {
-        return null;
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt;
+        } catch (Exception $e) {
+            return null;
+        }
     }
-}
 
 
-// Read all news
-public function ReadAllNews()
-{
-    try {
-        $query = "SELECT
+    // Read all news
+    public function ReadAllNews()
+    {
+        try {
+            $query = "SELECT
                     n.id,
                     n.cover_image,
                     n.publication_name,
@@ -840,19 +843,19 @@ public function ReadAllNews()
                 FROM " . $this->news_table . " n
                 ORDER BY n.date DESC";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    } catch (Exception $e) {
-        return null;
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt;
+        } catch (Exception $e) {
+            return null;
+        }
     }
-}
 
-// Read all events
-public function ReadAllEvents()
-{
-    try {
-        $query = "SELECT
+    // Read all events
+    public function ReadAllEvents()
+    {
+        try {
+            $query = "SELECT
                     e.id,
                     e.cover_image,
                     e.name,
@@ -868,13 +871,69 @@ public function ReadAllEvents()
                 FROM " . $this->events_table . " e
                 ORDER BY e.event_datetime DESC";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt;
-    } catch (Exception $e) {
-        return null;
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt;
+        } catch (Exception $e) {
+            return null;
+        }
     }
-}
 
+    // Read all executives
+    public function ReadAllExecutives()
+    {
+        try {
+            $query = "SELECT
+                    e.id,
+                    e.cover_image,
+                    e.name,
+                    e.country,
+                    e.region,
+                    e.title,
+                    e.headline,
+                    e.short_bio,
+                    e.long_bio,
+                    e.created_by,
+                    e.created_at,
+                    e.last_updated_at,
+                    e.last_updated_by
+                FROM " . $this->executives_table . " e
+                ORDER BY e.created_at ASC";
 
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
+
+    // Read all trustees
+    public function ReadAllTrustees()
+    {
+        try {
+            $query = "SELECT
+                    t.id,
+                    t.cover_image,
+                    t.name,
+                    t.country,
+                    t.region,
+                    t.title,
+                    t.headline,
+                    t.short_bio,
+                    t.long_bio,
+                    t.created_by,
+                    t.created_at,
+                    t.last_updated_at,
+                    t.last_updated_by
+                FROM " . $this->trustees_table . " t
+                ORDER BY t.created_at ASC";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
 }

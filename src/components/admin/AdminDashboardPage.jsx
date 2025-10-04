@@ -207,7 +207,7 @@ export default function UserDashboardPage({ isMobile }) {
           className="w-full rounded-lg "
           // style={{ borderRadius: '8px' }}
         >
-          <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-12">
+          <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-20">
               <div className="flex flex-row w-full justify-between mx-4 items-center">
                 <div
                   className="cursor-pointer hover:text-theme hover:bg-black bg-theme rounded-md px-2 py-2"
