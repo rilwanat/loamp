@@ -255,7 +255,7 @@ export default function LoginPageSuperAdmin({ isMobile }) {
       <div className="pt-10"></div>
 
       <div className="w-full">
-        <div className="flex flex-col h-auto px-4 sm:px-16 md:px-24 ">
+        <div className="flex flex-col h-auto px-4 sm:px-16 md:px-8 ">
           <div className="w-full px-4 ">
             <div className="text-sm">
               {/* <div className="absolute inset-0 ">

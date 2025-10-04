@@ -117,7 +117,7 @@ export default function EventsPage({ isMobile }) {
 
       <div className="pt-10"></div>
 
-      <div className="flex h-auto px-4 sm:px-16 md:px-24">
+      <div className="flex h-auto px-4 sm:px-16 md:px-8">
         {/* {isMobile ? (
           <div></div>
         ) : (
