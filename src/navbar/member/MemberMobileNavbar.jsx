@@ -253,7 +253,8 @@ export default function MemberMobileNavbar({
                 onClick={() => {
                   deleteCookie("member");
                   // toggleMenu();
-                  window.location.href = "/";
+                  // window.location.href = "/";
+                  gotoPage("")
                 }}
               >
                 Logout

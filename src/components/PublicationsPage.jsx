@@ -231,7 +231,7 @@ export default function PublicationsPage({ isMobile }) {
                                                       news.cover_image
                                                     }
                                                     alt="Cover Image"
-                                                    className="h-60 w-full object-cover"
+                                                    className="h-80 w-full object-cover"
                                                     style={{
                                                       // width: "100%",
                                                       // height: "auto",

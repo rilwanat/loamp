@@ -419,7 +419,7 @@ export default function HomePage({ isMobile }) {
 
                     <div className="flex flex-col items-start gap-4 mt-2">
                       {/* Language Radios */}
-                      <div className="flex gap-4 mb-2">
+                      <div className="flex gap-2 mb-2">
                         {[
                           "portuguese",
                           "english",

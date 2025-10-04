@@ -35,7 +35,7 @@ function LoampFooter({ gotoPage }) {
 
   return (
     <div className="flex flex-col bg-black text-white">
-      <div className="flex flex-col h-auto px-8 sm:px-16 md:px-8 py-4 pb-8">
+      <div className="flex flex-col h-auto px-8 sm:px-16 md:px-16 py-4 pb-8">
         <div className="flex flex-col items-start md:flex-row md:items-center md:justify-between ">
           <div className="flex flex-col md:items-start md:w-1/3 my-4 md:h-40">
             <div className="flex items-center mb-2">

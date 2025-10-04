@@ -82,7 +82,24 @@ export default function UserDashboardPage({ isMobile }) {
   const [editable, setEditable] = useState(false);
 
 
-  const [dashboardSummary, setDashboardSummary] = useState([]);
+  // const [dashboardSummary, setDashboardSummary] = useState([]);
+  const dashboardSummary = {
+  transactionAnalytics: [
+    { month: "Jan", totalAmount: 12000, transactionCount: 320, airtimeToCash: 4500, interNetworkSwap: 3000 },
+    { month: "Feb", totalAmount: 15000, transactionCount: 400, airtimeToCash: 5200, interNetworkSwap: 3500 },
+    { month: "Mar", totalAmount: 18000, transactionCount: 450, airtimeToCash: 6000, interNetworkSwap: 4100 },
+    { month: "Apr", totalAmount: 14000, transactionCount: 380, airtimeToCash: 4900, interNetworkSwap: 2900 },
+    { month: "May", totalAmount: 20000, transactionCount: 500, airtimeToCash: 7200, interNetworkSwap: 4700 },
+    { month: "Jun", totalAmount: 22000, transactionCount: 550, airtimeToCash: 8000, interNetworkSwap: 5100 },
+    { month: "Jul", totalAmount: 25000, transactionCount: 620, airtimeToCash: 8900, interNetworkSwap: 5600 },
+    { month: "Aug", totalAmount: 23000, transactionCount: 590, airtimeToCash: 7700, interNetworkSwap: 5300 },
+    { month: "Sep", totalAmount: 27000, transactionCount: 650, airtimeToCash: 9500, interNetworkSwap: 6000 },
+    { month: "Oct", totalAmount: 30000, transactionCount: 700, airtimeToCash: 10200, interNetworkSwap: 6700 },
+    { month: "Nov", totalAmount: 28000, transactionCount: 680, airtimeToCash: 9800, interNetworkSwap: 6400 },
+    { month: "Dec", totalAmount: 32000, transactionCount: 750, airtimeToCash: 11000, interNetworkSwap: 7200 }
+  ]
+};
+
   
     const fetchAllDataAndMessages = async () => {
       handleData();

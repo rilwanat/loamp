@@ -31,6 +31,8 @@ import { jwtDecode } from "jwt-decode";
 import { getCookie, deleteCookie } from "../auth/authUtils"; // Import getCookie function
 //
 
+import { format } from "date-fns";
+
 export default function MembersPage({ isMobile }) {
   const navigate = useNavigate();
 
@@ -217,10 +219,10 @@ export default function MembersPage({ isMobile }) {
                                               >
                                                 {/* Alphabet Header */}
                                                 <div className=" px-2 pt-2 mb-4">
-                                                <h2 className="text-lg font-bold text-black mb-0">
-                                                  {letter}
-                                                </h2>
-                                                </div> 
+                                                  <h2 className="text-lg font-bold text-black mb-0">
+                                                    {letter}
+                                                  </h2>
+                                                </div>
 
                                                 {/* Members Grid */}
                                                 <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
@@ -250,9 +252,17 @@ export default function MembersPage({ isMobile }) {
                                                               }
                                                               className="text-theme mr-2"
                                                             />
-                                                            {
+                                                            {/* {
                                                               member.registration_date
-                                                            }
+                                                            } */}
+                                                            {member?.registration_date
+                                                              ? format(
+                                                                  new Date(
+                                                                    member.registration_date
+                                                                  ),
+                                                                  "MMMM d, yyyy"
+                                                                )
+                                                              : "N/A"}
                                                           </p>
                                                         </div>
 

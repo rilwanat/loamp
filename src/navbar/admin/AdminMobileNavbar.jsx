@@ -281,7 +281,8 @@ export default function AdminMobileNavbar({
                 onClick={() => {
                   deleteCookie("admin");
                   // toggleMenu();
-                  window.location.href = "/";
+                  // window.location.href = "/";
+                  gotoPage("")
                 }}
               >
                 Logout

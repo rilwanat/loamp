@@ -183,7 +183,8 @@ export default function SuperAdminMobileNavbar({
                 onClick={() => {
                   deleteCookie("super-admin");
                   // toggleMenu();
-                  window.location.href = "/";
+                  // window.location.href = "/";
+                  gotoPage("")
                 }}
               >
                 Logout

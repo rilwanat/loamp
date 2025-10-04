@@ -20,8 +20,12 @@ import president from "../assets/images/home/president.webp";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faCalendarAlt, faClock, faMapMarkerAlt, faGlobe } from "@fortawesome/free-solid-svg-icons";
-
+import {
+  faCalendarAlt,
+  faClock,
+  faMapMarkerAlt,
+  faGlobe,
+} from "@fortawesome/free-solid-svg-icons";
 
 import NotificationModal from "./modals/NotificationModal";
 
@@ -31,6 +35,8 @@ import { setCookie, isMemberAuthenticated } from "../auth/authUtils"; // Ensure 
 import { jwtDecode } from "jwt-decode";
 import { getCookie, deleteCookie } from "../auth/authUtils"; // Import getCookie function
 //
+
+import { format } from "date-fns";
 
 export default function EventsPage({ isMobile }) {
   const navigate = useNavigate();
@@ -216,44 +222,75 @@ export default function EventsPage({ isMobile }) {
                                               // onClick={(e) => navigateToAppointments()}
                                             >
                                               <div className="relative w-full">
-  <img
-    src={import.meta.env.VITE_API_URL + event.cover_image}
-    alt="Cover Image"
-    className="w-full h-50 object-cover rounded-lg p-1 cursor-pointer"
-    // onClick={() =>
-    //   setPreviewSrc(
-    //     import.meta.env.VITE_API_URL + event.cover_image
-    //   )
-    // }
-  />
+                                                <img
+                                                  src={
+                                                    import.meta.env
+                                                      .VITE_API_URL +
+                                                    event.cover_image
+                                                  }
+                                                  alt="Cover Image"
+                                                  className="w-full h-50 object-cover rounded-lg p-1 cursor-pointer"
+                                                  // onClick={() =>
+                                                  //   setPreviewSrc(
+                                                  //     import.meta.env.VITE_API_URL + event.cover_image
+                                                  //   )
+                                                  // }
+                                                />
 
-  {/* Status badge at bottom-left */}
-  <div className="absolute bottom-3 left-3">
-    <p className="mr-2 text-black mb-1 px-3 py-1 bg-theme rounded-md w-fit text-sm">
-      {event.status == "Active" ? 'Upcoming' : 'Past' }
-    </p>
-  </div>
-</div>
+                                                {/* Status badge at bottom-left */}
+                                                <div className="absolute bottom-3 left-3">
+                                                  <p className="mr-2 text-black mb-1 px-3 py-1 bg-theme rounded-md w-fit text-sm">
+                                                    {event.status == "Active"
+                                                      ? "Upcoming"
+                                                      : "Past"}
+                                                  </p>
+                                                </div>
+                                              </div>
 
                                               <div className="p-2 flex flex-col w-full ">
                                                 {/* New: Time, Calendar, Location */}
-  <div className="flex flex-col gap-1 my-2">
-    <div className="flex">
-    <p className="text-sm text-gray-600 flex items-center mr-4">
-      <FontAwesomeIcon icon={faClock} className="text-theme mr-2" />
-      {event.event_datetimeX || "--:-- --"}
-    </p>
-    <p className="text-sm text-gray-600 flex items-center">
-      <FontAwesomeIcon icon={faCalendarAlt} className="text-theme mr-2" />
-      {event.event_datetime }
-    </p>
-    </div>
-    <p className="text-sm text-gray-600 flex items-center overflow-hidden truncate max-w-[200px]">
-      <FontAwesomeIcon icon={faMapMarkerAlt} className="text-theme mr-2" />
-      {event.location || "No location set"}
-    </p>
-  </div>
-                                                
+                                                <div className="flex flex-col gap-1 my-2">
+                                                  <div className="flex">
+                                                    <p className="text-sm text-gray-600 flex items-center mr-4">
+                                                      <FontAwesomeIcon
+                                                        icon={faClock}
+                                                        className="text-theme mr-2"
+                                                      />
+                                                      {event?.event_datetime
+                                                        ? format(
+                                                            new Date(
+                                                              event.event_datetime
+                                                            ),
+                                                            "h:mm a"
+                                                          )
+                                                        : "N/A"}
+                                                    </p>
+                                                    <p className="text-sm text-gray-600 flex items-center">
+                                                      <FontAwesomeIcon
+                                                        icon={faCalendarAlt}
+                                                        className="text-theme mr-2"
+                                                      />
+                                                      {/* {event.event_datetime } */}
+                                                      {event?.event_datetime
+                                                        ? format(
+                                                            new Date(
+                                                              event.event_datetime
+                                                            ),
+                                                            "MMMM d, yyyy"
+                                                          )
+                                                        : "N/A"}
+                                                    </p>
+                                                  </div>
+                                                  <p className="text-sm text-gray-600 flex items-center overflow-hidden truncate max-w-[200px] ml-1">
+                                                    <FontAwesomeIcon
+                                                      icon={faMapMarkerAlt}
+                                                      className="text-theme mr-2"
+                                                    />
+                                                    {event.location ||
+                                                      "No location set"}
+                                                  </p>
+                                                </div>
+
                                                 <div className="flex flex-col ">
                                                   <h3 className="text-lg font-bold text-black mb-1">
                                                     {event.name}
