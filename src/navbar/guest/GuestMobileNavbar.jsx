@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import LoampFooter from "../LoampFooter";
+import LoampButton from "../../widgets/LoampButton";
 
 import styles from "./GuestMobileNavbar.module.css";
 import { NavLink } from "react-router-dom";
@@ -123,48 +125,19 @@ export default function GuestMobileNavbar({
         </div>
 
        <div className="absolute top-6 right-4 flex gap-2">
-        <div
-                  onClick={() => {
-                    navigate("/create-membership");
-                  }}
-                  style={{ width: "176px", borderWidth: "1px" }}
-                  className="text-center shadow-lg border-black bg-softTheme rounded-lg px-4 py-2 text-black text-sm cursor-pointer mx-1 hover:border-theme"
-                >
-                  Create Membership
-                </div>
+        < LoampButton />
 
         {/* Hamburger (absolute on right) */}
-        <div className="flex justify-end p-2 rounded-md bg-softTheme hover:bg-softTheme">
-          <div
-            style={{ width: "20px", height: "24px" }}
-            className="relative z-20 cursor-pointer"
-            onClick={toggleMenu}
-          >
-            <div
-              style={{
-                width: "20px",
-                height: "2px",
-                backgroundColor: "#000000",
-                marginTop: "4px",
-                marginBottom: "6px",
-              }}
-            />
-            <div
-              style={{
-                width: "20px",
-                height: "2px",
-                backgroundColor: "#000000",
-                marginBottom: "6px",
-              }}
-            />
-            <div
-              style={{
-                width: "20px",
-                height: "2px",
-                backgroundColor: "#000000",
-              }}
-            />
-          </div>
+<div className="flex justify-end p-2 rounded-md 
+        bg-softTheme cursor-pointer
+        hover:text-theme hover:bg-black z-20
+        ">
+          <FontAwesomeIcon
+      icon={faBars}
+      size="lg"
+      className=""
+      onClick={toggleMenu}
+    />
         </div>
         </div> 
 

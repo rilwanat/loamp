@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On 
+
+    # Prevent infinite loops on index.html
+    RewriteRule ^index\.html$ - [L]
+
+    # Allow React Router to handle all routes under /loamp/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.html [L]
+</IfModule>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 import LoampFooter from "../LoampFooter";
 
@@ -123,37 +124,16 @@ export default function AdminMobileNavbar({
         </div>
 
         {/* Hamburger (absolute on right) */}
-        <div className="absolute top-6 right-4 flex justify-end p-2 rounded-md bg-softTheme hover:bg-softTheme">
-          <div
-            style={{ width: "20px", height: "24px" }}
-            className="relative z-20 cursor-pointer"
-            onClick={toggleMenu}
-          >
-            <div
-              style={{
-                width: "20px",
-                height: "2px",
-                backgroundColor: "#000000",
-                marginTop: "4px",
-                marginBottom: "6px",
-              }}
-            />
-            <div
-              style={{
-                width: "20px",
-                height: "2px",
-                backgroundColor: "#000000",
-                marginBottom: "6px",
-              }}
-            />
-            <div
-              style={{
-                width: "20px",
-                height: "2px",
-                backgroundColor: "#000000",
-              }}
-            />
-          </div>
+<div className="flex justify-end p-2 rounded-md 
+        bg-softTheme cursor-pointer
+        hover:text-theme hover:bg-black z-20
+        ">
+          <FontAwesomeIcon
+      icon={faBars}
+      size="lg"
+      className=""
+      onClick={toggleMenu}
+    />
         </div>
       </div>
 
