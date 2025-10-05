@@ -58,8 +58,8 @@ export default function LoginPageSuperAdmin({ isMobile }) {
     navigate(route);
   };
 
-  const [email, setEmail] = useState("rilwan.at@gmail.com");
-  const [password, setPassword] = useState("12345678");
+  const [email, setEmail] = useState("");//rilwan.at@gmail.com");
+  const [password, setPassword] = useState("");//12345678");
 
   const [isSigninLoading, setIsSigninLoading] = useState(false);
 

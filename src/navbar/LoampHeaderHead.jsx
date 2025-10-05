@@ -29,7 +29,8 @@ export default function LoampHeaderHead({}) {
     ${isMemberAuthenticated() || isAdminAuthenticated() || isSuperAdminAuthenticated() ? '' : 'lg:px-32 xl:px-32 2xl:px-64 '}
     py-2 pb-2 bg-theme shadow-lg`}>
       <div className="flex flex-col md:flex-row justify-between">
-        <div className="absolute top-2 flex items-center mr-8 bg-white p-2 rounded-full">
+        {/* <div className="absolute top-2 flex items-center mr-8 bg-white p-2 rounded-full"> */}
+        <div className="absolute top-8 flex items-center mr-8 bg-white p-2 rounded-full">
           <img
             className=" block h-20 w-auto max-w-none"
             src={logo}

@@ -60,12 +60,12 @@ export default function CreateMembershipPage({ isMobile }) {
     navigate(route);
   };
 
-  const [firstname, setFirstname] = useState("Rilwan");
-  const [lastname, setLastname] = useState("Adedeji");
-  const [countryOfResidence, setCountryOfResidence] = useState("Nigeria");
-  const [email, setEmail] = useState("rilwan.at@gmail.com");
-  const [password, setPassword] = useState("12345678");
-  const [confirmPassword, setConfirmPassword] = useState("12345678");
+  const [firstname, setFirstname] = useState("");//Rilwan");
+  const [lastname, setLastname] = useState("");//Adedeji");
+  const [countryOfResidence, setCountryOfResidence] = useState("");//Nigeria");
+  const [email, setEmail] = useState("");//rilwan.at@gmail.com");
+  const [password, setPassword] = useState("");//12345678");
+  const [confirmPassword, setConfirmPassword] = useState("");//12345678");
 
   const [selected, setSelected] = useState("");
   // Prepare data (just country name + code)
