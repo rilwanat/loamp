@@ -10,10 +10,10 @@ import AdminSideNavbar from "../../navbar/admin/AdminSideNavbar.jsx";
 import TitleLine from "../../widgets/TitleLine.jsx";
 import FileUpload from "../../widgets/FileUpload.jsx";
 
-import logo from "../../assets/images/logo.png";
-import fa1 from "../../assets/images/home/fa-1.jpg";
-import fa2 from "../../assets/images/home/fa-2.jpg";
-import fa3 from "../../assets/images/home/fa-3.jpg";
+import logo from "../../assets/images/logo-512x512.png";
+
+
+
 import charter from "../../assets/images/home/charter.webp";
 import president from "../../assets/images/home/president.webp";
 
@@ -85,18 +85,18 @@ export default function UserDashboardPage({ isMobile }) {
   // const [dashboardSummary, setDashboardSummary] = useState([]);
   const dashboardSummary = {
   transactionAnalytics: [
-    { month: "Jan", totalAmount: 12000, transactionCount: 320, airtimeToCash: 4500, interNetworkSwap: 3000 },
-    { month: "Feb", totalAmount: 15000, transactionCount: 400, airtimeToCash: 5200, interNetworkSwap: 3500 },
-    { month: "Mar", totalAmount: 18000, transactionCount: 450, airtimeToCash: 6000, interNetworkSwap: 4100 },
-    { month: "Apr", totalAmount: 14000, transactionCount: 380, airtimeToCash: 4900, interNetworkSwap: 2900 },
-    { month: "May", totalAmount: 20000, transactionCount: 500, airtimeToCash: 7200, interNetworkSwap: 4700 },
-    { month: "Jun", totalAmount: 22000, transactionCount: 550, airtimeToCash: 8000, interNetworkSwap: 5100 },
-    { month: "Jul", totalAmount: 25000, transactionCount: 620, airtimeToCash: 8900, interNetworkSwap: 5600 },
-    { month: "Aug", totalAmount: 23000, transactionCount: 590, airtimeToCash: 7700, interNetworkSwap: 5300 },
-    { month: "Sep", totalAmount: 27000, transactionCount: 650, airtimeToCash: 9500, interNetworkSwap: 6000 },
-    { month: "Oct", totalAmount: 30000, transactionCount: 700, airtimeToCash: 10200, interNetworkSwap: 6700 },
-    { month: "Nov", totalAmount: 28000, transactionCount: 680, airtimeToCash: 9800, interNetworkSwap: 6400 },
-    { month: "Dec", totalAmount: 32000, transactionCount: 750, airtimeToCash: 11000, interNetworkSwap: 7200 }
+    { month: "Jan", totalAmount: 12000, membersCount: 320, eventsCount: 4500, publicationsCount: 3000 },
+    { month: "Feb", totalAmount: 15000, membersCount: 400, eventsCount: 5200, publicationsCount: 3500 },
+    { month: "Mar", totalAmount: 18000, membersCount: 450, eventsCount: 6000, publicationsCount: 4100 },
+    { month: "Apr", totalAmount: 14000, membersCount: 380, eventsCount: 4900, publicationsCount: 2900 },
+    { month: "May", totalAmount: 20000, membersCount: 500, eventsCount: 7200, publicationsCount: 4700 },
+    { month: "Jun", totalAmount: 22000, membersCount: 550, eventsCount: 8000, publicationsCount: 5100 },
+    { month: "Jul", totalAmount: 25000, membersCount: 620, eventsCount: 8900, publicationsCount: 5600 },
+    { month: "Aug", totalAmount: 23000, membersCount: 590, eventsCount: 7700, publicationsCount: 5300 },
+    { month: "Sep", totalAmount: 27000, membersCount: 650, eventsCount: 9500, publicationsCount: 6000 },
+    { month: "Oct", totalAmount: 30000, membersCount: 700, eventsCount: 10200, publicationsCount: 6700 },
+    { month: "Nov", totalAmount: 28000, membersCount: 680, eventsCount: 9800, publicationsCount: 6400 },
+    { month: "Dec", totalAmount: 32000, membersCount: 750, eventsCount: 11000, publicationsCount: 7200 }
   ]
 };
 
@@ -224,7 +224,7 @@ export default function UserDashboardPage({ isMobile }) {
           className="w-full rounded-lg "
           // style={{ borderRadius: '8px' }}
         >
-          <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-20">
+          <div className="bg-white p-4 rounded-lg pt-20 sm:pt-20">
               <div className="flex flex-row w-full justify-between mx-4 items-center">
                 <div
                   className="cursor-pointer hover:text-theme hover:bg-black bg-theme rounded-md px-2 py-2"
@@ -664,21 +664,21 @@ export default function UserDashboardPage({ isMobile }) {
                                     />
                                     <Line
                                       type="natural"
-                                      dataKey="transactionCount"
+                                      dataKey="membersCount"
                                       stroke="#2F1155"
                                       strokeWidth={3}
                                       dot={{ r: 0 }}
                                     />
                                     <Line
                                       type="natural"
-                                      dataKey="airtimeToCash"
+                                      dataKey="eventsCount"
                                       stroke="#29B474"
                                       strokeWidth={3}
                                       dot={{ r: 0 }}
                                     />
                                     <Line
                                       type="natural"
-                                      dataKey="interNetworkSwap"
+                                      dataKey="publicationsCount"
                                       stroke="#FF9F1C"
                                       strokeWidth={3}
                                       dot={{ r: 0 }}
@@ -753,7 +753,7 @@ export default function UserDashboardPage({ isMobile }) {
                                   // navigate("/manage-appointments");
                                 }}
                               >
-                                <div className="bg-theme rounded-lg px-4 py-1 text-white hover:text-theme transition-colors duration-300 ease-in-out">
+                                <div className="bg-theme rounded-lg px-4 py-1 text-white hover:text-theme hover:bg-black">
                                   <p style={{ fontSize: "12px" }}>View All</p>
                                 </div>
                               </div>

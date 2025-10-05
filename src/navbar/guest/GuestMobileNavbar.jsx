@@ -11,8 +11,10 @@ import styles from "./GuestMobileNavbar.module.css";
 import { NavLink } from "react-router-dom";
 import { navData } from "./GuestNavData";
 
-import logo from "../../assets/images/logo.png";
-import logo2 from "../../assets/images/logo-2.png";
+
+import logo from "../../assets/images/logo-512x512.png";
+import logoFull from "../../assets/images/logo-full-h768.png";
+
 
 // import PersonIcon from '@mui/icons-material/Person';
 // import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -115,7 +117,7 @@ export default function GuestMobileNavbar({
         <div className="absolute top-2  flex items-center bg-white p-2 rounded-full">
           <img
             className="block h-20 w-auto max-w-none"
-            src={logo2}
+            src={logo}
             alt="Logo"
             onClick={() => {
               navigate("/");
@@ -124,7 +126,7 @@ export default function GuestMobileNavbar({
           />
         </div>
 
-       <div className="absolute top-6 right-4 flex gap-2">
+       <div className="absolute top-6 right-0 flex gap-2">
         < LoampButton />
 
         {/* Hamburger (absolute on right) */}
@@ -159,7 +161,7 @@ export default function GuestMobileNavbar({
               <div className=" mt-8 flex items-center bg-white p-2 rounded-full">
                 <img
                   className="block h-20 w-auto max-w-none"
-                  src={logo2}
+                  src={logo}
                   alt="Logo"
                   onClick={() => {
                     navigate("/");

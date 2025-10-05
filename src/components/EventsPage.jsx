@@ -11,10 +11,8 @@ import FileUpload from "../widgets/FileUpload.jsx";
 import Loading from "../widgets/Loading";
 import MiniLoading from "../widgets/MiniLoading";
 
-import logo from "../assets/images/logo.png";
-import fa1 from "../assets/images/home/fa-1.jpg";
-import fa2 from "../assets/images/home/fa-2.jpg";
-import fa3 from "../assets/images/home/fa-3.jpg";
+import logo from "../assets/images/logo-512x512.png";
+
 import charter from "../assets/images/home/charter.webp";
 import president from "../assets/images/home/president.webp";
 
@@ -123,7 +121,7 @@ export default function EventsPage({ isMobile }) {
 
       <div className="pt-10"></div>
 
-      <div className="flex h-auto px-4 sm:px-16 md:px-8">
+      <div className="flex h-auto flex flex-col h-auto px-4 sm:px-16 md:px-8 lg:px-32 xl:px-32 2xl:px-64">
         {/* {isMobile ? (
           <div></div>
         ) : (
@@ -134,7 +132,7 @@ export default function EventsPage({ isMobile }) {
           className="w-full rounded-lg "
           // style={{ borderRadius: '8px' }}
         >
-          <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-20">
+          <div className="bg-white p-4 rounded-lg pt-20 sm:pt-20">
             <div className="flex flex-row w-full justify-between mx-4 items-center">
               <div
                 className="cursor-pointer hover:text-theme hover:bg-black bg-theme rounded-md px-2 py-2 invisible"
@@ -171,8 +169,12 @@ export default function EventsPage({ isMobile }) {
                     <div className="w-full">
                       <div className="mb-4">
                         <div className="flex flex-col items-start w-full  sm:mt-0 bg-white rounded-lg p-4">
-                          <div className="flex w-full items-center justify-between  ">
-                            {/* <div className="font-semibold ">Upcoming Events</div> */}
+                          <motion.h1
+                            initial={{ y: -50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.2, duration: 0.5 }}
+                            // className="text-2xl font-bold text-black mb-2"
+                          >
                             <div className="flex flex-col items-start justify-center mt-0 mb-2 w-full">
                               <p
                                 className="mb-2"
@@ -182,28 +184,11 @@ export default function EventsPage({ isMobile }) {
                                   fontSize: "24px",
                                 }}
                               >
-                                Upcoming Events
+                                Current Events
                               </p>
                               <TitleLine />
                             </div>
-
-                            {/* <>
-                              <div
-                                className="flex items-center"
-                                style={{ height: "40px" }}
-                              >
-                                <div
-                                  onClick={() => {
-                                    
-                                  }}
-                                  // style={{ width: "176px" }}
-                                  className="text-center shadow-lg  bg-theme rounded-lg py-2 px-4 mx-4  text-black text-sm cursor-pointer hover:text-theme hover:bg-black transition-colors duration-300 ease-in-out"
-                                >
-                                  Create New Event
-                                </div>
-                              </div>
-                            </> */}
-                          </div>
+                          </motion.h1>
 
                           <div className="flex flex-col md:flex-row  w-full">
                             <div className="rounded-lg my-4  w-full">
@@ -241,8 +226,8 @@ export default function EventsPage({ isMobile }) {
                                                 <div className="absolute bottom-3 left-3">
                                                   <p className="mr-2 text-black mb-1 px-3 py-1 bg-theme rounded-md w-fit text-sm">
                                                     {event.status == "Active"
-                                                      ? "Upcoming"
-                                                      : "Past"}
+                                                      ? "Current"
+                                                      : "Previous"}
                                                   </p>
                                                 </div>
                                               </div>
@@ -360,31 +345,14 @@ export default function EventsPage({ isMobile }) {
                                   fontSize: "24px",
                                 }}
                               >
-                                Past Events
+                                Previous Events
                               </p>
                               <TitleLine />
                             </div>
-
-                            {/* <>
-                              <div
-                                className="flex items-center"
-                                style={{ height: "40px" }}
-                              >
-                                <div
-                                  onClick={() => {
-                                    
-                                  }}
-                                  // style={{ width: "176px" }}
-                                  className="text-center shadow-lg  bg-theme rounded-lg py-2 px-4 mx-4  text-black text-sm cursor-pointer hover:text-theme hover:bg-black transition-colors duration-300 ease-in-out"
-                                >
-                                  Create New Event
-                                </div>
-                              </div>
-                            </> */}
                           </div>
 
                           <div className="flex flex-col md:flex-row  w-full">
-                            <div className="rounded-lg bg-softTheme p-4 mt-4  w-full">
+                            <div className="rounded-lg my-4  w-full">
                               <div className="mt-0">
                                 <div className="bg-softTheme">
                                   <div className="flex w-full">
@@ -396,36 +364,80 @@ export default function EventsPage({ isMobile }) {
                                           {eventsData.map((event, index) => (
                                             <div
                                               key={index}
-                                              className="flex flex-col justify-between items-start rounded-lg my-0 p-2 w-full border-1 border-black bg-white cursor-pointer  transition-colors duration-300 ease-in-out hover:border-theme"
+                                              className="flex flex-col justify-between items-start rounded-lg my-0 p-2 w-full border-1 border-black bg-white cursor-pointer  transition-colors duration-300 ease-in-out hover:border-red-400"
                                               // onClick={(e) => navigateToAppointments()}
                                             >
-                                              <img
-                                                src={
-                                                  import.meta.env.VITE_API_URL +
-                                                  event.cover_image
-                                                }
-                                                alt="Cover Image"
-                                                className=" w-full h-50 object-cover rounded-lg p-1  cursor-pointer"
-                                                // onClick={() =>
-                                                //   setPreviewSrc(
-                                                //     import.meta.env.VITE_API_URL +
-                                                //       event.cover_image
-                                                //   )
-                                                // }
-                                              />
-                                              <div className="p-2 flex flex-col w-full">
-                                                <div className="flex ">
-                                                  <p className=" mr-2 text-gray-600 mb-1 px-3 py-1 bg-theme rounded-md w-fit text-sm">
-                                                    {event.status}
+                                              <div className="relative w-full">
+                                                <img
+                                                  src={
+                                                    import.meta.env
+                                                      .VITE_API_URL +
+                                                    event.cover_image
+                                                  }
+                                                  alt="Cover Image"
+                                                  className="w-full h-50 object-cover rounded-lg p-1 cursor-pointer"
+                                                  // onClick={() =>
+                                                  //   setPreviewSrc(
+                                                  //     import.meta.env.VITE_API_URL + event.cover_image
+                                                  //   )
+                                                  // }
+                                                />
+
+                                                {/* Status badge at bottom-left */}
+                                                <div className="absolute bottom-3 left-3">
+                                                  <p className="mr-2 text-black mb-1 px-3 py-1 bg-red-400 rounded-md w-fit text-sm">
+                                                    {event.status == "Active"
+                                                      ? "Current"
+                                                      : "Previous"}
                                                   </p>
                                                 </div>
+                                              </div>
+                                              <div className="p-2 flex flex-col w-full">
                                                 <div className="flex flex-col ">
                                                   <h3 className=" font-bold text-black mb-1">
                                                     {event.name}
                                                   </h3>
-                                                  <p className="text-sm text-darkTheme mb-1 line-clamp-2">
-                                                    {event.event_datetime}
-                                                  </p>
+                                                  <div className="flex flex-col gap-1 my-2">
+                                                    <div className="flex">
+                                                      <p className="text-sm text-gray-600 flex items-center mr-4">
+                                                        <FontAwesomeIcon
+                                                          icon={faClock}
+                                                          className="text-red-400 mr-2"
+                                                        />
+                                                        {event?.event_datetime
+                                                          ? format(
+                                                              new Date(
+                                                                event.event_datetime
+                                                              ),
+                                                              "h:mm a"
+                                                            )
+                                                          : "N/A"}
+                                                      </p>
+                                                      <p className="text-sm text-gray-600 flex items-center">
+                                                        <FontAwesomeIcon
+                                                          icon={faCalendarAlt}
+                                                          className="text-red-400 mr-2"
+                                                        />
+                                                        {/* {event.event_datetime } */}
+                                                        {event?.event_datetime
+                                                          ? format(
+                                                              new Date(
+                                                                event.event_datetime
+                                                              ),
+                                                              "MMMM d, yyyy"
+                                                            )
+                                                          : "N/A"}
+                                                      </p>
+                                                    </div>
+                                                    {/* <p className="text-sm text-gray-600 flex items-center overflow-hidden truncate max-w-[200px] ml-1">
+                                                    <FontAwesomeIcon
+                                                      icon={faMapMarkerAlt}
+                                                      className="text-theme mr-2"
+                                                    />
+                                                    {event.location ||
+                                                      "No location set"}
+                                                  </p> */}
+                                                  </div>
                                                 </div>
                                                 <div className="flex flex-col ">
                                                   <p className=" text-black mb-1">

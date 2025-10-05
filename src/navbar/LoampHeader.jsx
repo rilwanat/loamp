@@ -25,7 +25,7 @@ import MarqueeTextContainer from "./MarqueeTextContainer";
 export default function LoampHeader({ isMobile, gotoPage, showMarqees }) {
   return (
     <div className="fixed w-full  z-[9999]">
-      {/* { showMarqees ? <MarqueeTextContainer /> : <div></div> } */}
+      { showMarqees ? <MarqueeTextContainer isMobile={isMobile} /> : <div></div> }
       <div>
         {isMobile ? (
           isMemberAuthenticated() ? (

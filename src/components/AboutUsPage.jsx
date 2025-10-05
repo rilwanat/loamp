@@ -11,10 +11,12 @@ import FileUpload from "../widgets/FileUpload.jsx";
 import Loading from "../widgets/Loading";
 import MiniLoading from "../widgets/MiniLoading";
 
-import logo from "../assets/images/logo.png";
-import fa1 from "../assets/images/home/fa-1.jpg";
-import fa2 from "../assets/images/home/fa-2.jpg";
-import fa3 from "../assets/images/home/fa-3.jpg";
+import logo from "../assets/images/logo-512x512.png";
+import logoFull from "../assets/images/logo-full-h768.png";
+
+
+
+
 import charter from "../assets/images/home/charter.webp";
 import president from "../assets/images/home/president.webp";
 
@@ -193,7 +195,7 @@ export default function AboutUsPage({ isMobile }) {
       <div className="pt-20"></div>
 
       <div className="w-full">
-        <div className="flex flex-col h-auto px-4 sm:px-16 md:px-8 ">
+        <div className="flex flex-col h-auto flex flex-col h-auto px-4 sm:px-16 md:px-8 lg:px-32 xl:px-32 2xl:px-64">
           <div className="w-full p-4 ">
             {/* Welcome */}
             <div
@@ -235,11 +237,11 @@ export default function AboutUsPage({ isMobile }) {
                 <div className="bg-white relative">
                   <div className="flex w-full items-center justify-center">
                     <img
-                      src={logo}
-                      className=""
+                      src={logoFull}
+                      className="w-[300px] "
                       style={{
-                        width: "100%",
-                        height: "100%",
+                        // width: "100%",
+                        // height: "100%",
                         objectFit: "cover",
                         // userSelect: "none",
                         // pointerEvents: "none",
@@ -397,7 +399,7 @@ export default function AboutUsPage({ isMobile }) {
                     {/* <p className="text-lg text-black mb-4">
                       #
                     </p> */}
-                    <p className="text-lg text-black mb-4">
+                    <p className="text-lg text-black mb-4 text-justify">
                       Our mission is to transform Africa into a prosperous,
                       healthy, and united continent through Pan-African
                       Diplomacy. We aim to foster economic growth, ensure access
@@ -421,9 +423,9 @@ export default function AboutUsPage({ isMobile }) {
                       Download
                     </div> */}
 
-                    <div className="flex flex-col items-start gap-4 mt-2">
+                    <div className="flex flex-col items-start gap-4 mt-2 w-full">
                       {/* Language Radios */}
-                      <div className="flex gap-4 mb-2">
+                      <div className="flex flex-wrap gap-4 mb-2 w-sull">
                         {[
                           "portuguese",
                           "english",
@@ -433,7 +435,7 @@ export default function AboutUsPage({ isMobile }) {
                         ].map((lang) => (
                           <label
                             key={lang}
-                            className="flex items-center gap-1 text-sm font-medium cursor-pointer"
+                            className="flex items-center gap-2 mb-2  font-medium cursor-pointer"
                           >
                             <input
                               type="radio"

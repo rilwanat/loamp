@@ -7,12 +7,19 @@ import LoampFooter from "../navbar/LoampFooter.jsx";
 
 import TitleLine from "../widgets/TitleLine.jsx";
 
-import logo from "../assets/images/logo.png";
-import fa1 from "../assets/images/home/fa-1.jpg";
-import fa2 from "../assets/images/home/fa-2.jpg";
-import fa3 from "../assets/images/home/fa-3.jpg";
+import logo from "../assets/images/logo-512x512.png";
+
+
+
 import charter from "../assets/images/home/charter.webp";
 import president from "../assets/images/home/president.webp";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEnvelope, 
+  faPhone, 
+  faLocationDot 
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function ContactUsPage({ isMobile }) {
   const navigate = useNavigate();
@@ -34,7 +41,7 @@ export default function ContactUsPage({ isMobile }) {
       <div className="pt-20"></div>
 
       <div className="w-full">
-        <div className="flex flex-col h-auto px-4 sm:px-16 md:px-8 ">
+        <div className="flex flex-col h-auto flex flex-col h-auto px-4 sm:px-16 md:px-8 lg:px-32 xl:px-32 2xl:px-64">
           <div className="w-full p-4 ">
             {/* Contact Us */}
             <div
@@ -69,7 +76,7 @@ export default function ContactUsPage({ isMobile }) {
                 transition={{ delay: 0.6, duration: 0.5 }}
                 className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-6"
               >
-                <div className="bg-theme p-8 rounded-lg">
+                <div className="bg-theme p-3 sm:p-8 rounded-lg">
                   <div className="flex flex-col items-start justify-center h-full mb-4">
                     <div
                       className="flex"
@@ -84,9 +91,13 @@ export default function ContactUsPage({ isMobile }) {
                           fontWeight: "600",
                           fontSize: "16px",
                           transition: "color 0.3s ease",
+                          width: "100px"
                         }}
                       >
-                        Email:
+                        <FontAwesomeIcon
+                                                icon={faEnvelope}
+                                                className="text-white mr-2"
+                                              />Email:
                       </div>
                       <div
                         className="text-description z-50"
@@ -110,9 +121,13 @@ export default function ContactUsPage({ isMobile }) {
                           fontWeight: "600",
                           fontSize: "16px",
                           transition: "color 0.3s ease",
+                          width: "100px"
                         }}
                       >
-                        Phone:
+                        <FontAwesomeIcon
+                                                icon={faPhone}
+                                                className="text-white mr-2"
+                                              />Phone:
                       </div>
                       <div
                         className="text-description z-50"
@@ -131,9 +146,13 @@ export default function ContactUsPage({ isMobile }) {
                           fontWeight: "600",
                           fontSize: "16px",
                           transition: "color 0.3s ease",
+                          width: "100px"
                         }}
                       >
-                        Address:
+                        <FontAwesomeIcon
+                                                icon={faLocationDot}
+                                                className="text-white mr-2"
+                                              />Address:
                       </div>
                       <div
                         className="text-description z-50"
@@ -142,15 +161,15 @@ export default function ContactUsPage({ isMobile }) {
                           transition: "color 0.9s ease",
                         }}
                       >
-                        Stand No. 35187, Pelican House, Alick Nkhata Road,
-                        Opposite Mass Media, P.O Box 50354 Ridgeway, Lusaka,
-                        Zambia.
+                        Stand No. 35187, Pelican House, <br />
+              Alick Nkhata Road, Opposite Mass Media, <br />
+              P.O Box 50354 Ridgeway, Lusaka, Zambia.
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white p-8 rounded-lg">
+                <div className="bg-white p-3 sm:p-8 rounded-lg">
                   <div className="flex flex-col items-start mb-4">
                     {/* <div className="p-2 mb-4 rounded-md bg-theme flex items-center justify-center">
                       <MonetizationOnIcon className="text-white text-3xl" />

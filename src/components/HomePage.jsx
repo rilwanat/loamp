@@ -11,10 +11,12 @@ import FileUpload from "../widgets/FileUpload.jsx";
 import Loading from "../widgets/Loading";
 import MiniLoading from "../widgets/MiniLoading";
 
-import logo from "../assets/images/logo.png";
-import fa1 from "../assets/images/home/fa-1.jpg";
-import fa2 from "../assets/images/home/fa-2.jpg";
-import fa3 from "../assets/images/home/fa-3.jpg";
+import logo from "../assets/images/logo-512x512.png";
+import logoFull from "../assets/images/logo-full-h768.png";
+
+
+
+
 import charter from "../assets/images/home/charter.webp";
 import president from "../assets/images/home/president.webp";
 
@@ -36,6 +38,9 @@ import { setCookie, isMemberAuthenticated } from "../auth/authUtils"; // Ensure 
 import { jwtDecode } from "jwt-decode";
 import { getCookie, deleteCookie } from "../auth/authUtils"; // Import getCookie function
 //
+
+import { format } from "date-fns";
+
 
 export default function HomePage({ isMobile }) {
   const navigate = useNavigate();
@@ -190,7 +195,7 @@ export default function HomePage({ isMobile }) {
       <div className="pt-20"></div>
 
       <div className="w-full ">
-        <div className="flex flex-col h-auto px-4 sm:px-16 md:px-8 ">
+        <div className="flex flex-col h-auto px-4 sm:px-16 md:px-8 lg:px-32 xl:px-32 2xl:px-64">
           <div className="w-full p-4 ">
             {/* Welcome */}
             <div
@@ -214,7 +219,7 @@ export default function HomePage({ isMobile }) {
                       Welcome to the League of{" "}
                       <span className="text-theme">African</span> Ambassadors!
                     </h2>
-                    <p className="text-lg text-black mb-4">
+                    <p className="text-lg text-black mb-4 ">
                       Step into a world of diplomacy and unity. At the League of
                       African Ambassadors, we extend a warm embrace to you,
                       visionary diplomats and global leaders.
@@ -225,7 +230,7 @@ export default function HomePage({ isMobile }) {
                         navigate("/about-us");
                       }}
                       style={{ width: "176px", borderWidth: "1px" }}
-                      className="text-center  border-theme bg-theme rounded-lg px-4 py-2 text-black text-sm cursor-pointer mx-1 
+                      className="text-center  border-theme bg-theme rounded-lg px-4 py-2 text-black text-sm  mx-1 
                       cursor-pointer
                       hover:text-theme hover:bg-black
                       "
@@ -238,7 +243,7 @@ export default function HomePage({ isMobile }) {
                 <div className="bg-white relative">
                   <div className="flex w-full items-center justify-center">
                     <img
-                      src={logo}
+                      src={logoFull}
                       className="w-[300px] "
                       style={{
                         // width: "100%",
@@ -274,10 +279,12 @@ export default function HomePage({ isMobile }) {
                   <div className="flex w-full items-center justify-center">
                     <img
                       src={president}
-                      className=""
+                      // className="h-96"
+                      className="h-[90%]"
+                      
                       style={{
                         width: "100%",
-                        height: "auto",
+                        // height: "auto",
                         objectFit: "contain",
                         // userSelect: "none",
                         // pointerEvents: "none",
@@ -295,7 +302,7 @@ export default function HomePage({ isMobile }) {
                       transition={{ delay: 0.2, duration: 0.5 }}
                       className="text-2xl font-bold text-black mb-2"
                     >
-                      <div className="flex flex-col items-start justify-center mt-16 mb-2 w-full">
+                      <div className="flex flex-col items-start justify-center mt-0 mb-2 w-full">
                         <p
                           className="mb-2"
                           style={{
@@ -309,22 +316,20 @@ export default function HomePage({ isMobile }) {
                         <TitleLine />
                       </div>
                     </motion.h1>
-                    <p className="text-lg text-black mb-4">
-                      Welcome to the League of African Ambassadors, A body of
-                      Ambassadors and High Commissioners of the African decent
-                      world over. The surge of awareness of Pan-African unity
-                      and momentum has been notably increased in recent years.
-                      The recognition that our collective strength, resilience,
-                      and unity are essential ingredients for accelerated
-                      development is not merely a conceptual ideal, but a
-                      tangible pathway towards realizing our shared aspirations
-                      for a flourishing Africa. Various business bodies,
-                      professionals, non-governmental organizations, and
-                      religious groups have emerged as vanguards, actively
-                      embracing an African-centric approach in both mindset and
-                      operations. As the highest ranking officers in the
-                      diplomatic community we are committed to uniting African
-                      diplomacy, Join us! WE ARE LOUDER AND STRONGER TOGETHER.
+                    <p className="text-lg text-black mb-4 text-justify">
+                      Welcome to the League of African Ambassadors, a body of
+                      Ambassadors and High Commissioners of African descent
+                      worldwide. The surge of Pan-African unity and momentum has
+                      notably increased in recent years. Recognizing that our
+                      collective strength, resilience, and unity are essential
+                      for accelerated development is not merely a concept, but a
+                      tangible pathway toward our shared aspirations for a
+                      flourishing Africa. Business bodies, professionals, NGOs,
+                      and religious groups have become vanguards, embracing an
+                      African-centric mindset and operations. As senior members
+                      of the diplomatic community, we are committed to uniting
+                      African diplomacy. Join us — <strong>WE ARE LOUDER AND STRONGER
+                      TOGETHER.</strong>
                     </p>
                   </div>
                 </div>
@@ -371,8 +376,8 @@ export default function HomePage({ isMobile }) {
                       src={charter}
                       className=""
                       style={{
-                        width: "100%",
-                        height: "auto",
+                        // width: "100%",
+                        // height: "auto",
                         objectFit: "contain",
                         // userSelect: "none",
                         // pointerEvents: "none",
@@ -393,7 +398,7 @@ export default function HomePage({ isMobile }) {
                     {/* <p className="text-lg text-black mb-4">
                       #
                     </p> */}
-                    <p className="text-lg text-black mb-4">
+                    <p className="text-lg text-black mb-4 text-justify">
                       Our mission is to transform Africa into a prosperous,
                       healthy, and united continent through Pan-African
                       Diplomacy. We aim to foster economic growth, ensure access
@@ -417,9 +422,9 @@ export default function HomePage({ isMobile }) {
                       Download
                     </div> */}
 
-                    <div className="flex flex-col items-start gap-4 mt-2">
+                    <div className="flex flex-col items-start gap-4 mt-2 w-full">
                       {/* Language Radios */}
-                      <div className="flex gap-2 mb-2">
+                      <div className="flex flex-wrap gap-4 mb-2 w-sull">
                         {[
                           "portuguese",
                           "english",
@@ -429,7 +434,7 @@ export default function HomePage({ isMobile }) {
                         ].map((lang) => (
                           <label
                             key={lang}
-                            className="flex items-center gap-1 text-sm font-medium cursor-pointer"
+                            className="flex items-center gap-2 mb-2  font-medium cursor-pointer"
                           >
                             <input
                               type="radio"
@@ -512,8 +517,8 @@ export default function HomePage({ isMobile }) {
                       <div className="flex flex-col sm:flex-row ">
                         <div className="">
                           <p
-                            className="mt-4 pt-2 text-justify"
-                            style={{ fontSize: "18px" }}
+                            className="text-lg mt-4 pt-2 text-justify"
+                            style={{  }}
                           >
                             The League of African Ambassadors was established
                             following a webinar conference organized by the
@@ -576,7 +581,7 @@ export default function HomePage({ isMobile }) {
                 transition={{ delay: 0.6, duration: 0.5 }}
                 className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-6"
               >
-                <div className="bg-softTheme p-8 rounded-lg">
+                <div className="bg-softTheme p-3 sm:p-8  rounded-lg">
                   <div className="flex flex-col items-start mb-4 rounded-t-lg bg-theme">
                     <div className="p-4  rounded-lg bg-theme flex items-center justify-center">
                       <div className="flex items-center gap-3">
@@ -593,7 +598,7 @@ export default function HomePage({ isMobile }) {
                       Vision
                     </h2> */}
                   </div>
-                  <p className="text-lg text-black ">
+                  <p className="text-lg text-black text-justify">
                     Our mission is to catalyse the transformation of Africa into
                     a prosperous, healthy, and unified continent through the
                     principles of Pan-African Diplomacy. We are dedicated to
@@ -610,7 +615,7 @@ export default function HomePage({ isMobile }) {
                   </p>
                 </div>
 
-                <div className="bg-softTheme p-8 rounded-lg">
+                <div className="bg-softTheme p-3 sm:p-8 rounded-lg">
                   <div className="flex flex-col items-start mb-4 rounded-t-lg bg-theme ">
                     <div className="p-4  rounded-lg bg-theme flex items-center justify-center">
                       <div className="flex items-center gap-3">
@@ -627,7 +632,7 @@ export default function HomePage({ isMobile }) {
                       Vision
                     </h2> */}
                   </div>
-                  <p className="text-lg text-black">
+                  <p className="text-lg text-black  text-justify">
                     We, envision a future where Africa's engagement on the
                     international stage shall be on equel respect , dignity and
                     mutual gain. Our vision is to leverage on diplomatic
@@ -729,7 +734,7 @@ export default function HomePage({ isMobile }) {
                                       <h2 className="text-lg font-semibold text-black mb-4">
                                         {news.publication_name}
                                       </h2>
-                                      <p className="text-lg text-black mb-4">
+                                      <p className="text-lg text-black mb-4 text-justify">
                                         {news.publication_content}
                                       </p>
 
@@ -739,7 +744,7 @@ export default function HomePage({ isMobile }) {
                                           width: "176px",
                                           borderWidth: "1px",
                                         }}
-                                        className="text-center  border-theme bg-white text-theme rounded-lg px-4 py-2 text-sm cursor-pointer font-semibold 
+                                        className="text-center  border-theme bg-white text-theme rounded-lg px-4 py-2 text-sm  font-semibold 
                                                     cursor-pointer
                       hover:text-theme hover:bg-black
                       "
@@ -833,8 +838,8 @@ export default function HomePage({ isMobile }) {
                                     <div className="absolute bottom-3 left-3">
                                       <p className="mr-2 text-black mb-1 px-3 py-1 bg-theme rounded-md w-fit text-sm">
                                         {event.status == "Active"
-                                          ? "Upcoming"
-                                          : "Past"}
+                                          ? "Current"
+                                          : "Previous"}
                                       </p>
                                     </div>
                                   </div>
@@ -848,17 +853,32 @@ export default function HomePage({ isMobile }) {
                                             icon={faClock}
                                             className="text-theme mr-2"
                                           />
-                                          {event.event_datetimeX || "--:-- --"}
+                                          {event?.event_datetime
+                                                                                                  ? format(
+                                                                                                      new Date(
+                                                                                                        event.event_datetime
+                                                                                                      ),
+                                                                                                      "h:mm a"
+                                                                                                    )
+                                                                                                  : "N/A"}
                                         </p>
                                         <p className="text-sm text-gray-600 flex items-center">
                                           <FontAwesomeIcon
                                             icon={faCalendarAlt}
                                             className="text-theme mr-2"
                                           />
-                                          {event.event_datetime}
+                                          {/* {event.event_datetime} */}
+                                          {event?.event_datetime
+                                                                                                  ? format(
+                                                                                                      new Date(
+                                                                                                        event.event_datetime
+                                                                                                      ),
+                                                                                                      "MMMM d, yyyy"
+                                                                                                    )
+                                                                                                  : "N/A"}
                                         </p>
                                       </div>
-                                      <p className="text-sm text-gray-600 flex items-center overflow-hidden truncate max-w-[200px]">
+                                      <p className="text-sm text-gray-600 flex items-center overflow-hidden truncate max-w-[200px] ml-1">
                                         <FontAwesomeIcon
                                           icon={faMapMarkerAlt}
                                           className="text-theme mr-2"
@@ -951,7 +971,7 @@ export default function HomePage({ isMobile }) {
                 transition={{ delay: 0.6, duration: 0.5 }}
                 className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-6"
               >
-                <div className="bg-softTheme p-8 rounded-lg">
+                <div className="bg-softTheme p-3 sm:p-8 rounded-lg">
                   <div className="flex flex-col items-start mb-4">
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <MonetizationOnIcon className="text-white text-3xl" /> */}
@@ -974,7 +994,7 @@ export default function HomePage({ isMobile }) {
                   </div>
                 </div>
 
-                <div className="bg-softTheme p-8 rounded-lg">
+                <div className="bg-softTheme p-3 sm:p-8 rounded-lg">
                   <div className="flex flex-col items-start mb-4">
                     <div className="p-4 mb-4 rounded-lg bg-theme flex items-center justify-center">
                       {/* <VolunteerActivismIcon className="text-white text-3xl" /> */}

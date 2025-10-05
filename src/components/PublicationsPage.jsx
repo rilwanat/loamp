@@ -11,10 +11,8 @@ import FileUpload from "../widgets/FileUpload.jsx";
 import Loading from "../widgets/Loading";
 import MiniLoading from "../widgets/MiniLoading";
 
-import logo from "../assets/images/logo.png";
-import fa1 from "../assets/images/home/fa-1.jpg";
-import fa2 from "../assets/images/home/fa-2.jpg";
-import fa3 from "../assets/images/home/fa-3.jpg";
+import logo from "../assets/images/logo-512x512.png";
+
 import charter from "../assets/images/home/charter.webp";
 import president from "../assets/images/home/president.webp";
 
@@ -115,7 +113,7 @@ export default function PublicationsPage({ isMobile }) {
 
       <div className="pt-10"></div>
 
-      <div className="flex h-auto px-4 sm:px-16 md:px-8">
+      <div className="flex h-auto flex flex-col h-auto px-4 sm:px-16 md:px-8 lg:px-32 xl:px-32 2xl:px-64">
         {/* {isMobile ? (
                 <div></div>
               ) : (
@@ -126,7 +124,7 @@ export default function PublicationsPage({ isMobile }) {
           className="w-full rounded-lg "
           // style={{ borderRadius: '8px' }}
         >
-          <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-20">
+          <div className="bg-white p-4 rounded-lg pt-20 sm:pt-20">
             <div className="flex flex-row w-full justify-between mx-4 items-center">
               <div
                 className="cursor-pointer hover:text-theme hover:bg-black bg-theme rounded-md px-2 py-2 invisible"
@@ -165,19 +163,27 @@ export default function PublicationsPage({ isMobile }) {
                         <div className="flex flex-col items-start w-full  sm:mt-0 bg-white rounded-lg p-4">
                           <div className="flex w-full items-center justify-between  ">
                             {/* <div className="font-semibold ">Upcoming Events</div> */}
-                            <div className="flex flex-col items-start justify-center mt-0 mb-2 w-full">
-                              <p
-                                className="mb-2"
-                                style={{
-                                  color: "",
-                                  fontWeight: "700",
-                                  fontSize: "24px",
-                                }}
-                              >
-                                Featured Articles
-                              </p>
-                              <TitleLine />
-                            </div>
+
+                            <motion.h1
+                              initial={{ y: -50, opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              transition={{ delay: 0.2, duration: 0.5 }}
+                              // className="text-2xl font-bold text-black mb-2"
+                            >
+                              <div className="flex flex-col items-start justify-center mt-0 mb-2 w-full">
+                                <p
+                                  className="mb-2"
+                                  style={{
+                                    color: "",
+                                    fontWeight: "700",
+                                    fontSize: "24px",
+                                  }}
+                                >
+                                  Featured Articles
+                                </p>
+                                <TitleLine />
+                              </div>
+                            </motion.h1>
 
                             {/* <>
                                     <div
@@ -232,13 +238,15 @@ export default function PublicationsPage({ isMobile }) {
                                                     }
                                                     alt="Cover Image"
                                                     className="h-80 w-full object-cover"
-                                                    style={{
-                                                      // width: "100%",
-                                                      // height: "auto",
-                                                      // objectFit: "contain",
-                                                      // userSelect: "none",
-                                                      // pointerEvents: "none",
-                                                    }}
+                                                    style={
+                                                      {
+                                                        // width: "100%",
+                                                        // height: "auto",
+                                                        // objectFit: "contain",
+                                                        // userSelect: "none",
+                                                        // pointerEvents: "none",
+                                                      }
+                                                    }
                                                   />
                                                 </div>
                                                 <div className="absolute bottom-0 left-0 w-28 h-24 bg-white"></div>
@@ -251,8 +259,8 @@ export default function PublicationsPage({ isMobile }) {
                                                                 </div> */}
                                                   <h2 className="text-lg font-semibold text-black mb-4">
                                                     {news.publication_name}
-                                                  </h2>                                                  
-                                                  <p className="text-lg text-black mb-4">
+                                                  </h2>
+                                                  <p className="text-lg text-black mb-4 text-justify">
                                                     {news.publication_content}
                                                   </p>
 
@@ -262,7 +270,10 @@ export default function PublicationsPage({ isMobile }) {
                                                       width: "176px",
                                                       borderWidth: "1px",
                                                     }}
-                                                    className="text-center  border-theme bg-white text-theme rounded-lg px-4 py-2 text-sm cursor-pointer font-semibold"
+                                                    className="text-center  border-theme bg-white text-theme rounded-lg px-4 py-2 text-sm  font-semibold 
+                                                    cursor-pointer
+                      hover:text-theme hover:bg-black
+                      "
                                                   >
                                                     Read More
                                                   </div>

@@ -10,10 +10,10 @@ import AdminSideNavbar from "../../navbar/admin/AdminSideNavbar.jsx";
 import TitleLine from "../../widgets/TitleLine.jsx";
 import FileUpload from "../../widgets/FileUpload.jsx";
 
-import logo from "../../assets/images/logo.png";
-import fa1 from "../../assets/images/home/fa-1.jpg";
-import fa2 from "../../assets/images/home/fa-2.jpg";
-import fa3 from "../../assets/images/home/fa-3.jpg";
+import logo from "../../assets/images/logo-512x512.png";
+
+
+
 import charter from "../../assets/images/home/charter.webp";
 import president from "../../assets/images/home/president.webp";
 
@@ -149,7 +149,7 @@ export default function UserVerificationStatusPage({ isMobile }) {
       setNewsData(newsResponse.data.data); // Update state with  count
 
       // openNotificationModal(true, currentPageName, "");
-      alert(JSON.stringify(newsResponse.data.data), null, 2); // Update state with payments count
+      // alert(JSON.stringify(newsResponse.data.data), null, 2); // Update state with payments count
 
       // Once all data is fetched, set loading to false
       setIsDataLoading(false);
@@ -188,7 +188,7 @@ export default function UserVerificationStatusPage({ isMobile }) {
           className="w-full rounded-lg "
           // style={{ borderRadius: '8px' }}
         >
-          <div className="bg-gray-50 p-4 rounded-lg pt-20 sm:pt-20">
+          <div className="bg-white p-4 rounded-lg pt-20 sm:pt-20">
             <div className="flex flex-row w-full justify-between mx-4 items-center">
               <div
                 className="cursor-pointer hover:text-theme hover:bg-black bg-theme rounded-md px-2 py-2"

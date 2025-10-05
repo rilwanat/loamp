@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ClipLoader } from 'react-spinners';
 
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logo-512x512.png';
 
 
 

@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { navData } from "./AdminNavData";
 import styles from "./AdminSideNavbar.module.css";
 
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo-512x512.png";
 
 const SuperAdminSideNavbar = ({ currentPageName }) => {
   const [open, setOpen] = useState(true);

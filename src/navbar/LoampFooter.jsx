@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-// import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-// import SearchIcon from '@mui/icons-material/Search';
-// import PlaceOutlinedIcon from '@mui/icons-material/PlaceOutlined';
+import logo from "../assets/images/logo-512x512.png";
 
-// import scrappLogo from '../../../assets/images/scrapp-logo.png';
-// import scrappLogo2 from '../../../assets/images/scrapp-logo-2.png';
-// import scrappLogo3 from '../../../assets/images/scrapp-logo-3.png';
-import logo from "../assets/images/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faXTwitter, 
+  faFacebookF, 
+  faInstagram, 
+  faYoutube, 
+  faTelegram, 
+  faWhatsapp, 
+  faTiktok, 
+  faLinkedinIn
+} from "@fortawesome/free-brands-svg-icons";
 
-// import TwitterIcon from '@mui/icons-material/Twitter';
-// import FacebookIcon from '@mui/icons-material/Facebook';
-// import InstagramIcon from '@mui/icons-material/Instagram';
 
 // import appstore from '../../../assets/icons/app-store.png';
 // import googleplay from '../../../assets/icons/google-play.png';
@@ -35,7 +37,7 @@ function LoampFooter({ gotoPage }) {
 
   return (
     <div className="flex flex-col bg-black text-white">
-      <div className="flex flex-col h-auto px-8 sm:px-16 md:px-16 py-4 pb-8">
+      <div className="flex flex-col h-auto px-8 py-4 pb-8  sm:px-16 md:px-8 lg:px-32 xl:px-32 2xl:px-64">
         <div className="flex flex-col items-start md:flex-row md:items-center md:justify-between ">
           <div className="flex flex-col md:items-start md:w-1/3 my-4 md:h-40">
             <div className="flex items-center mb-2">
@@ -57,22 +59,42 @@ function LoampFooter({ gotoPage }) {
               unity, and growth, enhancing the quality of life in Africa and
               strengthening its global standing.
             </p>
-            <div className="flex mt-4">
+            <div className="flex my-4">
               <div className="relative z-20">
                 <ul className="flex">
-                  <li className="mr-4">
+                  <li className="bg-softTheme rounded-md p-1 mr-4">
                     <a href="https://www.facebook.com/" target="_blank">
-                      {/* <FacebookIcon style={{cursor: "pointer", color: "#055D4F" }}/> */}
+                      <FontAwesomeIcon icon={faFacebookF} className="text-black hover:text-theme cursor-pointer" />
                     </a>
                   </li>
-                  <li className="mr-4">
+                  <li className="bg-softTheme rounded-md p-1 mr-4">
                     <a href="https://www.twitter.com/" target="_blank">
-                      {/* <TwitterIcon style={{cursor: "pointer", color: "#055D4F" }}/> */}
+                      <FontAwesomeIcon icon={faXTwitter} className="text-black hover:text-theme cursor-pointer" />
                     </a>
                   </li>
-                  <li className="mr-4">
+                  <li className="bg-softTheme rounded-md p-1 mr-4">
                     <a href="https://www.instagram.com" target="_blank">
-                      {/* <InstagramIcon style={{cursor: "pointer", color: "#055D4F" }}/> */}
+                      <FontAwesomeIcon icon={faInstagram} className="text-black hover:text-theme cursor-pointer" />
+                    </a>
+                  </li>
+                  <li className="bg-softTheme rounded-md p-1 mr-4">
+                    <a href="https://www.whatsapp.com" target="_blank">
+                      <FontAwesomeIcon icon={faWhatsapp} className="text-black hover:text-theme cursor-pointer" />
+                    </a>
+                  </li>
+                  <li className="bg-softTheme rounded-md p-1 mr-4">
+                    <a href="https://www.youtube.com" target="_blank">
+                      <FontAwesomeIcon icon={faYoutube} className="text-black hover:text-theme cursor-pointer" />
+                    </a>
+                  </li>
+                  <li className="bg-softTheme rounded-md p-1 mr-4">
+                    <a href="https://www.telegram.com" target="_blank">
+                      <FontAwesomeIcon icon={faTelegram} className="text-black hover:text-theme cursor-pointer" />
+                    </a>
+                  </li>
+                  <li className="bg-softTheme rounded-md p-1 mr-4">
+                    <a href="https://www.telegram.com" target="_blank">
+                      <FontAwesomeIcon icon={faLinkedinIn} className="text-black hover:text-theme cursor-pointer" />
                     </a>
                   </li>
                 </ul>
@@ -80,7 +102,9 @@ function LoampFooter({ gotoPage }) {
             </div>
             <div className="flex flex-col">
             <span
-              className="text-white text-sm cursor-pointer block mb-2"
+              className="text-white text-sm cursor-pointer block mb-2 
+              hover:text-theme hover:bg-black
+              "
               onClick={() => {
                 window.location.href = "tel:+26077044538";
               }}
@@ -88,7 +112,9 @@ function LoampFooter({ gotoPage }) {
               Phone: +26077044538
             </span>
             <span
-              className="text-white text-sm cursor-pointer block mb-2"
+              className="text-white text-sm cursor-pointer block mb-2 
+              hover:text-theme hover:bg-black
+              "
               onClick={() => {
                 window.location.href = "mailto:info@africanambassadors.org";
               }}
@@ -188,7 +214,9 @@ function LoampFooter({ gotoPage }) {
         <div className="flex justify-between items-start sm:mt-16 ">
           <div></div>
           <span
-            className="text-white text-sm cursor-pointer block my-2"
+            className="text-white text-sm cursor-pointer block my-2 
+            hover:text-theme hover:bg-black
+            "
             // onClick={() => { gotoPage("privacy-policy"); }}
           >
             {/* Need Help ? */}

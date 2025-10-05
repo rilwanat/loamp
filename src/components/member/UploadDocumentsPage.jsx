@@ -9,10 +9,10 @@ import TitleLine from "../../widgets/TitleLine.jsx";
 import FileUpload from "../../widgets/FileUpload.jsx";
 import LoadingScreen from "../../widgets/LoadingScreen.jsx";
 
-import logo from "../../assets/images/logo.png";
-import fa1 from "../../assets/images/home/fa-1.jpg";
-import fa2 from "../../assets/images/home/fa-2.jpg";
-import fa3 from "../../assets/images/home/fa-3.jpg";
+import logo from "../../assets/images/logo-512x512.png";
+
+
+
 import charter from "../../assets/images/home/charter.webp";
 import president from "../../assets/images/home/president.webp";
 

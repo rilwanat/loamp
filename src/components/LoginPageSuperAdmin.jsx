@@ -8,15 +8,15 @@ import LoampFooter from "../navbar/LoampFooter.jsx";
 import TitleLine from "../widgets/TitleLine.jsx";
 import LoadingScreen from "../widgets/LoadingScreen.jsx";
 
-import logo from "../assets/images/logo.png";
-import fa1 from "../assets/images/home/fa-1.jpg";
-import fa2 from "../assets/images/home/fa-2.jpg";
-import fa3 from "../assets/images/home/fa-3.jpg";
+import logo from "../assets/images/logo-512x512.png";
+
+
+
 import charter from "../assets/images/home/charter.webp";
 import president from "../assets/images/home/president.webp";
 
-import semicircle from "../assets/images/register-login/semicircle.png";
-import semicircleflip from "../assets/images/register-login/semicircle-flip.png";
+import semicircle from "../assets/images/register-login/semicircle-black.png";
+import semicircleflip from "../assets/images/register-login/semicircle-flip-black.png";
 import africa from "../assets/images/register-login/africa.png";
 
 import NotificationModal from "./modals/NotificationModal.jsx";
@@ -276,7 +276,7 @@ export default function LoginPageSuperAdmin({ isMobile }) {
                 <img
                   src={semicircleflip}
                   alt="orange semicircle"
-                  className="absolute top-0 left-90 w-[800px] md:w-[800px] h-auto  -z-10 opacity-30"
+                  className="hidden sm:block absolute top-0 left-90 w-[800px] md:w-[800px] h-auto  -z-10 opacity-30"
                 />
 
                 <div className="w-full rounded-lg">
@@ -284,7 +284,7 @@ export default function LoginPageSuperAdmin({ isMobile }) {
                     <div className="hidden md:flex flex-col justify-center items-center h-screen">
                       <div className="relative w-full max-w-md mx-auto rounded-2xl overflow-hidden">
                         <h2 className="text-4xl text-black font-bold text-center mb-4">
-                          Welcome Back!
+                          Welcome Super Admin!
                         </h2>
                         <img src={africa} className="w-full object-contain" />
                       </div>
@@ -333,7 +333,7 @@ export default function LoginPageSuperAdmin({ isMobile }) {
                             {/* <p>Forgot Password</p> */}
                           </div>
                           <button
-                            className="w-full my-5 py-2 bg-theme  text-black font-semibold  cursor-pointer"
+                            className="w-full my-5 py-2 bg-black  text-theme font-semibold  cursor-pointer"
                             type="submit"
                             style={{ borderRadius: "8px" }}
                             disabled={isSigninLoading}

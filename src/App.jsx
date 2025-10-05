@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import logo from "./assets/images/logo.png";
+
 
 import HomePage from "./components/HomePage.jsx";
 import AboutUsPage from './components/AboutUsPage.jsx';
@@ -120,7 +120,9 @@ function App() {
       
 
   return (
-    <Router basename="/loamp" >
+    <Router 
+    basename="/loamp"
+     >
       <div>
         <div>
           <Routes>
@@ -157,6 +159,7 @@ function App() {
             <Route path="/admin-create-events" element={<ProtectedAdminRoute><AdminCreateEventsPage isMobile={isMobile} adminDetails={adminDetails} refreshAdminDetails={refreshAdminDetails} /></ProtectedAdminRoute>} />
             
              
+            <Route path="/super-admin-login" element={<LoginPageSuperAdmin isMobile={isMobile} />} />
             
 
             <Route path="/*" element={<div>NOT FOUND</div>} />

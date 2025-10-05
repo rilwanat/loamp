@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { navData } from "./MemberNavData";
 import styles from "./MemberSideNavbar.module.css";
 
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo-512x512.png";
 
 const MemberSideNavbar = ({ currentPageName }) => {
   const [open, setOpen] = useState(true);

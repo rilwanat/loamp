@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import logo from "../assets/images/logo.png";
-import logo2 from "../assets/images/logo-2.png";
+import logo from "../assets/images/logo-512x512.png";
 
 //
 import axiosInstance from "../auth/axiosConfig"; // Ensure the correct relative path
@@ -26,12 +25,14 @@ export default function LoampHeaderHead({}) {
   }, []);
 
   return (
-    <div className="flex flex-col h-auto px-4 sm:px-16 md:px-16 py-2 pb-2 bg-theme shadow-lg">
+    <div className={`flex flex-col h-auto px-4 sm:px-16 md:px-16  
+    ${isMemberAuthenticated() || isAdminAuthenticated() || isSuperAdminAuthenticated() ? '' : 'lg:px-32 xl:px-32 2xl:px-64 '}
+    py-2 pb-2 bg-theme shadow-lg`}>
       <div className="flex flex-col md:flex-row justify-between">
         <div className="absolute top-2 flex items-center mr-8 bg-white p-2 rounded-full">
           <img
             className=" block h-20 w-auto max-w-none"
-            src={logo2}
+            src={logo}
             alt="Logo"
             onClick={() => {
               navigate("/");
@@ -122,30 +123,33 @@ export default function LoampHeaderHead({}) {
             <div className="flex items-center" style={{ height: "40px" }}>
               {isMemberAuthenticated() ? (
                 <div
-                  className="cursor-pointer"
+                  className="text-sm cursor-pointer font-semibold hover:bg-white rounded-md px-3 py-1"
                   onClick={() => {
                     deleteCookie("member");
-                    window.location.href = "/";
+                    // window.location.href = "/";
+                    navigate("/");
                   }}
                 >
                   Logout
                 </div>
               ) : isAdminAuthenticated() ? (
                 <div
-                  className="cursor-pointer"
+                  className="text-sm cursor-pointer font-semibold hover:bg-white rounded-md px-3 py-1"
                   onClick={() => {
                     deleteCookie("admin");
-                    window.location.href = "/";
+                    // window.location.href = "/";
+                    navigate("/");
                   }}
                 >
                   Logout
                 </div>
               ) : isSuperAdminAuthenticated() ? (
                 <div
-                  className="cursor-pointer"
+                  className="text-sm cursor-pointer font-semibold hover:bg-white rounded-md px-3 py-1"
                   onClick={() => {
                     deleteCookie("super-admin");
-                    window.location.href = "/";
+                    // window.location.href = "/";
+                    navigate("/");
                   }}
                 >
                   Logout

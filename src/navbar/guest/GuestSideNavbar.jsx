@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { navData } from "./GuestNavData";
 import styles from "./GuestSideNavbar.module.css";
 
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo-512x512.png";
 
 const GuestSideNavbar = ({ currentPageName }) => {
   const [open, setOpen] = useState(true);

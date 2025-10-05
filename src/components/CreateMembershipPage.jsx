@@ -8,10 +8,10 @@ import LoampFooter from "../navbar/LoampFooter.jsx";
 import TitleLine from "../widgets/TitleLine.jsx";
 import LoadingScreen from "../widgets/LoadingScreen.jsx";
 
-import logo from "../assets/images/logo.png";
-import fa1 from "../assets/images/home/fa-1.jpg";
-import fa2 from "../assets/images/home/fa-2.jpg";
-import fa3 from "../assets/images/home/fa-3.jpg";
+import logo from "../assets/images/logo-512x512.png";
+
+
+
 import charter from "../assets/images/home/charter.webp";
 import president from "../assets/images/home/president.webp";
 
@@ -306,7 +306,7 @@ export default function CreateMembershipPage({ isMobile }) {
                 <img
                   src={semicircleflip}
                   alt="orange semicircle"
-                  className="absolute top-0 left-90 w-[800px] md:w-[800px] h-auto  -z-10 opacity-30"
+                  className="hidden sm:block absolute top-0 sm:left-90 sm:w-[800px] w-full md:w-[800px] h-auto  -z-10 opacity-30"
                 />
 
                 <div className="w-full rounded-lg">
@@ -332,8 +332,8 @@ export default function CreateMembershipPage({ isMobile }) {
                           <h2 className="text-xl text-black font-bold">
                             Complete the quick registration process to create
                             your{" "}
-                            <span className="text-theme">ambassadorial</span>{" "}
-                            profile
+                            <span className="text-theme">Ambassadorial</span>{" "}
+                            Profile
                           </h2>
                           {/* <p className='text-l text-pcGrayText my-2'>Start your 30-day free trial</p> */}
                           <div className="flex flex-col mt-4 py-2">
